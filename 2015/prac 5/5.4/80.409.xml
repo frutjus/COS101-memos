@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<memo version='0.4'>
+	<title>COS132_P5S4_main</title>
+	<!-- Vreda -->
+	<config>
+		<random>0</random>
+		<sequence>1</sequence>
+		<parts>1</parts>
+		<chances>10</chances> 
+	</config>
+
+<output part='1' fullmarks='10'> 
+	<executable>series.out</executable>
+			
+	<delete-patterns>
+		<pattern>.+\.o$</pattern>
+		<pattern>.+~$</pattern>
+	</delete-patterns>
+	
+	<source-patterns>
+		<pattern>.+\.cpp$</pattern>
+	</source-patterns>
+
+	<extra-files>
+		<file overwrite='true' jail='true'>series.cpp</file>
+		<file overwrite='true' jail='true'>makefile</file>
+		<file overwrite='true' jail='true'>series.h</file>
+		<file overwrite='true' jail='true'>e08.txt</file>
+		<file overwrite='true' jail='true'>ln08.txt</file>
+	</extra-files>
+
+	<case id='1'>
+		<arguments>
+			<arg file='true' input='true'>e08.txt</arg>
+		</arguments>
+		<!-- x = -0.8, choice = 1  terms = 11  -->
+		<line>
+			<regexp mark='1' 
+			successMessage="OK: First menu line PASS" 
+			errorMessage="X: First menu line FAIL" 
+			>1\.?\s+[Cc]alc.*\se\^-0\.8</regexp>
+		</line><line>
+			<regexp mark='1' 
+			successMessage="OK: Second menu line PASS" 
+			errorMessage="X: Second menu line FAIL" 
+			>2\.?\s+[Cc]alc.*\sln\(1\s*\+\s*-0\.8\)</regexp>
+		</line><line><regexp>.*</regexp>
+		</line><line>
+			<regexp mark='4'
+			successMessage="OK: Correct calculation of e^x using the cmath constant and pow" 
+			errorMessage="X: Output showing calculation of e^x using the cmath constant and pow FAIL" 
+			>\scmath(\s.*\s|\s)pow\s.*(\s|=)0\.449328964117$</regexp>
+		</line>
+	</case>
+
+	<case id='2'>
+		<arguments>
+			<arg file='true' input='true'>ln08.txt</arg>
+		</arguments>
+		<!-- x = 0.8, choice = 2  terms = 11  -->
+		<line><regexp>.*</regexp></line>
+		<line><regexp>.*</regexp></line>
+		<line><regexp>.*</regexp></line>
+		<line>
+			<regexp mark='4'
+			successMessage="OK: Correct calculation of ln(1 + x) using the cmath log function" 
+			errorMessage="X: Output showing calculation of ln(1 + x) using the cmath log function FAIL" 
+			>\scmath(\s.*\s|\s)log\s.*(\s|=)0\.587786664902$</regexp>
+		</line>
+	</case>
+</output>
+</memo>

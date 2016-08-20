@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<memo version='0.4'>
+    <title>Prac3_OddsAndEvens</title>
+    
+    <config>
+        <random>0</random>
+        <sequence>1</sequence>
+        <parts>1</parts>
+        <chances>10</chances>
+    </config>
+    
+    <output part='1' fullmarks='20'>
+        <executable>odds.out</executable>
+        
+        <delete-patterns>
+            <pattern>.+\.o$</pattern>
+            <pattern>.+~$</pattern>
+        </delete-patterns>
+        
+        <source-patterns>
+            <pattern>.+\.c$</pattern>
+        </source-patterns>
+   
+        <extra-files>
+	<file overwrite='true' jail='true'>CharAtTop.txt</file>
+	<file overwrite='true' jail='true'>Empty.txt</file>
+	<file overwrite='true' jail='true'>Evens.txt</file>
+
+	<file overwrite='true' jail='true'>InputCharAtTop.txt</file>
+	<file overwrite='true' jail='true'>InputEmpty.txt</file>
+	<file overwrite='true' jail='true'>InputEvens.txt</file>
+	<file overwrite='true' jail='true'>InputNegAtTop.txt</file>
+	<file overwrite='true' jail='true'>InputNoFile.txt</file>
+	<file overwrite='true' jail='true'>InputOne.txt</file>
+	<file overwrite='true' jail='true'>InputRealInMiddle.txt</file>
+	<file overwrite='true' jail='true'>InputSuccess.txt</file>
+	<file overwrite='true' jail='true'>InputZeroInMiddle.txt</file>
+	
+	<file overwrite='true' jail='true'>makefile</file>
+
+	<file overwrite='true' jail='true'>NegAtTop.txt</file>
+	<file overwrite='true' jail='true'>One.txt</file>
+	<file overwrite='true' jail='true'>RealInMiddle.txt</file>
+	<file overwrite='true' jail='true'>Success.txt</file>
+	<file overwrite='true' jail='true'>ZeroInMiddle.txt</file>
+	
+        </extra-files>
+	
+	<!--Values entered as integer values are correct (Success.txt)-->
+	<!--Check if success result is correct -->
+	<case id="1">
+	<arguments> 
+		<arg input="true" file="true">InputSuccess.txt</arg>
+	</arguments>
+		<line><alt>
+			<regexp mark='2' 
+			successMessage = "OK: Values read from file echoed correctly"
+			errorMessage = "X: A file with some odd and even numbers not read correctly"
+			>[\s:]3\s+2\s+7\s+1\s+8\s+5$</regexp>
+			<regexp 
+			successMessage = "X: Program cannot open a valid file that was given: IT IS LIKELY THAN NONE OF THE TEST DATA IS EVER READ"
+			>([Ii]nvalid|[Ww]rong|not|[Ii]ncorrect|[Ee]rror)</regexp>
+		</alt></line>
+		<line>
+			<regexp mark='2' 
+			successMessage= "OK: Final result is correct if product of even integers and sum of odd number are equal"
+			errorMessage= "X: Final result is wrong if product of even numbers and sum of odd numbers are equal"
+			>[\s:][Ss]ucc?es?s$</regexp>
+		</line>
+	</case>
+
+	<!--Input values are all even (Evens.txt) -->
+	<case id="2">
+	<arguments> 
+		<arg input="true" file="true">InputEvens.txt</arg>
+	</arguments>
+		<line><regexp>.*</regexp></line>
+                    <line>
+			<regexp mark='1' 
+			successMessage = "OK: Final result is correct if product of even integers unequal to the sum of odd numbers"
+			errorMessage="Hint: Use the keyword failure when the product of even integers unequal to the sum of odd numbers">[\s:][Ff]ailu?r?e?$</regexp>
+		</line>
+	</case>
+
+	<!-- Only one input value -->
+	<case id="3">
+	<arguments> 
+		<arg input="true" file="true">InputOne.txt</arg>
+	</arguments>
+		<line>
+			<regexp mark = '1'
+			successMessage = "OK: Program reads the file correctly when only one input value is in the file"
+			errorMessage = "X: Program does not read the file correctly when only one input value is in the file"
+			>[\s:][Ii]nput.?\s*1$</regexp>
+		</line>
+	</case>
+	
+	<!-- File has one value (One.txt) -->
+	<case id="4">
+	<arguments> 
+		<arg input="true" file="true">InputOne.txt</arg>
+	</arguments>
+		<line><regexp>.*</regexp></line>
+		<line>
+			<regexp mark = '1'
+			successMessage =  "OK: Program result is correct when the only number on the file is a 1"
+			errorMessage =  "Hint: The product of the empty set of even integers is 1"
+			>[Ss]ucc?ess?</regexp>
+		</line>
+	</case>
+	
+	 <!-- Input terminate when 0 is encountered (ZeroInMiddle.txt)-->
+	<case id="5">
+	<arguments> 
+		<arg input="true" file="true">InputZeroInMiddle.txt</arg>
+	</arguments>
+		<line>
+			<regexp mark='2' 
+			successMessage = "OK: Input is correctly terminated when a zero is encountered on the file"
+			errorMessage = "X: Input is not terminated when a zero is encountered. For example; when reading Data02.txt you should read only 6 122 8"
+			>[\s:]4\s+8\s+301\s+19\s+10$</regexp>
+		</line>
+	</case>
+	
+	<!--Input terminate when negative is encountered (NegAtTop.txt) -->
+	<case id="6">
+	<arguments> 
+		<arg input="true" file="true">InputNegAtTop.txt</arg>
+	</arguments>
+		<line><alt>
+			<regexp
+			successMessage = "X: Input is not terminated when a negative number is encountered. For example; when reading Data03.txt you should read only 1 1 1"
+			>[\s:]1\s+2\s+3$</regexp>
+			<regexp mark='2'
+			successMessage = "OK: Input is correctly terminated when a negative number is encountered"
+			> ^((?!1\s+2\s+3).)*$</regexp>
+		</alt></line>
+	</case>
+
+	<!--Input terminate when character is encountered (CharAtTop.txt) -->
+	<case id="7">
+	<arguments> 
+		<arg input="true" file="true">InputCharAtTop.txt</arg>
+	</arguments>
+		<line><alt>
+			<regexp
+			successMessage = "X: Input is not terminated when a character is encountered"
+			>[\s:]5\s+4$</regexp>
+			<regexp mark='2'
+			successMessage = "OK: Input is correctly terminated when a character is encountered"
+			> ^((?!5\s+4).)*$</regexp>
+		</alt></line>
+	</case>
+
+	<!--Correctly read all values up to the integer part of a real number (RealInMiddle.txt) -->
+	<case id="8">
+	<arguments> 
+		<arg input="true" file="true">InputRealInMiddle.txt</arg>
+	</arguments>
+		<line>
+			<regexp mark='2' 
+			successMessage = "OK: Values correctly read up to the integer part of a real value"
+			errorMessage = "X: A file containing a real value not read correctly"
+			>[\s:]4\s+5\s+2\s+3$</regexp>
+		</line>
+	</case>
+	
+	<!--Input terminate when a real number is encountered (RealInMiddle.txt) -->
+	<case id="9">
+	<arguments> 
+		<arg input="true" file="true">InputRealInMiddle.txt</arg>
+	</arguments>
+		<line><alt>
+			<regexp
+			successMessage = "X: Input is not terminated when a character is encountered"
+			>7\s+12</regexp>
+			<regexp mark='1'
+			successMessage = "OK: Input is correctly terminated when a real value is encountered"
+			> ^((?!7\s+12).)*$</regexp>
+		</alt></line>
+	</case>
+
+	<!-- Error message if given input file does not exist -->
+	<case id="10">
+	<arguments> 
+		<arg input="true" file="true">InputNoFile.txt</arg>
+	</arguments>
+		<line>
+			<regexp mark = "1"
+			successMessage = "OK: Program behaves correctly when the given input file name is typed incorrectly"
+			errorMessage = "X: The error message when the user specifies a file that does not exist can be improved"
+			>([Ii]nvalid|[Ww]rong|not|[Ii]ncorrect|[Ee]rror)</regexp>
+		</line>
+	</case>
+
+	<!-- Error message if given input file does not exist (BogusFileName) -->
+	<case id="11">
+	<arguments> 
+		<arg input="true" file="true">InputNoFile.txt</arg>
+	</arguments>
+		<line>
+			<regexp mark = "2"
+			successMessage = "OK: Program behaves correctly when the given input file name is typed incorrectly"
+			errorMessage = "X: The error message should echo the file name of a file that can not be opened"
+			>\sBogusFileName([\s\.,;:!\?]|$)</regexp>
+		</line>
+	</case>
+
+	<!-- Error message if input file is empty (Empty.txt) -->
+	<case id="12">
+	<arguments> 
+		<arg input="true" file="true">InputEmpty.txt</arg>
+	</arguments>
+		<line>
+			<regexp mark = "1"
+			successMessage = "OK: Program behaves correctly when dealing with an empty input file"
+			errorMessage = "X: The error message when the input file is empty can be improved"
+			>\sempty([\s\.,;:!\?]|$)</regexp>
+		</line>
+	</case>
+	</output>
+</memo>
+
+

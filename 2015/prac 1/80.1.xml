@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<memo version='0.4'>
+	<title>Prac1_Hi</title>
+	<!-- hannes jvv -->
+	<config>
+		<random>0</random>
+		<sequence>1</sequence>
+		<parts>1</parts>
+		<chances>10</chances> <!-- todo: remember to reset to 10 for students -->
+	</config>
+	
+	<output part='1' fullmarks='6'>
+		<executable>hi.out</executable>
+				
+		<delete-patterns>
+			<pattern>.+\.o$</pattern>
+			<pattern>.+~$</pattern>
+		</delete-patterns>
+		
+		<source-patterns>
+			<pattern>.+\.cpp$</pattern>
+		</source-patterns>
+		
+		<extra-files>
+			<file overwrite='true' jail='true'>empty.txt</file>
+			<file overwrite='true' jail='true'>makefile</file>
+		</extra-files>
+
+		<case id='1'>
+			<arguments>
+				<arg file='true' input='true'>empty.txt</arg>
+			</arguments>
+			<line><alt>
+				<regexp mark='6' successMessage="Well done." errorMessage="Hint: Make sure you have spelled everything correctly and that your output is according to the instructions.">[Hh]i.*\s+my\s+student\s+number\s+is\D+\d{8}\s*[.]?\s*I.?.?m\s+busy\s+with\s+a\s+(cos|COS)\s*132\s+practical!</regexp>
+				<regexp mark='5' successMessage="OK: overall good sentence structure and content.">my\s+student\s+number\s+is\s+[Uu]?\d{8}\D.*\s+busy\s+with\s+a\s+(cos|COS)\s*132\s+practical</regexp>
+				<regexp mark='4' >s.{4,6}t\s+n.{3,5}r\D+\d{8}\D+(cos|COS)\s*132.+prac</regexp>
+				<regexp mark='3' >number.+\D\d{8}\D.*123</regexp>
+				<regexp mark='3' successMessage="OK: student number detected">number.+\D\d{8}\D</regexp>
+				<regexp mark='2' >my.+number\s+ is\DX{8}.*(cos|COS)132</regexp>
+				<regexp mark='1' successMessage="Hint: you're supposed to make it output an actual student number">X{6,9}</regexp>
+				<regexp mark='1' successMessage="OK: the words 'COS132 practical' were detected">[Hh]i|(cos|COS)s*132|practical</regexp>
+				<regexp mark='1' successMessage="Hint: it is COS132 not COS123.">(cos|COS|Cos).*123</regexp>
+			</alt></line>
+		</case>
+
+	</output>
+</memo>

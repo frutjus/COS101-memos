@@ -1,0 +1,409 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- By Nikki, 04/03/2016 -->
+<!-- COS 132 Prac 5 Task 3, Name Sorting -->
+<memo version='0.3'>
+	<title>Name_Sorting</title>
+
+	<config>
+		<random>0</random>
+		
+		<sequence>1</sequence>
+
+		<parts>1</parts>
+    
+		<chances>5</chances>
+	</config>
+
+	<output part='1' fullmarks='3'>
+		<delete-patterns>
+			<pattern>.+\.o$</pattern>
+			<pattern>.+~$</pattern>
+		</delete-patterns>
+
+		<source-patterns>
+			<pattern>.+\.(c|C)(\+\+|pp?|xx)?$</pattern>	
+			<pattern>.+\.ii?$</pattern>
+			<pattern>.+\.cc$</pattern>
+		</source-patterns>
+		
+		<extra-files>
+			<file overwrite='true' jail='true'>makefile</file>
+			<file overwrite='true' jail='true'>names.cpp</file>
+			<file overwrite='true' jail='true'>nameSort.h</file>
+
+			<file overwrite='true' jail='true'>TextOne.txt</file>
+			<file overwrite='true' jail='true'>TextTwo.txt</file>
+			<file overwrite='true' jail='true'>TextThree.txt</file>
+			<file overwrite='true' jail='true'>TextFour.txt</file>
+			<file overwrite='true' jail='true'>TextFive.txt</file>
+			<file overwrite='true' jail='true'>TextSix.txt</file>
+
+			<file overwrite='true' jail='true'>caseOne.txt</file>
+			<file overwrite='true' jail='true'>caseTwo.txt</file>
+			<file overwrite='true' jail='true'>caseThree.txt</file>
+			<file overwrite='true' jail='true'>caseFour.txt</file>
+			<file overwrite='true' jail='true'>caseFive.txt</file>
+			<file overwrite='true' jail='true'>caseSix.txt</file>
+		</extra-files>
+		
+		<case id = '1'>
+			<arguments>
+				<arg file='true' input='true'>caseOne.txt</arg>				
+			</arguments>
+		
+	<!--Heading -->
+				<line>
+					<regexp>.*</regexp>
+				</line>
+
+	<!--dashes-->
+				<line>
+					<regexp>.*</regexp>
+				</line>	
+
+	<!-- Line 1 menu-->
+				<line>
+					<regexp>.*</regexp>
+				</line>	
+
+	<!-- Line two menu-->
+				<line>
+					<regexp> .*</regexp>
+				</line>	
+
+	<!-- Enter choice and echo choice-->
+				<line>
+					<regexp> .*</regexp>
+				</line>	
+	<!-- Print Function-->
+				<!-- if the content is on the right line-->
+				<line>
+					<regexp> .*</regexp>
+				</line>	
+	<!-- dashes-->
+				<line>
+					<regexp> .*</regexp>
+				</line>	
+	<!--output-->
+				<line>
+					<regexp mark="1" errormessage="Sort by surnames is incorrect."> Abbbb\sxx</regexp>
+				</line>	
+	<!--output-->
+				<line>
+					<regexp  errormessage="Sort by surnames is incorrect."> Bccccc\spx </regexp>
+				</line>	
+	<!--output-->
+				<line>
+					<regexp  errormessage="Sort by surnames is incorrect."> Deee\sjx </regexp>
+				</line>	
+	<!--output-->
+				<line>
+					<regexp  errormessage="Sort by surnames is incorrect."> Fgggg\shx </regexp>
+				</line>	
+		</case>
+
+
+
+		<case id = '2'>
+			<arguments>
+				<arg file='true' input='true'>caseTwo.txt</arg>				
+			</arguments>
+		
+	<!--Heading -->
+				<line>
+					<regexp>.*</regexp>
+				</line>
+
+	<!--dashes-->
+				<line>
+					<regexp>.*</regexp>
+				</line>	
+
+	<!-- Line 1 menu-->
+				<line>
+					<regexp>.*</regexp>
+				</line>	
+
+	<!-- Line two menu-->
+				<line>
+					<regexp> .*</regexp>
+				</line>	
+
+	<!-- Enter choice and echo choice-->
+				<line>
+					<regexp> .*</regexp>
+				</line>	
+
+	<!-- Print Function-->
+				<!-- if the content is on the right line-->
+				<line>
+					<regexp> .*</regexp>
+				</line>	
+	<!-- dashes-->
+				<line>
+					<regexp> .*</regexp>
+				</line>	
+	<!--output-->
+				<line>
+					<regexp mark="1" errormessage="First value of sort surname incorrect."> Abbbb\sxx</regexp>
+				</line>	
+	<!--output-->
+				<line>
+					<regexp errormessage="Second value of sort by surname incorect."> Bccccc\spx </regexp>
+				</line>	
+	<!--output-->
+				<line>
+					<regexp> .* </regexp>
+				</line>	
+	<!--output-->
+				<line>
+					<regexp> .* </regexp>
+				</line>	
+		</case>
+
+
+<case id = '3'>
+			<arguments>
+				<arg file='true' input='true'>caseThree.txt</arg>				
+			</arguments>
+		
+	<!--Heading -->
+				<line>
+					<regexp>.*</regexp>
+				</line>
+
+	<!--dashes-->
+				<line>
+					<regexp>.*</regexp>
+				</line>	
+
+	<!-- Line 1 menu-->
+				<line>
+					<regexp>.*</regexp>
+				</line>	
+
+	<!-- Line two menu-->
+				<line>
+					<regexp> .*</regexp>
+				</line>	
+
+	<!-- Enter choice and echo choice-->
+				<line>
+					<regexp> .*</regexp>
+				</line>	
+
+	<!-- Print Function-->
+				<!-- if the content is on the right line-->
+				<line>
+					<regexp> .*</regexp>
+				</line>	
+	<!-- dashes-->
+				<line>
+					<regexp> .*</regexp>
+				</line>	
+	<!--output-->
+				<line>
+					<regexp > .*</regexp>
+				</line>	
+	<!--output-->
+				<line>
+					<regexp > .*</regexp>
+				</line>	
+	<!--output-->
+				<line>
+					<regexp mark="1" errormessage="Second last value of sort by surname incorrect."> Deee\sjx </regexp>
+				</line>	
+	<!--output-->
+				<line>
+					<regexp  errormessage="Last value of sort by surname incorrect."> Fgggg\shx </regexp>
+				</line>	
+		</case>
+
+
+
+		<case id = '4'>
+			<arguments>
+				<arg file='true' input='true'>caseFour.txt</arg>				
+			</arguments>
+		
+	<!--Heading -->
+				<line>
+					<regexp>.*</regexp>
+				</line>
+
+	<!--dashes-->
+				<line>
+					<regexp>.*</regexp>
+				</line>	
+
+	<!-- Line 1 menu-->
+				<line>
+					<regexp>.*</regexp>
+				</line>	
+
+	<!-- Line two menu-->
+				<line>
+					<regexp> .*</regexp>
+				</line>	
+
+	<!-- Enter choice and echo choice-->
+				<line>
+					<regexp> .*</regexp>
+				</line>	
+
+	<!-- Print Function-->
+				<!-- if the content is on the right line-->
+				<line>
+					<regexp> .*</regexp>
+				</line>	
+	<!-- dashes-->
+				<line>
+					<regexp> .*</regexp>
+				</line>	
+	<!--output-->
+				<line>
+					<regexp mark="1" errormessage="Sort by surnames is incorrect."> Abbbb\sxx</regexp>
+				</line>	
+	<!--output-->
+				<line>
+					<regexp errormessage="Sort by surnames is incorrect."> Bccccc\s px </regexp>
+				</line>	
+	<!--output-->
+				<line>
+					<regexp  errormessage="Sort by surnames is incorrect."> Deee\sjx </regexp>
+				</line>	
+	<!--output-->
+				<line>
+					<regexp   errormessage="Sort by surnames is incorrect."> Fgggg\shx </regexp>
+				</line>	
+		</case>
+
+
+
+		<case id = '5'>
+			<arguments>
+				<arg file='true' input='true'>caseFive.txt</arg>				
+			</arguments>
+		
+	<!--Heading -->
+				<line>
+					<regexp>.*</regexp>
+				</line>
+
+	<!--dashes-->
+				<line>
+					<regexp>.*</regexp>
+				</line>	
+
+	<!-- Line 1 menu-->
+				<line>
+					<regexp>.*</regexp>
+				</line>	
+
+	<!-- Line two menu-->
+				<line>
+					<regexp> .*</regexp>
+				</line>	
+
+	<!-- Enter choice and echo choice-->
+				<line>
+					<regexp> .*</regexp>
+				</line>	
+
+	<!-- Print Function-->
+				<!-- if the content is on the right line-->
+				<line>
+					<regexp> .*</regexp>
+				</line>	
+	<!-- dashes-->
+				<line>
+					<regexp> .*</regexp>
+				</line>	
+	<!--output-->
+				<line>
+					<regexp mark="1" errormessage="Sort by firstname is incorrect.">nn\sAbbbb</regexp>
+				</line>	
+	<!--output-->
+				<line>
+					<regexp  errormessage="Sort by firstname is incorrect.">tt\sAbbbb</regexp>
+				</line>	
+	<!--output-->
+				<line>
+					<regexp  errormessage="Sort by firstname is incorrect.">XX\sAbbbb</regexp>
+				</line>	
+	<!--output-->
+				<line>
+					<regexp  errormessage="Sort by firstname is incorrect.">ggg\sFgggg</regexp>
+				</line>	
+	<!--output-->
+				<line>
+					<regexp  errormessage="Sort by firstname is incorrect.">ww\sFggmg</regexp>
+				</line>	
+<!--output-->
+				<line>
+					<regexp  errormessage="Sort by firstname is incorrect.">Yy\sggggg</regexp>
+				</line>	
+		</case>
+
+
+
+		<case id = '6'>
+			<arguments>
+				<arg file='true' input='true'>caseSix.txt</arg>				
+			</arguments>
+		
+	<!--Heading -->
+				<line>
+					<regexp>.*</regexp>
+				</line>
+
+	<!--dashes-->
+				<line>
+					<regexp>.*</regexp>
+				</line>	
+
+	<!-- Line 1 menu-->
+				<line>
+					<regexp>.*</regexp>
+				</line>	
+
+	<!-- Line two menu-->
+				<line>
+					<regexp> .*</regexp>
+				</line>	
+
+	<!-- Enter choice and echo choice-->
+				<line>
+					<regexp> .*</regexp>
+				</line>	
+
+
+	<!-- Print Function-->
+				<alt>
+					<!-- if the content is on the right line-->
+					<line>
+						<regexp mark="1" errorMessage=""> [Ss]urname.*[Ff]irst.*</regexp>
+					</line>	
+
+					<line>
+						<regexp successMessage="Display function must not start with endl.">$^</regexp>
+					</line>	
+					<line>
+						<regexp successMessage="Display headings in wrong place.">-{5}</regexp>
+					</line>	
+				</alt>
+	<!-- dashes-->
+				<line>
+					<regexp> -{5}</regexp>
+				</line>	
+	<!--output-->
+				<line>
+					<regexp mark="1" errorMessage="Print function incorrect.">C{3}\s+D{2}</regexp>
+				</line>	
+	<!--output-->
+				<line>
+					<regexp errorMessage="Print function incorrect." >A{3}\s+B{2}</regexp>
+				</line>	
+		</case>
+</output>
+</memo>

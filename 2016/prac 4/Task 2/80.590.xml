@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<memo version='0.3'>
+	<title>prac4task2</title>
+
+	<config>
+		<random>0</random>
+		<sequence>1</sequence>
+		<parts>1</parts>
+		<chances>1000</chances>
+	</config>
+	<output part='1' fullmarks='24'>
+		<delete-patterns>
+			<pattern>.+\.o$</pattern>
+			<pattern>.+~$</pattern>
+		</delete-patterns>
+
+		<source-patterns>
+			<pattern>.+\.(c|C)(\+\+|pp?|xx)?$</pattern>	
+			<pattern>.+\.ii?$</pattern>
+			<pattern>.+\.cc$</pattern>
+		</source-patterns>
+		
+		
+		<extra-files>
+			<file overwrite='true' jail='true'>raindata.txt</file>
+			<file overwrite='true' jail='true'>_0.txt</file>
+			<file overwrite='true' jail='true'>_1_1.txt</file>
+			<file overwrite='true' jail='true'>_1_53.txt</file>
+			<file overwrite='true' jail='true'>_44_4.txt</file>
+			<file overwrite='true' jail='true'>_50_1.txt</file>
+		</extra-files>
+<!--START Enter the number of weeks-->
+		<case id = '1'>
+			<arguments>
+				<arg file='true' input='true'>_44_4.txt</arg>
+			</arguments>
+			<line>
+				<regexp mark='1'
+				 successMessage="PASS TEST 1:"
+				 errorMessage="FAIL TEST 1: The number of weeks to select is incorrect (the range)"
+				>\D1\D\s*-\s*\D52\D
+				</regexp>
+			</line>
+		</case><!--END Enter the number of weeks-->
+<!--START Test legend -->
+		<case id = '2'>
+			<arguments>
+				<arg file='true' input='true'>_1_1.txt</arg>
+			</arguments>
+			<line><regexp>.*</regexp></line>
+			<alt>
+				<line>
+					<regexp mark='1'
+					 successMessage="PASS TEST 2:"
+					 errorMessage="FAIL TEST 2: Graph legend may have errors"
+					>(?i)(^|\W)rel.*rain.*(%|\Wper)
+					</regexp>
+				</line>
+				<line>
+					<regexp
+					 errorMessage="Hint: Unit of measurement is important for any graphs"
+					>(?i)(%|\Wper)
+					</regexp>
+				</line>
+			</alt>
+		</case><!--END Test legend -->
+<!--
+	START Graph percentage scale
+	(i.e. 0 through 100 fit in 80 spaces)
+	??NOTE: Must be \D0.{77,77}100($|\D) to fit as on the memo, But an offset of +/- 4 is allowed
+-->
+		<case id = '3'>
+			<arguments>
+				<arg file='true' input='true'>_1_1.txt</arg>
+			</arguments>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line>
+				<regexp mark='1'
+				 successMessage="PASS TEST 3:"
+				 errorMessage="FAIL TEST 3: Graph percentage values might not fit in 80 spaces properly"
+				>(^|\D)0.{73,81}100\D*$
+				</regexp>
+			</line>
+		</case><!--END Graph percentage scale-->
+		
+<!--START Axis -->
+		<case id = '4'>
+			<arguments>
+				<arg file='true' input='true'>_1_1.txt</arg>
+			</arguments>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line>
+				<regexp mark='1'
+				 successMessage="PASS TEST 4:"
+				 errorMessage="FAIL TEST 4: Graph axis might not fit 80 spaces (i.e. Series of +---)"
+				>\+---\+---\+---\+---\+---\+---\+---\+---\+---\+---\+---\+---\+---\+---\+---\+---\+---\+---\+---\+---\+\s*$
+				</regexp>
+			</line>
+		</case><!--END Axis -->
+<!--START Display number week row test -->
+		<case id = '5'>
+			<arguments>
+				<arg file='true' input='true'>_44_4.txt</arg>
+			</arguments>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line>
+				<regexp mark='1'
+				 successMessage="PASS TEST 5:"
+				 errorMessage="FAIL TEST 5: Total bars displayed might be incorrect"
+				>-------
+				</regexp>
+			</line>
+		</case><!--END  Display number week row test  -->
+<!--
+START  (#1) test week start at 44 with 4 rel weeks 
+
+4 week's rain total = 253
+
+week 44: test round up
+numSigns = 80 * (63)/253 = 80 * 0.249 = 19.921 ~ 20
+-->
+		<case id = '6'>
+			<arguments>
+				<arg file='true' input='true'>_44_4.txt</arg>
+			</arguments>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<alt>
+				<line>
+					<regexp mark='4'
+					 successMessage="PASS TEST 6:"
+					>(:|\|)={20}\s*$
+					</regexp>
+				</line>
+				<line>
+					<regexp mark='2'
+					 successMessage="PARTIAL PASS TEST 6: Graph bar size is slightly too small/large"
+					>(:|\|)={19,21}\s*$
+					</regexp>
+				</line>
+				<line>
+					<regexp mark='1'
+					 successMessage="PARTIAL PASS TEST 6: Graph bar size is significantly too small/large"
+					 errorMessage="FAIL TEST 6: Graph bar size is incorrect"
+					>(:|\|)={18,22}\s*$
+					</regexp>
+				</line>
+				<line>
+					<regexp
+					 errorMessage="NOTE: The '|' symbol is required before the week's graph bar"
+					>(:|\|)
+					</regexp>
+				</line>
+			</alt>
+		</case><!--END (#1) test week start at 44 with 4 rel weeks -->
+		
+		
+<!--
+START  (#2) test week start at 44 with 4 rel weeks 
+
+4 week's rain total = 253
+
+week 46:
+numSigns = 80 * (24+5+48)/253 = 80 * 0.304 = 24.348 ~ 24
+-->
+		<case id = '7'>
+			<arguments>
+				<arg file='true' input='true'>_44_4.txt</arg>
+			</arguments>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<alt>
+				<line>
+					<regexp mark='4'
+					 successMessage="PASS TEST 7:"
+					>(:|\|)={24}\s*$
+					</regexp>
+				</line>
+				<line>
+					<regexp mark='2'
+					 successMessage="PARTIAL PASS TEST 7: Graph bar size is slightly too small/large"
+					>(:|\|)={23,25}\s*$
+					</regexp>
+				</line>
+				<line>
+					<regexp mark='1'
+					 successMessage="PARTIAL PASS TEST 7: Graph bar size is significantly too small/large"
+					 errorMessage="FAIL TEST 7: Graph bar size is incorrect"
+					>(:|\|)={22,26}\s*$
+					</regexp>
+				</line>
+				<line>
+					<regexp
+					 errorMessage="NOTE: The '|' symbol is required before the week's graph bar"
+					>(:|\|)
+					</regexp>
+				</line>
+			</alt>
+		</case><!--END (#2) test week start at 44 with 4 rel weeks -->
+		
+<!--START  Empty bar -->
+		<case id = '8'>
+			<arguments>
+				<arg file='true' input='true'>_50_1.txt</arg>
+			</arguments>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<alt>
+				<line>
+					<regexp mark='1'
+					 successMessage="PASS TEST 8:"
+					  errorMessage="FAIL TEST 8: Graph bar size in incorrect when there was no rain"
+					>(:|\|)\s*$
+					</regexp>
+				</line>
+				<line>
+					<regexp
+					 errorMessage="NOTE: The '|' symbol is required before the week's graph bar"
+					>(:|\|)
+					</regexp>
+				</line>
+			</alt>
+		</case><!--END Empty bar  -->
+		
+<!--START Input error #1-->
+		<case id = '9'>
+			<arguments>
+				<arg file='true' input='true'>_0.txt</arg>
+			</arguments>
+			<alt>
+				<line>
+					<regexp mark='1'
+					 successMessage="PASS TEST 9:"
+					 errorMessage="FAIL TEST 9: Incorrect user input error handling"
+					>:.*:.*\D0\D
+					</regexp>
+				</line>
+				<line>
+					<regexp
+					 errorMessage="Detected missing colons where the program receives use input"
+					>:.*:.*
+					</regexp>
+				</line>
+			</alt>
+		</case><!--END Input error #1-->
+<!--START Input error #2-->
+		<case id = '10'>
+			<arguments>
+				<arg file='true' input='true'>_1_53.txt</arg>
+			</arguments>
+			<alt>
+				<line>
+					<regexp mark='1'
+					 successMessage="PASS TEST 10:"
+					 errorMessage="FAIL TEST 10: Incorrect user input error handling"
+					>:.*:.*\D53\D
+					</regexp>
+				</line>
+				<line>
+					<regexp
+					 errorMessage="Detected missing colons where the program receives use input"
+					>:.*:.*
+					</regexp>
+				</line>
+			</alt>
+		</case><!--END Input error #2-->
+	</output>
+</memo>
+
+
+<!--START Template->
+		<case id = ''>
+			<arguments>
+				<arg file='true' input='true'></arg>
+			</arguments>
+			<line><regexp>.*</regexp></line>
+			<line>
+				<regexp mark=''
+				 successMessage="PASS TEST :"
+				 errorMessage="FAIL TEST :"
+				>(?i)
+				</regexp>
+			</line>
+		</case><!-END Template-->

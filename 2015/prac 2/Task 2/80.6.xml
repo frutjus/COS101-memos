@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<memo version='0.1'>
+	<title>Prac2 Task2</title>
+
+	<config>
+		<random>0</random>
+		
+		<sequence>1</sequence>
+
+		<parts>1</parts>
+		
+		<chances>10</chances>
+	</config>
+
+	<output part='1' fullmarks='12'>
+		<executable>binary.out</executable>
+		
+		<delete-patterns>
+			<pattern>.+\.o$</pattern>
+			<pattern>.+~$</pattern>
+		</delete-patterns>
+
+		<source-patterns>
+			<pattern>.+\.(c|C)(\+\+|pp?|xx)?$</pattern>	
+			<pattern>.+\.ii?$</pattern>
+			<pattern>.+\.cc$</pattern>
+		</source-patterns>
+		
+		<extra-files>
+			<file overwrite='true' jail='true'>input0</file>
+			<file overwrite='true' jail='true'>input1</file>
+			<file overwrite='true' jail='true'>makefile</file>
+		</extra-files>
+		
+		<case id='1'>
+			<arguments>
+				<arg file='true' input='true'>input0</arg>
+			</arguments>
+			
+			<alt>
+				<line><regexp mark='1' successMessage="Hint: It seems you have reversed the input.">.*[\s:]01000$</regexp></line>
+				<line><regexp mark='3' errorMessage="Hint: The binary number does not seem to match the bits that was entered">.*[\s:]00010</regexp></line>
+			</alt>	
+		</case>
+		
+		<case id='2'>
+			<arguments>
+				<arg file='true' input='true'>input0</arg>
+			</arguments>
+
+			<line><regexp>.*</regexp></line>
+			<alt>
+				<line><regexp mark='3' errorMessage="Hint: The formatting when displaying the decimal number may be wrong">.*[Dd]ecimal.*[\s:]2$</regexp></line>
+				<line><regexp mark='2' errorMessage="Hint: The calculation of the decimal value of a small number seems incorrect">.*[\s:]\s*2$</regexp></line>
+				<line><regexp mark='1' successMessage="Hint: It seems you have reversed the input in your calculation.">.*[\s:]8$</regexp></line>
+			</alt>	
+		</case>
+
+		<case id='3'>
+			<arguments>
+				<arg file='true' input='true'>input1</arg>
+			</arguments>
+
+			<alt>
+				<line><regexp mark='3' errorMessage="Hint: The formatting when displaying the binary number may be wrong">.*[Bb]inary.*[\s:]11011$</regexp></line>
+				<line><regexp mark='2'>.*[\s:]11011$</regexp></line>
+			</alt>	
+		</case>
+
+		<case id='4'>
+			<arguments>
+				<arg file='true' input='true'>input1</arg>
+			</arguments>
+
+			<line><regexp>.*</regexp></line>
+			<line><regexp mark='3' errorMessage="Hint: The calculation of the decimal value of a large number seems incorrect">.*[\s:]27$</regexp></line>	
+		</case>
+	</output>
+</memo>

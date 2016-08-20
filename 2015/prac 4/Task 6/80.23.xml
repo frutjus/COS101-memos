@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<memo version='0.4'>
+	<title>Prac4_LiceneceTest</title>
+	<!-- Vreda -->
+	<config>
+		<random>0</random>
+		<sequence>1</sequence>
+		<parts>1</parts>
+		<chances>10</chances> 
+	</config>
+
+<output part='1' fullmarks='15'> 
+	<delete-patterns>
+		<pattern>.+\.o$</pattern>
+		<pattern>.+~$</pattern>
+	</delete-patterns>
+	
+	<source-patterns>
+		<pattern>.+\.cpp$</pattern>
+	</source-patterns>
+
+	<extra-files>
+		<file overwrite='true' jail='true'>answers.dat</file>
+		<file overwrite='true' jail='true'>100.txt</file>
+		<file overwrite='true' jail='true'>75.txt</file>
+		<file overwrite='true' jail='true'>50.txt</file>
+	</extra-files>
+
+	<case id='1'>
+		<!--Check for correct compile and run -->
+		<arguments>
+			<arg file='true' input='true'>100.txt</arg>
+		</arguments>
+		<alt>
+			<line><regexp 
+				successMessage = "XXX: makefile problem.  PLEASE FIX BEFORE PAYING ATTENTION THE THE REST OF THIS REPORT"
+				>make: \*{3}</regexp></line>
+			<line><regexp successMessage = "XXX: program crash.  PLEASE FIX BEFORE PAYING ATTENTION THE THE REST OF THIS REPORT"
+				>exceed limit</regexp></line>
+		</alt>
+		<line><regexp 
+			successMessage = "XXX: makefile problem.  PLEASE FIX BEFORE PAYING ATTENTION THE THE REST OF THIS REPORT"
+			errorMessage = "No errors to report for this case"
+			>make: \*{3}</regexp></line>
+	</case>
+
+	<case id='2'>
+		<!--Check for correct vertical alignment -->
+		<arguments>
+			<arg file='true' input='true'>100.txt</arg>
+		</arguments>
+		<line><regexp mark = '1' 
+			successMessage= "OK: Program title line" 
+			errorMessage="X: The first line of output should be 'Driver's Licence Exam'"
+			>[Ee]xam</regexp></line>
+		<line><regexp mark = '1' 
+			successMessage= "OK: Instruction to user" 
+			errorMessage="X: The second line of output should be 'Student: Enter your answers:'"
+			>[Ee]nter\s</regexp></line>
+		<line><regexp mark = '1' 
+			successMessage= "OK: Dashed line after user input" 
+			errorMessage="X: Did not observe a dashed line before the results. PLEASE FIX BEFORE PAYING ATTENTION THE THE REST OF THIS REPORT"
+			>=====$</regexp></line>
+	</case>
+
+	<case id='3'>
+		<!--Check  prompts for answers to be entered -->
+		<arguments>
+			<arg file='true' input='true'>100.txt</arg>
+		</arguments>
+		<line><regexp>.*</regexp></line>
+		<line><regexp>.*</regexp></line>
+		<alt>
+		<line><regexp mark = '3' 
+			successMessage= "OK: Prompts for user input" 
+			errorMessage="X: Prompts for user input is faulty"
+			>((^|\s)[Qq]uestion\s*[1234].*){4}</regexp></line>
+		<line><regexp 
+			errorMessage="X: Prompt for last question not found"
+			>[Qq]uestion\s*4</regexp></line>
+		<line><regexp 
+			successMessage="X: More prompts than questions specified on the input file found"
+			>[Qq]uestion\s*5</regexp></line>
+		</alt>
+	</case>
+	
+	<case id='4'>
+		<!--Check  result if student passed (all answers are correct) -->
+		<arguments>
+			<arg file='true' input='true'>100.txt</arg>
+		</arguments>
+		<line><regexp>.*</regexp></line>
+		<line><regexp>.*</regexp></line>
+		<line><regexp>.*</regexp></line>
+		<line><regexp mark = '1' 
+			successMessage= "OK: Result when student passed the test" 
+			errorMessage="X:  Result when student passed the test is faulty"
+			>(PASS?ED|[Pp]ass?(ed)?)</regexp></line>
+		<line><regexp mark = '1' 
+			successMessage= "OK: Report of number of correct answers" 
+			errorMessage="X:  Report of number of correct answers is faulty"
+			>(CORR?ECT|[Cc]orr?ect).*\D4$</regexp></line>
+		<line><regexp mark = '1' 
+			successMessage= "OK: Report of number of incorrect answers" 
+			errorMessage="X:  Report of number of incorrect answers is faulty"
+			>(INCORR?ECT|[Ii]ncorr?ect).*\D0$</regexp></line>
+	</case>
+
+	<case id='5'>
+		<!--Check  result if student passed. Exactly 75% correct. Wrong answer in the middle -->
+		<arguments>
+			<arg file='true' input='true'>75.txt</arg>
+		</arguments>
+		<line><regexp>.*</regexp></line>
+		<line><regexp>.*</regexp></line>
+		<line><regexp>.*</regexp></line>
+		<line><regexp mark = '2' 
+			successMessage= "OK: Student pass with exactly 75%" 
+			errorMessage="X:  The student should pass if he/she answers 75% of the questions correctly"
+			>(PASS?(ED)?|[Pp]ass?(ed)?)</regexp></line>
+		<line><regexp>.*</regexp></line>
+		<line><regexp>.*</regexp></line>
+		<alt>
+			<line><regexp mark = '1' 
+				successMessage= "OK: List of incorrect answers" 
+				errorMessage="X:  List of incorrect answers is faulty"
+				>.*\D2($|[,\s])</regexp></line>
+			<line><regexp
+				successMessage= "X: The numbers of the reported questions that were answered incorrectly is off-by-one" 
+				>.*\D[13]($|[,\s])</regexp></line>
+		</alt>
+	</case>
+
+	<case id='6'>
+		<!--Check result if student failed. Wrong answers at the beginning and the end. -->
+		<arguments>
+			<arg file='true' input='true'>50.txt</arg>
+		</arguments>
+		<line><regexp>.*</regexp></line>
+		<line><regexp>.*</regexp></line>
+		<line><regexp>.*</regexp></line>
+		<line><regexp mark = '2' 
+			successMessage= "OK: Result when student failed the test" 
+			errorMessage="X:  Result when student failed the test is faulty -- Use the keyword FAILED"
+			>(F[AI]{2}L(ED)?|[Ff][ai]{2}l(ed)?)</regexp></line>
+		<line><regexp>.*</regexp></line>
+		<line><regexp>.*</regexp></line>
+		<alt>
+			<line><regexp mark = '1' 
+					successMessage= "OK: List of incorrect answers" 
+					errorMessage="X:  List of incorrect answers is faulty"
+					>.*\D1\s+4$</regexp></line>
+			<line><regexp
+					successMessage= "X: Incorrect answers should NOT be separated using commas" 
+					>.*\D\d,\s*\d($|,)</regexp></line>
+			<line><regexp
+					successMessage= "X: Incorrect answers should be separated using spaces" 
+					>.*\D\d\d$</regexp></line>
+		</alt>
+	</case>
+</output>
+</memo>

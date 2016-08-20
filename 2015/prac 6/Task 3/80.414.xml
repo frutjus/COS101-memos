@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<memo version='0.4'>
+	<title>isVowel</title>
+	<config>
+		<random>0</random>
+		<sequence>1</sequence>
+		<parts>1</parts>
+		<chances>11</chances> 
+	</config>
+	
+	<output part='1' fullmarks='10'>
+		<delete-patterns>
+			<pattern>.+\.o$</pattern>
+			<pattern>.+~$</pattern>
+		</delete-patterns>
+		
+		<source-patterns>
+			<pattern>.+\.cpp$</pattern>
+		</source-patterns>
+		
+		<extra-files>
+			<file overwrite='true' jail='true'>makefile</file>
+			<file overwrite='true' jail='true'>main.cpp</file>
+			<file overwrite='true' jail='true'>piglatin.h</file>
+			<file overwrite='true' jail='true'>case1.txt</file>
+			<file overwrite='true' jail='true'>case2.txt</file>
+		</extra-files>
+
+		<case id='1'>
+			<arguments>
+				<arg file='true' input='true'>case1.txt</arg>
+			</arguments>
+			<line>
+				<exact mark='2' errorMessage="X: Failed to identify a vowel as a vowel"
+				successMessage="OK: isVowel passed a test case"
+				>e is a vowel</exact>
+			</line>
+			<line>
+				<exact mark='1' errorMessage="X: Failed to identify a vowel as a vowel"
+				>U is a vowel</exact>
+			</line>
+			<line>
+				<exact mark='2' errorMessage="X: Wrongly identify a consonant as a vowel"
+				>d is not a vowel</exact>
+			</line>
+			<line>
+				<exact mark='1' errorMessage="X: Wrongly identify a consonant as a vowel"
+				>F is not a vowel</exact>
+			</line>
+			<line>
+				<exact mark='1' errorMessage="X: Wrongly identify a non-alpahabetical as a vowel"
+				>3 is not a vowel</exact>
+			</line>
+		</case>
+		
+
+		<case id='2'>
+			<arguments>
+				<arg file='true' input='true'>case2.txt</arg>
+			</arguments>
+			<line>
+				<exact mark='1' errorMessage="X: Wrongly identify y as a vowel"
+				successMessage="OK: isVowel passed a test case"
+				>y is not a vowel</exact>
+			</line>
+			<line>
+				<exact mark='1' errorMessage="X: Wrongly identify Y as a vowel"
+				>Y is not a vowel</exact>
+			</line>
+			<line>
+				<exact mark='1' errorMessage="X: Wrongly identify a non-alpahabetical as a vowel"
+				>Null is not a vowel</exact>
+			</line>
+		</case>
+	</output>
+</memo>

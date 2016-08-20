@@ -1,0 +1,5 @@
+challenge.out: challenge.cpp
+	g++ -static challenge.cpp -o challenge.out
+
+run:
+	./challenge.out

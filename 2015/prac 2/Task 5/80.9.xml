@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<memo version='0.1'>
+	<title>Prac2 Task5</title>
+
+	<config>
+		<random>0</random>
+		
+		<sequence>1</sequence>
+
+		<parts>1</parts>
+		
+		<chances>10</chances>
+	</config>
+
+	<output part='1' fullmarks='8'>
+		<executable>format.out</executable>
+		
+		<delete-patterns>
+			<pattern>.+\.o$</pattern>
+			<pattern>.+~$</pattern>
+		</delete-patterns>
+
+		<source-patterns>
+			<pattern>.+\.(c|C)(\+\+|pp?|xx)?$</pattern>	
+			<pattern>.+\.ii?$</pattern>
+			<pattern>.+\.cc$</pattern>
+		</source-patterns>
+		
+		<extra-files>
+			<file overwrite='true' jail='true'>input0</file>
+			<file overwrite='true' jail='true'>input1</file>
+			<file overwrite='true' jail='true'>input2</file>
+			<file overwrite='true' jail='true'>makefile</file>
+		</extra-files>
+		
+		<case id='1'>
+			<arguments>
+				<arg file='true' input='true'>input0</arg>
+			</arguments>
+			<line mark='1' errorMessage="Hint: First output need to be in 2 decimal places exactly"><regexp>1001\.00\D?.*$</regexp></line>
+			<line errorMessage="Hint: In the second line, make sure you are rounding to the nearest integer (with no decimal places) value."><regexp>1001\D?.*$</regexp></line>	
+			<alt>
+			<line successMessage="Hint: Your third line of output is not in a right justified field of 12 spaces. Make sure that your output is preceded by a colon and not a space."><regexp>\s{9}\s*1001\D?.*$</regexp></line>
+			<line mark='1' errorMessage="Hint: In the third line, make sure you have the integer (no decimal places) part of the number is in a right justified field of 12 spaces"><regexp>:\s{8}1001\D?.*$</regexp></line>			
+			</alt>
+		</case>
+
+		<case id='2'>
+			<arguments>
+				<arg file='true' input='true'>input1</arg>
+			</arguments>
+			<line mark='1' errorMessage="Hint: First output need to be in 2 decimal places exactly"><regexp>129\.79\D?.*$</regexp></line>	
+			<line mark='1' errorMessage="Hint: In the second line, make sure you are rounding to the nearest integer (with no decimal places) value."><regexp>130\D?.*$</regexp></line>			
+			<alt>
+			<line successMessage="Hint: Your third line of output is not in a right justified field of 12 spaces. Make sure that your output is preceded by a colon and not a space."><regexp>\s{10}\s*129</regexp></line>
+			<line successMessage="Hint: Your third line of output must be the integer part of the number (NOT rounded up or down and with no decimal places) in a right justified field of 12 spaces"><regexp>130</regexp></line>
+			<line mark='2' errorMessage="Hint: In the third line, make sure you have the integer part of the number in a right justified field of 12 spaces"><regexp>:\s{9}129\D?.*$</regexp></line>	
+			</alt>
+		</case>
+
+		<case id='3'>
+			<arguments>
+				<arg file='true' input='true'>input2</arg>
+			</arguments>
+			<line mark='1' errorMessage="Hint: First output need to be in 2 decimal places exactly"><regexp>0\.49\D?.*$</regexp></line>	
+			<line><regexp>0\D?.*$</regexp></line>	
+			<alt>	
+			<line successMessage="Hint: Your third line of output is not in a right justified field of 12 spaces. Make sure that your output is preceded by a colon and not a space."><regexp>\s{12}\s*0</regexp></line>				
+			<line mark='1' errorMessage="Hint: In the third line, make sure you have the integer (no decimal places) part of the number in a right justified field of 12 spaces"><regexp>:\s{11}0\D?.*$</regexp></line>	
+			</alt>
+		</case>
+	</output>
+</memo>

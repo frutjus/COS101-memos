@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<memo version='0.4'>
+	<title>COS132_P5S1_addSeries</title>
+	<!-- Kwan Sui Dave Ka -->
+	<config>
+		<random>0</random>
+		<sequence>1</sequence>
+		<parts>1</parts>
+		<chances>10</chances> 
+	</config>
+
+<output part='1' fullmarks='6'> 
+	<executable>radian.out</executable>
+			
+	<delete-patterns>
+		<pattern>.+\.o$</pattern>
+		<pattern>.+~$</pattern>
+	</delete-patterns>
+	
+	<source-patterns>
+		<pattern>.+\.cpp$</pattern>
+	</source-patterns>
+
+	<extra-files>
+		<file overwrite='true' jail='true'>main.cpp</file>
+		<file overwrite='true' jail='true'>makefile</file>
+		<file overwrite='true' jail='true'>series.h</file>
+	</extra-files>
+
+	<case id='1'>
+		<line>
+			<regexp mark='1' 
+				successMessage="OK: Only numbers returned."
+				errorMessage="X: toRadians() should only return floating point numbers" 
+			>\d+\.\d+</regexp>
+		</line>
+	</case>
+	
+	<case id='2'><!--value: 10-->
+		<line>
+			<regexp
+			>.*</regexp>
+		</line>
+		<line>
+			<regexp
+			>.*</regexp>
+		</line>
+		<line>
+			<regexp
+				successMessage="X: Use the PI constant value provided by the cmath library." 
+			>XX0\.1745328XX</regexp>
+		</line>
+		<line>
+			<regexp
+			>.*</regexp>
+		</line>
+	</case>
+	
+	<case id='3'><!--value: 10-->
+		<line>
+			<regexp
+			>.*</regexp>
+		</line>
+		<line>
+			<regexp
+			>.*</regexp>
+		</line>
+		<line>
+			<regexp
+				successMessage="X: The PI value you are using is inaccurate." 
+			>XX0\.1744445XX</regexp>
+		</line>
+		<line>
+			<regexp
+			>.*</regexp>
+		</line>
+	</case>
+	
+	<case id='4'><!--value: 10-->
+		<line>
+			<regexp
+			>.*</regexp>
+		</line>
+		<line>
+			<regexp
+			>.*</regexp>
+		</line>
+		<line>
+			<regexp mark='1'
+				errorMessage="X: Make sure that you have applied the formula correctly." 
+			>XX0\.174\d{4}XX</regexp>
+		</line>
+		<line>
+			<regexp
+			>.*</regexp>
+		</line>
+	</case>
+	
+	<case id='5'><!--value: 155, answer: 2.7052603-->
+		<line>
+			<regexp mark='1'
+				errorMessage="X: Your calculation may be incorrect" 
+			>XX2\.7052603XX</regexp>
+		</line>
+		<line>
+			<regexp
+			>.*</regexp>
+		</line><line>
+			<regexp
+			>.*</regexp>
+		</line><line>
+			<regexp
+			>.*</regexp>
+		</line>
+	</case>
+	
+	<case id='6'><!--value: 360, answer: 6.2831855-->
+		<line>
+			<regexp
+			>.*</regexp>
+		</line>
+		<line>
+			<regexp mark='1'
+				errorMessage="X: Your calculation may be incorrect" 
+			>XX6\.2831855XX</regexp>
+		</line>
+		<line>
+			<regexp
+			>.*</regexp>
+		</line><line>
+			<regexp
+			>.*</regexp>
+		</line>
+	</case>
+	
+	<case id='7'><!--value: 10, answer: 0.1745329-->
+		<line>
+			<regexp
+			>.*</regexp>
+		</line><line>
+			<regexp
+			>.*</regexp>
+		</line>
+		<line>
+			<regexp mark='1'
+				errorMessage="X: Make sure that you have applied the formula correctly." 
+			>XX0\.1745329XX</regexp>
+		</line>
+		<line>
+			<regexp
+			>.*</regexp>
+		</line>
+	</case>
+	
+	<case id='8'><!--value: 281, answer: 4.9043751-->
+		<line>
+			<regexp
+			>.*</regexp>
+		</line><line>
+			<regexp
+			>.*</regexp>
+		</line><line>
+			<regexp
+			>.*</regexp>
+		</line>
+		<line>
+			<regexp mark='1'
+				errorMessage="X: Your calculation may be incorrect" 
+			>XX4.\9043751XX</regexp>
+		</line>
+	</case>
+</output>
+</memo>

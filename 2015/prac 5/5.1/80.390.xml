@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<memo version='0.4'>
+	<title>COS132_P5S1_sinSeries</title>
+	<!-- Mary -->
+	<config>
+		<random>0</random>
+		<sequence>1</sequence>
+		<parts>1</parts>
+		<chances>10</chances> 
+	</config>
+
+<output part='1' fullmarks='12'> 
+	<executable>sinSeries.out</executable>
+			
+	<delete-patterns>
+		<pattern>.+\.o$</pattern>
+		<pattern>.+~$</pattern>
+	</delete-patterns>
+	
+	<source-patterns>
+		<pattern>.+\.cpp$</pattern>
+	</source-patterns>
+
+	<extra-files>
+		<file overwrite='true' jail='true'>driver-sinSeries.cpp</file>
+		<file overwrite='true' jail='true'>makefile</file>
+		<file overwrite='true' jail='true'>series.h</file>
+	</extra-files>
+
+	<case id='1'>
+		<!-- Uses the radian values of the angles. {170, -90, 15, 0, 360}-->
+		<!-- angle = 170, term = 5-->
+		<alt>
+			<line>
+				<regexp mark='3' 
+				successMessage="OK: sinSeries(float, double[], size_t) when angle is positive and a bit large" 
+				errorMessage="X: sinSeries(float, double[], size_t) fails when angle is positive and a bit large" 
+				>2.\96706\t-4\.35339\t1\.91624\t-0\.401655\t0\.0491104\t999</regexp>
+				<!--1\t-3\.42695\t1\.95733\t-0\.447177\t0\.0547304\t999-->
+			</line><line>
+				<regexp mark='2' 
+				successMessage="X: The signs (+ -) for the terms are wrong" 
+				>4\.35339\t-1\.91624\t0\.401655\t-0\.0491104\t999</regexp>
+			</line><line>
+				<regexp mark='1'
+				successMessage="X: first term not initialised" 
+				>999\t-4\.35339\t1\.91624\t-0\.401655\t0\.0491104\t999</regexp>
+			</line><line>
+				<regexp mark='2'
+				successMessage="X: terms are in right order but in the wrong place" 
+				>^-3\.42695\t1\.95733\t-0\.447177\t0\.0547304\t999</regexp>
+			</line>
+			<line>
+				<regexp mark='1'
+				successMessage="X: Accessing an element past the end of the array" 
+				>^((?!999).)*$</regexp>
+			</line>
+			<line>
+				<regexp mark='2'
+				successMessage="X: Too few terms entered in array" 
+				>2.\96706\t-4\.35339\t1\.91624\t-0\.401655(\t999){2}</regexp>
+			</line>
+		</alt>
+
+		<!-- angle = -90, term = 5  check first 4 terms in array for negative angle -->
+		<alt>
+		<line>
+			<regexp mark='3' 
+			successMessage="OK: sinSeries(float, double[], size_t) when angle is negative" 
+			errorMessage="X: sinSeries(float, double[], size_t) fails when angle is negative"
+			>-1\.5708\t0\.645964\t-0\.0796926\t0\.00468176\t-0\.000160441\t999</regexp>
+		</line><line>
+			<regexp mark='1' 
+			successMessage="X: The signs (+ -) for the terms are wrong when angle is negative" 
+			>-0\.645964\t0\.0796926\t-0\.00468176\t0\.000160441\t999</regexp>
+		</line>
+		</alt>
+
+		<!-- angle = 15, term = 5    Check only first two terms in array for angle = 20 -->
+		<alt>
+			<line>
+				<regexp mark='2' 
+				successMessage="OK: sinSeries(float, double[], size_t) when angle is a bit small" 
+				errorMessage="X: sinSeries(float, double[], size_t) fails when angle is a bit small"
+				>0\.261799\t-0.00299057</regexp>
+			</line><line>
+				<regexp mark = '1'
+				successMessage="X: first term not initialised" 
+				>999\t-0.00299057</regexp>
+			</line><line>
+				<regexp mark = '1'
+				successMessage="X: second term where first term was expected" 
+				>^-0.00299057</regexp>
+			</line>
+		</alt>	
+		
+		<!-- angle = 0, term = 5    Check only first two terms in array for angle = 0 -->
+		<alt>
+		<line>
+			<regexp mark='1' 
+			successMessage="OK: sinSeries(float, double[], size_t) when angle = 0" 
+			errorMessage="X: sinSeries(float, double[], size_t) fails when angle = 0"
+			>0\t-0\t0\t-0\t0\t999</regexp>
+		</line>
+		<line>
+			<regexp successMessage="X: the negative - sign may be missing in some elements of the array"
+			>0\t0\t0\t0\t0\t999</regexp>
+		</line>
+		<line>
+			<regexp successMessage="X: the signs (+ -) elements of array may have been swapped"
+			>-0\t0\t-0\t0\t-0\t999</regexp>
+		</line>
+		</alt>
+		<!-- angle = 360, term = 5  -->
+		<line>
+			<regexp mark='1' 
+			successMessage="OK: sinSeries(float, double[], size_t) when angle is quite large" 
+			errorMessage="X: sinSeries(float, double[], size_t) fails when angle is quite large" 
+			>6\.28319\t-41\.3417\t81\.6053\t-76\.7059\t42\.0587\t999</regexp>
+		</line>
+		
+		<!-- angle = 360, term = 1    Only first term in array should be set to 1 -->
+			<line>
+				<regexp mark='1' 
+				successMessage="OK: sinSeries(float, double[], size_t) when number of terms is one" 
+				errorMessage="X: sinSeries(float, double[], size_t) fails when number of terms is one"
+				>6\.28319\t(999\t){5}</regexp>
+			</line>
+				
+		<!-- angle = 360, term = 0    Array should not be set -->
+		<line>
+			<regexp mark='1' 
+			successMessage="OK: sinSeries(float, double[], size_t) when number of terms is zero" 
+			errorMessage="X: sinSeries(float, double[], size_t) fails when number of terms is zero"
+			>(999\t){6}</regexp>
+		</line>
+	</case>
+</output>
+</memo>

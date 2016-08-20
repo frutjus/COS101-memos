@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<memo version='0.4'>
+	<title>Prac1_Challenge</title>
+	<!-- hannes jvv -->
+	<config>
+		<random>0</random>
+		<sequence>1</sequence>
+		<parts>1</parts>
+		<chances>10</chances> <!-- todo: remember to reset to 10 for students -->
+	</config>
+	
+	<output part='1' fullmarks='6'>
+		<executable>challenge.out</executable>
+				
+		<delete-patterns>
+			<pattern>.+\.o$</pattern>
+			<pattern>.+~$</pattern>
+		</delete-patterns>
+		
+		<source-patterns>
+			<pattern>.+\.cpp$</pattern>
+		</source-patterns>
+		
+		<extra-files>
+			<file overwrite='true' jail='true'>input.txt</file>
+			<file overwrite='true' jail='true'>makefile</file>
+		</extra-files>
+
+<!--		<case id='1'>
+			<arguments>
+				<arg file='true' input='true'>input.txt</arg>
+			</arguments>
+			<group mark='1'>
+				<line>
+				<regexp mark='0' errorMessage="First prompt should ask for user's name">your\s+name\??</regexp>
+				</line>
+				<line>
+				<regexp mark='0' errorMessage="Second prompt should ask for user's age">your\s+age\??</regexp>
+				</line>
+			</group>
+			<line>
+				<alt>
+				<regexp mark='1'>\w{2,10}\s+Wijnand.+((my|My)\s+age|I\s+am)\D+31</regexp>
+				<regexp mark='0' successMessage="Hint: check the form of your message; it currently contains some of the right things.">Wijnand|31</regexp>
+				</alt>
+			</line>
+		</case> -->
+		
+		<case id='1'>
+			<arguments>
+				<arg file='true' input='true'>input.txt</arg>
+			</arguments>
+			<line>
+				<regexp mark='1' errorMessage="Name/age prompts not detected.">you.+\s+name.+you.+\s+age</regexp>
+			</line>
+		</case>
+
+		<case id='2'>
+			<arguments>
+				<arg file='true' input='true'>input.txt</arg>
+			</arguments>
+			<line>
+				<regexp mark='1' errorMessage="Final message not detected.">([hH]ello|[hH]i)\s+Wijnand.+([mM]y\s+age|I'm|I am).+31\D+</regexp>
+			</line>
+		</case>
+		
+		<case id='3'>
+			<arguments>
+				<arg file='true' input='true'>input.txt</arg>
+			</arguments>
+			<line>
+				<regexp mark='0'>.+</regexp>
+				<regexp mark='0'>.+</regexp>
+				<regexp mark='0' successMessage="Hint: there shouldn't be a linebreak after prompts">Wijnand|31</regexp>
+			</line>
+		</case>
+
+	</output>
+</memo>

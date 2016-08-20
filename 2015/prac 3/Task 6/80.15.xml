@@ -1,0 +1,390 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<memo version='0.4'>
+	<title>Prac3_GuessGame</title>
+	
+	<config>
+		<random>0</random>
+		<sequence>1</sequence>
+		<parts>1</parts>
+		<chances>15</chances>
+	</config>
+	
+	<output part='1' fullmarks='30'>
+		<executable>guess.out</executable>
+		
+		<delete-patterns>
+			<pattern>.+\.o$</pattern>
+			<pattern>.+~$</pattern>
+		</delete-patterns>
+		
+		<source-patterns>
+			<pattern>.+\.cpp$</pattern>
+		</source-patterns>
+		
+		<extra-files>
+			<file overwrite='true' jail='true'>5enters.txt</file>
+			<file overwrite='true' jail='true'>blackWhite.txt</file>
+			<file overwrite='true' jail='true'>makefile</file>
+			<file overwrite='true' jail='true'>noBalls.txt</file>
+			<file overwrite='true' jail='true'>oneBlack.txt</file>
+			<file overwrite='true' jail='true'>oneBlackCapY.txt</file>
+			<file overwrite='true' jail='true'>oneWhite.txt</file>
+			<file overwrite='true' jail='true'>oneWhiteCapN.txt</file>
+			<file overwrite='true' jail='true'>twoBlack.txt</file>
+			<file overwrite='true' jail='true'>twoWhite.txt</file>
+			<file overwrite='true' jail='true'>whiteBlack.txt</file>
+		</extra-files>
+		
+		<!-- Verify that  the output is vertically in sync (One mark for headings) --> 
+		<case id='1'> 
+			<arguments>
+				<arg file='true' input='true'>oneBlack.txt</arg> <!-- 1 0 1 b n -->
+			</arguments>
+
+			<!-- Should be only all prompts -->
+			<line>
+				<regexp>.*</regexp>
+			</line>
+			<!-- Should have line of dashes -->
+			<line>
+				<regexp mark='1' errorMessage="XXX: Output does not have the top line of dashes where it was expected. NOTE: Please ignore all further evaluation -- it is looking for the answers on the wrong lines"
+				>-{22,80}</regexp>
+			</line>
+			<!-- Heading -->
+			<line>
+				<regexp mark='1' successMessage= "OK: Heading pass"
+				errorMessage="X: Heading failed"
+				>[Ii]teration\s.*\s[Ff]irst.*[Ss]econd</regexp>
+			</line>
+		</case>
+
+		<!-- Verify random: black and white are drawn --> 
+		<case id='2'> 
+			<arguments>
+				<arg file='true' input='true'>blackWhite.txt</arg> <!-- 7 1 2 b n -->
+			</arguments>
+			
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<!-- Iteration 1 output should be on line 6 -->
+			<line>
+				<regexp errorMessage="X: Random generator seem to be wrong NOTE: GAME LOGIC FEEDBACK MAY BE INCORRECT"
+				successMessage="OK: Random generator pass"
+				mark='4'>\s+1\s+.\s+[bB]lack\s+.\s+[Ww]hite\s+</regexp>
+			</line>
+			<!-- Message for guessing correct should be in line 8 -->
+		</case>
+		
+		<!-- Verify game logic when two white balls are drawn --> 
+		<case id='3'> 
+			<arguments>
+				<arg file='true' input='true'>twoWhite.txt</arg> <!-- 1 2 0 b n -->
+			</arguments>
+			
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<!-- Iteration 1 output should be on line 6 -->
+			<line>
+				<regexp errorMessage="X: Game logic when two white balls are drawn fail"
+				successMessage="OK: Game logic when two white balls are drawn pass"
+				mark='3'>\s+1\s+.\s+[Ww]hite\s+.\s+[Ww]hite\s+.\s+1\s+.\s+0\s+</regexp>
+			</line>
+			<!-- Message for guessing correct should be in line 8 -->
+		</case>
+
+		<!-- Verify game logic when two black balls are drawn --> 
+		<case id='4'> 
+			<arguments>
+				<arg file='true' input='true'>twoBlack.txt</arg> <!-- 1 0 2 b n -->
+			</arguments>
+			
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<!-- Iteration 1 output should be on line 6 -->
+			<line>
+				<regexp errorMessage="X: Game logic when two black balls are drawn fail"
+				successMessage="OK: Game logic when two black balls are drawn pass"
+				mark='3'>\s+1\s+.\s+[bB]lack\s+.\s+[bB]lack\s+.\s+1\s+.\s+0\s+</regexp>
+			</line>
+			<!-- Message for guessing correct should be in line 8 -->
+		</case>
+
+		<!-- Verify game logic when white and black are drawn --> 
+		<case id='5'> 
+			<arguments>
+				<arg file='true' input='true'>whiteBlack.txt</arg> <!-- 5 1 1 b n -->
+			</arguments>
+			
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<!-- Iteration 1 output should be on line 6 -->
+			<line>
+				<regexp errorMessage="X: Game logic when a white ball and a black ball are drawn fail"
+				successMessage="OK: Game logic when a white ball and a black ball are drawn pass"
+				mark='3'>\s+1\s+.\s+[Ww]hite\s+.\s+[bB]lack\s+.\s+0\s+.\s+1\s+</regexp>
+			</line>
+			<!-- Message for guessing correct should be in line 8 -->
+		</case>
+
+		<case id='6'> 
+			<arguments>
+				<arg file='true' input='true'>blackWhite.txt</arg> <!-- 7 1 2 b n -->
+			</arguments>
+			
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<!-- Iteration 1 output should be on line 6 -->
+			<line>
+				<regexp errorMessage="X: Game logic when a black ball and a white ball are drawn fail"
+				successMessage="OK: Game logic when a black ball and a white ball are drawn pass"
+				mark='3'>\s+1\s+.\s+[bB]lack\s+.\s+[Ww]hite\s+.\s+0\s+.\s+2\s+</regexp>
+			</line>
+			<!-- Message for guessing correct should be in line 8 -->
+		</case>
+		
+		<!-- Verify if game result is correct if user guessed correctly --> 
+		<case id='7'> 
+			<arguments>
+				<arg file='true' input='true'>oneBlack.txt</arg> <!-- 1 0 1 b n -->
+			</arguments>
+			
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<!-- Should have and empty line on line 7 -->
+			<line>
+				<regexp errorMessage="XXX: Output does not have an empty line below the table where it was expected. NOTE THAT ALL FURTHER FEEDBACK MAY BE WRONG AS IT IT LOOKING FOR CERTAIN OUTPUT ON WRONG LINES">^$</regexp>
+			</line>
+			<!-- Message for guessing correct should be in line 8 -->
+			<line><alt>
+				<regexp successMessage= "X: Result when comparing final ball colour and the user's guess may be faulty"
+				>\swrong([\s!,.]|$)</regexp>
+				<regexp mark='1' successMessage= "OK: Message when user guessed correctly pass"
+				errorMessage="X: Message when user guessed correctly fail"
+				>\s(c[orec]{4,5}t|right)([!\s]|$)</regexp>
+			</alt></line>
+		</case>
+
+		<!-- Verify if game result is correct if user guessed the wrong colour --> 
+		<case id='8'> 
+			<arguments>
+				<arg file='true' input='true'>blackWhite.txt</arg> <!-- 7 1 2 b n -->
+			</arguments>
+			
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<!-- Should have and empty line on line 9 -->
+			<line>
+				<regexp mark='1' successMessage="OK: Empty line below table pass">^$</regexp>
+			</line>
+			<!-- Message for wrong guess should be in line 10 -->
+			<line><alt>
+				<regexp successMessage= "X: Result when comparing final ball colour and the user's guess may be faulty"
+				>\s(correct|right)([\s!,\.]|$)</regexp>
+				<regexp mark='1' successMessage= "OK: Message when the user's guess was wrong pass"
+				errorMessage="X: Message when the user's guess was wrong fail"
+				>\s(incorrect|wrong|not)([!\s,\.]|$)</regexp>
+			</alt></line>
+		</case>
+
+		<!-- Verify that game terminates before iteration 1 if no balls are given -->
+		<case id='9'> 
+			<arguments>
+				<arg file='true' input='true'>noBalls.txt</arg> <!-- 7 0 0 b n -->
+			</arguments>
+			
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<!-- Should have dashes instead of Iteration 1 on line 6 -->
+			<line>
+				<regexp successMessage="OK: Game executes correctly when started without balls"
+				errorMessage="X: The game should not have iterations beyond iteration 0 if there are no balls"
+				mark='2'>-{22,80}</regexp>
+			</line>
+		</case>	
+
+		<!-- Verify prompt to repeat the game after one remaining ball --> 
+		<case id='10'> 
+			<arguments>
+				<arg file='true' input='true'>oneBlack.txt</arg> <!-- 1 0 1 b y 0 1 b n -->
+			</arguments>
+			
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<!-- Prompt to repeat the game should be in line 9 -->
+			<line>
+				<regexp mark='1' successMessage= "OK: Prompt to ask the user whether or not to start a new game pass"
+				errorMessage="X: The prompt for repeating the game is not where it was expected OR this prompt can be improved"
+				>(^|\s)([Aa]gain|[Rr]epeat|[Nn]ew)([\s,:;.\?!])</regexp>
+			</line>
+		</case>
+		
+		<!-- Verify if game repeat after one remaining ball --> 
+		<case id='11'> 
+			<arguments>
+				<arg file='true' input='true'>oneBlack.txt</arg> <!-- 1 0 1 b y 0 1 b n -->
+			</arguments>
+			
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<!-- Prompt to repeat the game should be in line 9 -->
+			<line>
+				<regexp mark='1' successMessage= "OK: Game terminates correctly when starting with one ball"
+				errorMessage="X: It is likely that the game does not terminate correctly when starting with one ball OR there is something wrong with the prompt to repeat the game."
+				>(^|\s)([Aa]gain|[Rr]epeat|[Nn]ew)([\s,:;.\?!])</regexp>
+			</line>
+		</case>
+
+		<!-- Verify if game repeats correctly when 'y' is entered --> 
+		<case id='12'> 
+			<arguments>
+				<arg file='true' input='true'>oneBlack.txt</arg> <!-- 1 0 1 b y 0 1 b n -->
+			</arguments>
+			
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<!-- Prompt to repeat the game and further input prompts should be in line 9 -->
+			<line>
+				<regexp mark='1' successMessage= "OK: Game repeats correctly when lower case y is entered"
+				errorMessage="X: It is possible that the game does not always repeat when the user wanted it to repeat"
+				>.*[Ww]hite.*[Bb]lack ball.*last ball</regexp>
+			</line>
+		</case>
+
+		<!-- Verify if game repeats correctly when 'y' is entered --> 
+		<case id='13'> 
+			<arguments>
+				<arg file='true' input='true'>oneBlack.txt</arg> <!-- 1 0 1 b y 0 1 b n -->
+			</arguments>
+			
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<!-- Prompt to repeat the game and further input prompts should be in line 9 -->
+			<line>
+				<regexp mark='1' successMessage="OK: Seed value correctly asked only once at the beginning of the game"
+				errorMessage="X: Seed value should not be re-entered when game is repeated"
+				> ^((?!seed value).)*$</regexp>
+			</line>
+		</case>
+
+		<!-- Verify if game repeats correctly when 'Y' is entered --> 
+		<case id='14'> 
+			<arguments>
+				<arg file='true' input='true'>oneBlackCapY.txt</arg> <!-- 1 0 1 b Y 0 1 b n -->
+			</arguments>
+			
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<!-- Prompt to repeat the game and further input prompts should be in line 9 -->
+			<line>
+				<regexp mark='1' successMessage= "OK: Game repeats correctly when capital Y is entered"
+				errorMessage="X: It is possible that the game does not always repeat when the user wanted it to repeat"
+				>.*[Ww]hite.*[Bb]lack ball.*last ball</regexp>
+			</line>
+		</case>
+
+		<!-- Verify if game is terminated when 'n' is entered --> 
+		<case id='15'> 
+			<arguments>
+				<arg file='true' input='true'>oneWhite.txt</arg> <!-- 1 0 1 b n 1 0 b n -->
+			</arguments>
+			
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<!-- Prompt to repeat the game and further input prompts should be in line 9 -->
+			<line><alt>
+				<regexp successMessage= "X: Game does not terminate when user entered lower case n"
+				>\sballs?([\s,:;.\?!])</regexp>
+				<regexp mark='1' successMessage= "OK: Game terminates correctly when user entered lower case n"
+				> ^((?!last ball).)*$</regexp>
+			</alt></line>
+		</case>
+
+		<!-- Verify if game is terminated when 'N' is entered --> 
+		<case id='16'> 
+			<arguments>
+				<arg file='true' input='true'>oneWhiteCapN.txt</arg> <!-- 1 0 1 b N 1 0 b n -->
+			</arguments>
+			
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<!-- Prompt to repeat the game and further input prompts should be in line 9 -->
+			<line><alt>
+				<regexp successMessage= "X: Game does not terminate when user entered capital N"
+				>\sballs?([\s,:;.\?!])</regexp>
+				<regexp mark='1' successMessage= "OK: Game terminates correctly when user entered capital N"
+				> ^((?!last ball).)*$</regexp>
+			</alt></line>
+		</case>
+	</output>
+</memo>

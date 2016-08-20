@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<memo version='0.4'>
+	<title>COS132_P5S2_dotproduct</title>
+	<!-- hannes jvv -->
+	<config>
+		<random>0</random>
+		<sequence>1</sequence>
+		<parts>1</parts>
+		<chances>30</chances> <!-- TODO: change appropriately -->
+	</config>
+
+<output part='1' fullmarks='6'> 
+	<executable>test.out</executable>
+			
+	<delete-patterns>
+		<pattern>.+\.o$</pattern>
+		<pattern>.+~$</pattern>
+	</delete-patterns>
+	
+	<source-patterns>
+		<pattern>.+\.cpp$</pattern>
+	</source-patterns>
+
+	<extra-files>
+		<file overwrite='true' jail='true'>harness-dotproduct.cpp</file>
+		<file overwrite='true' jail='true'>makefile</file>
+		<file overwrite='true' jail='true'>input-add1</file>
+		<file overwrite='true' jail='true'>input-add6</file>
+		<file overwrite='true' jail='true'>input-eqvecs</file>
+		<file overwrite='true' jail='true'>inputVector.cpp</file>
+	</extra-files>
+
+	<case id='1'>
+		<arguments>
+			<arg file='true' input='true'>input-add1</arg>
+		</arguments>
+		<line>
+			<regexp mark='2' successMessage="" errorMessage="">\b190$</regexp>
+		</line>
+	</case>
+
+	<case id='2'>
+		<arguments>
+			<arg file='true' input='true'>input-add6</arg>
+		</arguments>
+		<line>
+			<regexp mark='2' successMessage="" errorMessage="">-29$</regexp>
+		</line>
+	</case>
+
+	<case id='3'>
+		<arguments>
+			<arg file='true' input='true'>input-eqvecs</arg>
+		</arguments>
+		<line>
+			<regexp mark='2' successMessage="" errorMessage="">\b91$</regexp>
+		</line>
+	</case>
+
+</output>
+</memo>

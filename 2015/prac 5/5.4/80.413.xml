@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<memo version='0.4'>
+	<title>COS132_P5S1_sumOfSeries</title>
+	<!-- Kwan Sui Dave Ka -->
+	<config>
+		<random>0</random>
+		<sequence>1</sequence>
+		<parts>1</parts>
+		<chances>10</chances> 
+	</config>
+
+<output part='1' fullmarks='10'> 
+	<delete-patterns>
+		<pattern>.+\.o$</pattern>
+		<pattern>.+~$</pattern>
+	</delete-patterns>
+	
+	<source-patterns>
+		<pattern>.+\.cpp$</pattern>
+	</source-patterns>
+
+	<extra-files>
+		<file overwrite='true' jail='true'>main.cpp</file>
+		<file overwrite='true' jail='true'>makefile</file>
+		<file overwrite='true' jail='true'>series.h</file>
+		<file overwrite='true' jail='true'>input1.txt</file>
+		<file overwrite='true' jail='true'>input2.txt</file>
+		<file overwrite='true' jail='true'>input3.txt</file>
+		<file overwrite='true' jail='true'>input4.txt</file>
+	</extra-files>
+
+	<case id='1'>
+		<arguments>
+			<arg file='true' input='true'>input1.txt</arg>
+		</arguments>
+		<line>
+			<regexp mark = '1'
+				successMessage="OK: Only numbers returned."
+				errorMessage="X: sumOfSeries() should only return doubles" 
+			>\d+\.*\d*</regexp>
+		</line>
+	</case>
+	
+	<case id='2'>
+		<arguments>					<!-- Add first 3 elements i.e 1 + 2 + 3 = 6 -->
+			<arg file='true' input='true'>input1.txt</arg>
+		</arguments>
+		<alt>
+			<line><regexp mark = '3' 
+				successMessage="OK: Calculation is correct"
+				>6</regexp></line>
+			<line><regexp mark = '1'
+				successMessage="X: Your loop has stopped early."
+				>3</regexp></line>
+			<line><regexp mark = '1'
+				successMessage="X: Your loop has stopped late."
+				>10</regexp></line>
+			<line> <regexp mark = '1'
+				successMessage="X: Your loop is starting at the second index instead of the first index."
+				>9</regexp></line>
+			<line><regexp
+				successMessage="X: Your loop is starting at the second index instead of the first index and it stops too early."
+				>5</regexp></line>
+			<line><regexp
+				successMessage="X: Your loop is starting at the second index instead of the first index and it stops too late."
+				>14</regexp></line>
+		</alt>
+	</case>
+	
+	<case id='3'>
+		<arguments>							<!--value: 2, answer: 1-->
+			<arg file='true' input='true'>input2.txt</arg>
+		</arguments>
+		<line>
+			<regexp mark = '2'
+				successMessage="OK: Calculation is correct when adding only 1 number."
+				errorMessage="X: Your function should be able to cater for additions of only 1 number."
+			>1</regexp>
+		</line>
+	</case>
+	
+	<case id='4'>
+		<arguments>							<!--value: 3, answer: 0-->
+			<arg file='true' input='true'>input3.txt</arg>
+		</arguments>
+		<line>
+			<regexp mark = '1'
+				successMessage="OK: Calculation is correct when adding no numbers."
+				errorMessage="X: Your function should be able to cater for additions of no numbers."
+			>0</regexp>
+		</line>
+	</case>
+	
+	<case id='5'>
+		<arguments>							<!--value: 4, answer: 21-->
+			<arg file='true' input='true'>input4.txt</arg>
+		</arguments>
+		<line>
+			<regexp
+				mark = '3'
+				successMessage="OK: Your calculation is correct."
+				errorMessage="X: Your addition of numbers are incorrect."
+			>21</regexp>
+		</line>
+	</case>
+</output>
+</memo>

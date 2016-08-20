@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- By Ulrik, 11/04/2016 -->
+<!-- COS 132 Prac 4 Task 5, Reducing a Fraction -->
+<memo version="0.3">
+	<title>FractionMainFunction</title>
+
+	<config>
+		<random>0</random>
+		<sequence>1</sequence>
+		<parts>1</parts>
+		<chances>3</chances>
+	</config>
+
+	<output part="1" fullmarks="10">
+		<delete-patterns>
+			<pattern>.+\.o(ut)?$</pattern>
+			<pattern>.+~$</pattern>
+		</delete-patterns>
+
+		<source-patterns>
+			<pattern>.+\.(c|C)(\+\+|pp?|xx)?$</pattern>	
+			<pattern>.+\.ii?$</pattern>
+			<pattern>.+\.cc$</pattern>
+		</source-patterns>
+
+		<extra-files>
+			<file overwrite="true" jail="true">makefile</file>
+			<file overwrite="true" jail="true">reduce.h</file>
+			<file overwrite="true" jail="true">reduce.cpp</file>
+			<file overwrite="true" jail="true">normal.txt</file>
+			<file overwrite="true" jail="true">zero.txt</file>
+			<file overwrite="true" jail="true">negative-denom.txt</file>
+			<file overwrite="true" jail="true">negative-both.txt</file>
+		</extra-files>
+
+		<case id="1">
+			<arguments>
+				<arg file="true" input="true">normal.txt</arg>
+			</arguments>
+
+			<line>
+				<regexp successMessage="PASS Test 1"
+					errorMessage="FAIL Test 1: Heading incorrect"
+					>(?i)fraction\s+reduction</regexp>
+			</line>
+			<line>
+				<regexp successMessage="PASS Test 2"
+					errorMessage="FAIL Test 2: No line of dashes"
+					>-{8}</regexp>
+			</line>
+			<alt>
+				<line>
+					<regexp successMessage="PASS Test 3"
+						errorMessage="FAIL Test 3: Prompts incorrect"
+						>(?i)numerator.*:.*denominator.*:</regexp>
+				</line>
+				<line>
+					<regexp errorMessage="NOTE THAT THE REST OF THE ASSESSMENT MAY BE INCORRECT"
+						>(?i)numerator.*:.*denominator.*:</regexp>
+				</line>
+			</alt>
+		</case>
+
+		<case id="2">
+			<arguments>
+				<arg file="true" input="true">normal.txt</arg>
+			</arguments>
+
+			<line></line>
+			<line></line>
+			<alt>
+				<line>
+					<regexp mark="1"
+						successMessage="PASS Test 4"
+						errorMessage="FAIL Test 4: GCD calculation incorrect"
+						>2.*8.*10</regexp>
+				</line>
+				<line>
+					<regexp successMessage="HINT: Display given values used to calculate GCD"
+						>10</regexp>
+				</line>
+			</alt>
+			<line>
+				<regexp mark="1"
+					successMessage="PASS Test 5"
+					errorMessage="FAIL Test 5: Fraction displayed incorrectly"
+					>8,2</regexp>
+			</line>
+		</case>
+
+		<case id="3">
+			<arguments>
+				<arg file="true" input="true">normal.txt</arg>
+			</arguments>
+
+			<line></line>
+			<line></line>
+			<line></line>
+			<line>
+				<regexp mark="1"
+					successMessage="PASS Test 6"
+					errorMessage="FAIL Test 6: Fraction reduced or displayed incorrectly"
+					>2,1</regexp>
+			</line>
+		</case>
+
+		<case id="4">
+			<arguments>
+				<arg file="true" input="true">normal.txt</arg>
+			</arguments>
+
+			<line></line>
+			<line></line>
+			<line></line>
+			<line>
+				<regexp mark="1"
+					successMessage="PASS Test 7"
+					errorMessage="FAIL Test 7: Decimal format display incorrect"
+					>0.2?5</regexp>
+			</line>
+		</case>
+
+		<case id="5">
+			<arguments>
+				<arg file="true" input="true">zero.txt</arg>
+			</arguments>
+
+			<line></line>
+			<line></line>
+			<line>
+				<regexp mark="1"
+					successMessage="PASS Test 8"
+					errorMessage="FAIL Test 8: Incorrect output when denominator is 0"
+					>(?i)division\s+by\s+(zero|0)</regexp>
+			</line>
+		</case>
+
+		<case id="6">
+			<arguments>
+				<arg file="true" input="true">negative-denom.txt</arg>
+			</arguments>
+
+			<line></line>
+			<line></line>
+			<alt>
+				<line>
+					<regexp mark="1"
+						successMessage="PASS Test 9"
+						errorMessage="FAIL Test 9: GCD calculation incorrect for negative input"
+						>2.*8.*10</regexp>
+				</line>
+				<line>
+					<regexp successMessage="HINT: Use absoluate values to calculate GCD"
+						>2.*-?8.*(-1|10)</regexp>
+				</line>
+			</alt>
+			<alt>
+				<line>
+					<regexp mark="1"
+						successMessage="PASS Test 10"
+						errorMessage="FAIL Test 10: Fraction displayed incorrectly for negative input"
+						>-8,2</regexp>
+				</line>
+				<line>
+					<regexp successMessage="HINT: Include negative values in given fraction display"
+						>8,2</regexp>
+				</line>
+			</alt>
+		</case>
+
+		<case id="7">
+			<arguments>
+				<arg file="true" input="true">negative-denom.txt</arg>
+			</arguments>
+
+			<line></line>
+			<line></line>
+			<line></line>
+			<alt>
+				<line>
+					<regexp mark="1"
+						successMessage="PASS Test 11"
+						errorMessage="FAIL Test 11: Fraction reduced or displayed incorrectly for negative input"
+						>-\s*2,1|2,-1</regexp>
+				</line>
+				<line>
+					<regexp successMessage="HINT: Indicate when reduced fraction is negative"
+						>2,1</regexp>
+				</line>
+			</alt>
+		</case>
+
+		<case id="8">
+			<arguments>
+				<arg file="true" input="true">negative-denom.txt</arg>
+			</arguments>
+
+			<line></line>
+			<line></line>
+			<line></line>
+			<line>
+				<regexp mark="1"
+					successMessage="PASS Test 12"
+					errorMessage="FAIL Test 12: Decimal format display incorrect for negative input"
+					>-\s*0.2?5</regexp>
+			</line>
+		</case>
+
+		<case id="9">
+			<arguments>
+				<arg file="true" input="true">negative-both.txt</arg>
+			</arguments>
+
+			<line></line>
+			<line></line>
+			<line></line>
+			<alt>
+				<line>
+					<regexp mark="1"
+						successMessage="PASS Test 13"
+						errorMessage="FAIL Test 13: Fraction reduced or displayed incorrectly for negative input"
+						>[^- ]\s*2,1</regexp>
+				</line>
+				<line>
+					<regexp successMessage="HINT: A negative divided by a negative is a positive"
+						>-\s*2,1|2,-1</regexp>
+				</line>
+			</alt>
+		</case>
+	</output>
+</memo>

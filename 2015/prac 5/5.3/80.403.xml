@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<memo version='0.4'>
+	<title>Prac5_Task1_PolynomialAdd</title>
+	<config>
+		<random>0</random>
+		<sequence>1</sequence>
+		<parts>1</parts>
+		<chances>10</chances> 
+	</config>
+	
+	<output part='1' fullmarks='6'>
+		<executable>polynomials.o</executable>
+				
+		<delete-patterns>
+			<pattern>.+\.o$</pattern>
+			<pattern>.+~$</pattern>
+		</delete-patterns>
+		
+		<source-patterns>
+			<pattern>.+\.cpp$</pattern>
+		</source-patterns>
+		
+		<extra-files>
+			<file overwrite='true' jail='true'>makefile</file>
+			<file overwrite='true' jail='true'>main.cpp</file>
+			<file overwrite='true' jail='true'>multiplyData</file>
+		</extra-files>
+
+		<case id='1'>
+			<arguments>
+				<arg file='true' input='true'>multiplyData</arg>
+			</arguments>
+	
+			<line>
+				<regexp mark='2' errorMessage="Hint: Multiplying polynomials of the same order, assign array indexes appropriately, and make sure your product array have appropriate order">10\s+27\s+52\s+86\s+82\s+67\s+40</regexp>
+			</line>
+			<line>
+				<regexp mark='1' errorMessage="Hint: Your polynomial multiplication must be pefect for both negative and positive terms">-10\s+-107\s+-212\s+-328</regexp>
+			</line>
+			<line>
+				<regexp mark='1' errorMessage="Hint: Your function must handle all arrays, even empty arrays ">10\s+13\s+-3\s+-9\s+-55\s+-57</regexp>
+			</line>
+			<line>
+				<alt>
+					<regexp mark='2' errorMessage="Hint: multiplying polynomial of different orders; resulting polynomial have the order equals to the sum of the two multiplied polynomials.">10\s+13\s+-3\s+-9\s+-55\s+-57</regexp>
+				</alt>
+				<alt>
+					<regexp mark='1' errorMessage="Hint: check off-by-one errors">13\s+-3\s+-9\s+-55\s+-57</regexp>
+				</alt>
+				<alt>
+					<regexp mark='1' errorMessage="Hint: Hint: check off-by-one errors">10\s+13\s+-3\s+-9\s+-55</regexp>
+				</alt>
+				<alt>
+					<regexp mark='0' errorMessage="Hint: Hint: check off-by-one erros">13\s+-3\s+-9\s+-55</regexp>
+				</alt>
+			</line>
+		</case>
+	</output>
+</memo>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<memo version='0.4'>
+	<title>Prac5_Task1_PolynomialAdd</title>
+	<config>
+		<random>0</random>
+		<sequence>1</sequence>
+		<parts>1</parts>
+		<chances>10</chances> 
+	</config>
+	
+	<output part='1' fullmarks='8'>
+		<executable>polynomials.o</executable>
+				
+		<delete-patterns>
+			<pattern>.+\.o$</pattern>
+			<pattern>.+~$</pattern>
+		</delete-patterns>
+		
+		<source-patterns>
+			<pattern>.+\.cpp$</pattern>
+		</source-patterns>
+		
+		<extra-files>
+			<file overwrite='true' jail='true'>makefile</file>
+			<file overwrite='true' jail='true'>main.cpp</file>
+			<file overwrite='true' jail='true'>addData</file>
+		</extra-files>
+
+		<case id='1'>
+			<arguments>
+				<arg file='true' input='true'>addData</arg>
+			</arguments>
+	
+			<line>
+				<regexp mark='2' errorMessage="Hint: Add corresponding polynomial coefficients together, and assign them into the corresponding index on result polynomial array ">7\s+9\s+11\s+13</regexp>
+			</line>
+			<line>
+				<regexp mark='2' errorMessage="Hint: Your polynomial addition must add both negative and positive terms">-3\s+-43\s+-23\s+-14</regexp>
+			</line>
+			<line>
+				<regexp mark='1' errorMessage="Hint: Your function must handle all arrays, even empty arrays ">7\s+2\s+-6\s+5\s+-5\s+4</regexp>
+			</line>
+			<line>
+				<alt>
+					<regexp mark='3' errorMessage="Hint: Adding polynomial with different orders; resulting polynomial takes the order of the polynomial with the highest order among the added polynomials. When one polynomial have extra terms (higher order), we assign them into the results polynomial">10\s+5\s+-3\s+8\s+-5\s+4</regexp>
+				</alt>
+				<alt>
+					<regexp mark='2' errorMessage="Hint: check off-by-one errors">5\s+-3\s+8\s+-5\s+4</regexp>
+				</alt>
+				<alt>
+					<regexp mark='2' errorMessage="Hint: Hint: check off-by-one errors">10\s+5\s+-3\s+8\s+-5</regexp>
+				</alt>
+				<alt>
+					<regexp mark='1' errorMessage="Hint: Hint: check off-by-one erros">5\s+-3\s+8\s+-5</regexp>
+				</alt>
+			</line>
+		</case>
+	</output>
+</memo>

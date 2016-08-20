@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<memo version='0.4'>
+    <title>Prac3_MagicDates</title>
+    
+    <config>
+        <random>0</random>
+        <sequence>1</sequence>
+        <parts>1</parts>
+        <chances>10</chances>
+    </config>
+    
+    <output part='1' fullmarks='10'>
+        <executable>date.out</executable>
+        
+        <delete-patterns>
+            <pattern>.+\.o$</pattern>
+            <pattern>.+~$</pattern>
+        </delete-patterns>
+        
+        <source-patterns>
+            <pattern>.+\.c$</pattern>
+        </source-patterns>
+   
+	<extra-files>
+		<file overwrite='true' jail='true'>makefile</file>
+		<file overwrite='true' jail='true'>sixty.txt</file>
+		<file overwrite='true' jail='true'>twenty.txt</file>
+		<file overwrite='true' jail='true'>one.txt</file>
+		<file overwrite='true' jail='true'>sixty5.txt</file>
+		<file overwrite='true' jail='true'>fifteen.txt</file>
+	</extra-files>
+
+
+<!-- Check for alignment 22/11/1965 (sixty.txt)-->
+<case id="1">
+	<arguments> 
+		<arg input="true" file="true">sixty.txt</arg>
+	</arguments>
+	<line>
+		<regexp mark='1' successMessage = "OK: Three prompts"
+		errorMessage = "Fail: Could not find all three prompts. A prompt should end with a colon and a space and NO new line."
+		>(.*:\s){3}</regexp>
+	</line>
+	<line>
+		<regexp successMessage = "Found a prompt where output was expected. PLEASE IGNORE THE REST OF THE FEEDBACK"
+		>^([Pp]lease|[Ee]nter)</regexp>
+	</line>
+</case>
+
+<!-- Output date fits the template 22/11/1965 AND appears on its own line (sixty.txt)-->
+<case id="2">
+	<arguments> 
+		<arg input="true" file="true">sixty.txt</arg>
+	</arguments>
+	<line>
+		<regexp mark='1' successMessage = "OK: Date format seems fine"
+		errorMessage = "The date is not shown in the prescribed format - FURTHER FEEDBACK MAY BE FAULTY"
+		>.*\s\d{2,4}/\d{2}/\d{2,4}(\s|$)</regexp>
+	</line>
+</case>
+
+<!-- Output date fits the template 22/11/1965 (sixty.txt) 
+Only output that does NOT end in a newline gets this feedback -->
+<case id="3">
+	<arguments> 
+		<arg input="true" file="true">sixty.txt</arg>
+	</arguments>
+	<line>
+		<regexp mark='1' 
+		successMessage = "Date does not appear on its own line - FEEDBACK REGARDING RESULTS MAY BE FAULTY"
+		>.*\s\d{2,4}/\d{2}/\d{2,4}.+</regexp>
+	</line>
+</case>
+
+<!--day and month entered as two digit displays correctly 22/11/1965 (sixty.txt)-->
+<case id="4">
+	<arguments> 
+		<arg input="true" file="true">sixty.txt</arg>
+	</arguments>
+	<line><alt>
+		<regexp mark='1' successMessage = "OK: Format of month and day when entered as two digits"
+		errorMessage="The date is not displayed as expected">.*\s(1965|65)/11/22(\s|$)</regexp>
+		<regexp successMessage = "Year should be first, then month, then day">.*\s22/11/(1965|65)(\s|$)</regexp>
+	</alt></line>
+</case>
+
+<!--year entered as four digit value displays correctly 22/11/1965 (sixty.txt)-->
+<case id="5">
+	<arguments> 
+		<arg input="true" file="true">sixty.txt</arg>
+	</arguments>
+	<line>
+		<regexp mark='1' successMessage = "OK: Year when entered as four digits"
+		errorMessage = "The entered date should be given in the format YY/MM/DD"
+		>.*\s65/\d\d/\d\d(\s|$)</regexp>
+	</line>
+</case>
+
+
+<!--year entered as two digit value displays correctly 22/11/65 (sixty5.txt) 
+The marks are still given even if the date is displayed in the wrong order -->
+<case id="6">
+	<arguments> 
+		<arg input="true" file="true">sixty5.txt</arg>
+	</arguments>
+	<line>
+		<regexp mark='3' successMessage= "OK: Year when entered as two digits"
+		errorMessage="Your program seems to be wrong when the year is entered as a two digit value"
+		>.*\s(65/11/22|22/11/65)(\s|$)</regexp>
+	</line>
+</case>
+	
+<!--day and month as one digit values display correctly 5/6/2030 (one.txt) 
+Marks are still given if year is shown as four digits and or in the wrong order -->
+<case id="7">
+	<arguments> 
+		<arg input="true" file="true">one.txt</arg>
+	</arguments>
+	<line><alt>
+		<regexp mark='2' successMessage = "OK: Month and day when entered as one digit"
+		errorMessage="The date is not displayed as expected when day or month is a one digit value"
+		>.*\s(2030|30)/06/05(\s|$)</regexp>
+		<regexp mark='2' successMessage = "OK: Month and day when entered as one digit"
+		>.*\s05/06/(2030|30)(\s|$)</regexp>
+	</alt></line>
+</case>
+
+<!--year is entered as 1 digit display correctly 2/11/2 (twenty.txt) 
+Note how the test case passes automatically if the day and year are swapped -->
+<case id="8">
+	<arguments> 
+		<arg input="true" file="true">twenty.txt</arg>
+	</arguments>
+	<line>
+		<regexp mark='1'  successMessage="OK: Year when entered as one digit"
+		errorMessage="Hint: your output date is not correct when year is entered as a single digit number "
+		>.*\s02/11/02(\s|$)</regexp>
+	</line>
+</case>
+	
+<!-- result what the date is magic 05/06/2030 (one.txt)--> 
+<case id="9">
+	<arguments> 
+		<arg input="true" file="true">one.txt</arg>
+	</arguments>
+	<line><regexp>.*</regexp></line>
+	<line><alt>
+		<regexp mark='3' successMessage="OK: Final result is correct if the date is magic."
+		errorMessage="The final result is wrong if the date is magic."
+		>^0?6\s*\*\s*0?5\s*==\s*30\t[Mm]agic$</regexp>
+		<regexp mark='1' successMessage="The final result should be MM * DD == YY &lt; tab &gt; Magic if the date is Magic"
+		>^0?(5|6)\s*\*\s*0?(5|6)\s*(==|=)\s*30\s+[Mm]agic$</regexp>
+	</alt></line>
+</case>
+
+<!--if product of day and month is greater 22/11/1965 (sixty.txt) -->
+<case id="10">
+	<arguments> 
+		<arg input="true" file="true">sixty.txt</arg>
+	</arguments>
+	<line><regexp>.*</regexp></line>
+	<line><alt>
+		<regexp mark='2' successMessage="Final result is correct if product of day and month is greater that the year"
+		errorMessage="Final result is wrong for a case where product of day and month is greater than the year"
+		>^11\s*\*\s*22\s*>\s*65$</regexp>
+		<regexp mark = '1' successMessage="The final result should be MM * DD &gt; YY if product of day and month is greater that the year. ORDER MATTERS"
+		>^(11|22)\s*\*\s*(11|22)\s*(>|\u003C)\s*(1965|65)$</regexp>
+	</alt></line>
+</case>
+
+<!-- if product of day and month is smaller 3/2/2015 (fiteen.xtx}--> 
+<case id="11">
+	<arguments> 
+		<arg input="true" file="true">fifteen.txt</arg>
+	</arguments>
+	<line><regexp>.*</regexp></line>
+	<line><alt>
+		<regexp mark='2' successMessage="Final result is correct if product of day and month is less that the year"
+		errorMessage="Final result is wrong for a case where product of day and month is less that the year"
+		>^0?2\s*\*\s*0?3\s*\u003C\s*15$</regexp>
+		<regexp mark = '1' successMessage="The final result should be MM * DD &lt; YY if product of day and month is less that the year. ORDER MATTERS"
+		>^0?(2|3)\s*\*\s*0?(2|3)\s*\u003C\s*(2015|15)$</regexp>
+	</alt></line>
+</case>
+</output>
+</memo>

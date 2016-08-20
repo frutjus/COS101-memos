@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<memo version='0.4'>
+	<title>COS132_P5S4_eSeries</title>
+	<!-- Vreda -->
+	<config>
+		<random>0</random>
+		<sequence>1</sequence>
+		<parts>1</parts>
+		<chances>10</chances> 
+	</config>
+
+<output part='1' fullmarks='16'> 
+	<executable>eSeries.out</executable>
+			
+	<delete-patterns>
+		<pattern>.+\.o$</pattern>
+		<pattern>.+~$</pattern>
+	</delete-patterns>
+	
+	<source-patterns>
+		<pattern>.+\.cpp$</pattern>
+	</source-patterns>
+
+	<extra-files>
+		<file overwrite='true' jail='true'>driver-eSeries.cpp</file>
+		<file overwrite='true' jail='true'>makefile</file>
+		<file overwrite='true' jail='true'>series.h</file>
+		<file overwrite='true' jail='true'>case1.txt</file>
+		<file overwrite='true' jail='true'>case2.txt</file>
+		<file overwrite='true' jail='true'>case3.txt</file>
+		<file overwrite='true' jail='true'>case4.txt</file>
+	</extra-files>
+
+	<case id='1'>
+		<arguments>
+			<arg file='true' input='true'>case1.txt</arg>
+		</arguments>
+		<!-- x = 0.3, t = 4   First four terms in array for positive x -->
+		<alt>
+			<line>
+				<regexp mark='3' 
+				successMessage="OK: eSeries(double, double[], size_t) when x is positive" 
+				>1\t0\.3\t0\.045\t0\.0045\t999</regexp>
+			</line><line>
+				<regexp mark='1'
+				successMessage="X: first term not initialised" 
+				>999\t0\.3\t0\.045\t0\.0045\t999</regexp>
+			</line><line>
+				<regexp mark='2'
+				successMessage="X: terms are in right order but in the wrong place" 
+				>^0\.3\t0\.045\t0\.0045</regexp>
+			</line>
+			<line>
+				<regexp mark='1'
+				successMessage="X: Accessing an element past the end of the array" 
+				>^((?!999).)*$</regexp>
+			</line>
+			<line>
+				<regexp mark='2'
+				successMessage="X: Too few terms entered in array" 
+				>1\t0\.3\t0\.045(\t999){2}</regexp>
+			</line>
+		</alt>
+		<!-- x = 1, t = 4    Check only first three terms in array for x = 1 -->
+		<alt>
+			<line>
+				<regexp mark='1' 
+				successMessage="OK: eSeries(double, double[], size_t) when x = 1" 
+				errorMessage="X: eSeries(double, double[], size_t) fails when x = 1"
+				>(1\t){2}0\.5</regexp>
+			</line><line>
+				<regexp mark = '1'
+				successMessage="X: first term not initialised" 
+				>999\t1\t0\.5</regexp>
+			</line><line>
+				<regexp mark = '1'
+				successMessage="X: second term where first term was expected" 
+				>^1\t0\.5</regexp>
+			</line>
+		</alt>			
+		<!-- x = -0.2, t = 4    Second to fourth term in array for negative x -->
+		<line>
+			<regexp mark='1' 
+			successMessage="OK: eSeries(double, double[], size_t) when x is negative" 
+			errorMessage="X: eSeries(double, double[], size_t) fails when x is negative"
+			>-0\.2\t0\.02\t-0\.00133333</regexp>
+		</line>
+		<!-- x = 0, t = 4    Check only first two terms in array for x = 0 -->
+		<line>
+			<regexp mark='1' 
+			successMessage="OK: eSeries(double, double[], size_t) when x = 0" 
+			errorMessage="X: eSeries(double, double[], size_t) fails when x = 0"
+			>1\t0</regexp>
+		</line>
+	</case>
+
+	<case id='2'>
+		<arguments>
+			<arg file='true' input='true'>case2.txt</arg>
+		</arguments>
+		<!-- x = 0.3, t = 4   First four terms in array for positive x -->
+		<alt>
+			<line>
+				<regexp mark='3' 
+				successMessage="OK: eSeries(double, double[][2], size_t) when x is positive" 
+				>1H1\t0\.3H1\t0\.09H2\t0\.027H6\t999H999</regexp>
+			</line><line>
+				<regexp mark='1'
+				successMessage="X: first term not initialised" 
+				>999H999\t0\.3H1\t0\.09H2\t0\.027H6\t999H999</regexp>
+			</line><line>
+				<regexp mark='2'
+				successMessage="X: terms are in right order but in the wrong place" 
+				>^0\.3H1\t0\.09H2\t0\.027H6</regexp>
+			</line>
+			<line>
+				<regexp mark='1'
+				successMessage="X: Accessing an element past the end of the array" 
+				>^((?!999H999).)*$</regexp>
+			</line>
+			<line>
+				<regexp mark='2'
+				successMessage="X: Too few terms entered in array" 
+				>1H1\t0\.3H1\t0\.09H2\t999H999\t999H999</regexp>
+			</line>
+		</alt>
+		<!-- x = 1, t = 4    Check only first three terms in array for x = 1 -->
+		<alt>
+			<line>
+				<regexp mark='1' 
+				successMessage="OK: eSeries(double, double[][2], size_t) when x = 1" 
+				errorMessage="X: eSeries(double, double[][2], size_t) fails when x = 1"
+				>(1H1\t){2}1H2</regexp>
+			</line><line>
+				<regexp mark = '1'
+				successMessage="X: first term not initialised" 
+				>999H999\t1H1\t1H2</regexp>
+			</line><line>
+				<regexp mark = '1'
+				successMessage="X: second term where first term was expected" 
+				>^1H1\t1H2</regexp>
+			</line>
+		</alt>			
+		<!-- x = -0.2, t = 4    Second to fourth term in array for negative x -->
+		<line>
+			<regexp mark='1' 
+			successMessage="OK: eSeries(double, double[][2], size_t) when x is negative" 
+			errorMessage="X: eSeries(double, double[][2], size_t) fails when x is negative"
+			>-0\.2H1\t0\.04H2\t-0\.008H6</regexp>
+		</line>
+		<!-- x = 0, t = 4    Check only first two terms in array for x = 0 -->
+		<line>
+			<regexp mark='1' 
+			successMessage="OK: eSeries(double, double[][2], size_t) when x = 0" 
+			errorMessage="X: eSeries(double, double[][2], size_t) fails when x = 0"
+			>1H1\t0H1</regexp>
+		</line>
+	</case>
+
+	<case id='3'>
+	<arguments>
+		<arg file='true' input='true'>case3.txt</arg>
+	</arguments>
+		<!-- x = 0.3, t = 1    Only first term in array should be set to 1 -->
+		<alt>
+			<line>
+				<regexp mark='1' 
+				successMessage="OK: eSeries(double, double[], size_t) when number of terms is one" 
+				errorMessage="X: eSeries(double, double[], size_t) fails when number of terms is one"
+				>1\t(999\t){4}</regexp>
+			</line><line>
+				<regexp successMessage="----- first term should be 1" 
+				>0\.3\t(999\t){2}</regexp>
+			</line>
+		</alt>
+		<!-- x = 0.3, t = 0    Array should not be set -->
+		<line>
+			<regexp mark='1' 
+			successMessage="OK: eSeries(double, double[], size_t) when number of terms is zero" 
+			errorMessage="X: eSeries(double, double[], size_t) fails when number of terms is zero"
+			>(999\t){5}</regexp>
+		</line>
+	</case>
+
+	<case id='4'>
+	<arguments>
+		<arg file='true' input='true'>case4.txt</arg>
+	</arguments>
+		<!-- x = 0.3, t = 1    Only first term in array should be set to 1 -->
+		<alt>
+			<line>
+				<regexp mark='1' 
+				successMessage="OK: eSeries(double, double[][2], size_t) when number of terms is one" 
+				errorMessage="X: eSeries(double, double[][2], size_t) fails when number of terms is one"
+				>1H1\t(999H999\t){4}</regexp>
+			</line><line>
+				<regexp successMessage="----- first term should be 1" 
+				>0\.3H1\t(999H999\t){2}</regexp>
+			</line>
+		</alt>
+		<!-- x = 0.3, t = 0    Array should not be set -->
+		<alt>
+			<line>
+				<regexp mark='1' 
+				successMessage="OK: eSeries(double, double[][2], size_t) when number of terms is zero" 
+				errorMessage="X: eSeries(double, double[][2], size_t) fails when number of terms is zero"
+				>(999H999\t){5}</regexp>
+			</line>
+		</alt>
+	</case>
+</output>
+</memo>

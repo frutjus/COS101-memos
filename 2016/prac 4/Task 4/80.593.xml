@@ -1,0 +1,436 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- By Nikki, 04/03/2016 -->
+<!-- COS 132 Prac 4 Task 3, Chips and Salsa -->
+<memo version='0.3'>
+	<title>ChipsAndSalsa</title>
+
+	<config>
+		<random>0</random>
+		
+		<sequence>1</sequence>
+
+		<parts>1</parts>
+    
+		<chances>300</chances>
+	</config>
+
+	<output part='1' fullmarks='30'>
+		<delete-patterns>
+			<pattern>.+\.o$</pattern>
+			<pattern>.+~$</pattern>
+		</delete-patterns>
+
+		<source-patterns>
+			<pattern>.+\.(c|C)(\+\+|pp?|xx)?$</pattern>	
+			<pattern>.+\.ii?$</pattern>
+			<pattern>.+\.cc$</pattern>
+		</source-patterns>
+		
+		<extra-files>
+			<file overwrite='true' jail='true'>makefile</file>
+			<file overwrite='true' jail='true'>ChipsAndSalsa.h</file>
+			<file overwrite='true' jail='true'>firstCase.txt</file>
+			<file overwrite='true' jail='true'>secondCase.txt</file>
+			<file overwrite='true' jail='true'>thirdCase.txt</file>
+			<file overwrite='true' jail='true'>fourthCase.txt</file>
+
+
+		</extra-files>
+		
+		<case id = '1'><!-- 56 3 24-->
+			<arguments>
+				<arg file='true' input='true'>firstCase.txt</arg><!--normal input: 56 3 24-->				
+			</arguments>
+			<!-- Test that the input lines and prompts are correct as -->
+
+				<line><!--Test if first line is correct-->
+					<regexp mark = '0' successMessage="	PASS"
+					 errorMessage="FAIL: Missing line of stars."> \*{5}</regexp>
+				</line>
+
+
+				<line><!--Test if second line is correct-->
+					<regexp mark = '0' successMessage="	PASS"
+					 errorMessage="FAIL: Shop heading incorrect.">.*CHIPS.*AND.*SALSA.*</regexp>
+				</line>
+
+				<line><!--Test if third line is correct-->
+					<regexp mark = '0' successMessage="	PASS"
+					 errorMessage="FAIL: Missing line of stars."> \*{5}</regexp>
+				</line>
+
+
+			<alt>
+				<line>
+					<regexp mark = '5'
+					 successMessage="PASS Test 1"
+					 >.*[Ee]nter.*\sProductA\s.*:.*[Ee]nter.*\sProductB\s.*:.*[Ee]nter.*\sProductC\s.*:.*</regexp>
+				</line>	
+				<line>
+					<regexp mark = '0'
+					 successMessage="FAIL Test 1: Entering of input is one too few" >.*[Ee]nter.*\sProductA\s.*:.*[Ee]nter.*\sProductB\s.*:.*</regexp>
+					 errorMessage="FAIL Test 1: Entering of input is incorrect"
+				</line>	
+			</alt>
+				<line>
+					<regexp mark ='1' successMessage="PASS Test 2"
+				 errorMessage="FAIL Test 2: Missing line of *">\*{10}</regexp>
+				</line>
+
+				<alt>
+
+
+					<line><regexp mark ='1' successMessage="PASS Test 3"
+						 errorMessage="FAIL Test 3: Report heading incorrect.">.*CHIPS AND SALSA REPORT.*</regexp>
+					</line>
+
+					<line><regexp 
+						 successMessage="	FAIL: NB!!! Your line of stars is on the wrong line.">\*{10}</regexp>
+					</line>
+
+				</alt>
+
+				<line>
+						<regexp mark ='0' successMessage="	PASS"
+					 errorMessage="	FAIL: Missing line of *">\*{10}</regexp>
+				</line>
+				
+				<line><regexp mark ='1' successMessage="PASS Test 4"
+					 errorMessage="FAIL Test 4: Report sub-headings incorrect.">.*[Nn]ame.*:.* [Aa]mount.*:.*</regexp>
+				</line>
+
+<!--REPORT VALUES-->				
+				<line><regexp mark ='0' successMessage="	PASS"
+					 errorMessage="	FAIL: incorrect first value in the array">.*ProductA.* 56.*</regexp>
+				</line>
+
+				<line><regexp mark ='0' successMessage="	PASS"
+					 errorMessage="	FAIL: incorrect second value in the array">.*ProductB.* 3.*</regexp>
+				</line>
+
+				<line><regexp mark ='5' successMessage="PASS Test 5"
+					 errorMessage="	FAIL Test 5: incorrect last value in the array">.*ProductC.* 24.*</regexp>
+				</line>
+
+<!-- end of Report output-->
+<!--TOTAL-->
+				<line>
+					<regexp mark ='0' successMessage="	PASS"
+				 errorMessage="	FAIL: No line of - after output">-{10}</regexp>
+				</line>
+
+			<alt>
+				<line><regexp mark ='2' successMessage="PASS Test 6"
+					>.*[Tt]otal.*:.* 83.*</regexp>
+				</line>
+				<line><regexp mark ='0' successMessage="FAIL Test 6: First value of array skipped" >.*[Tt]otal.*:.* 27.*</regexp>
+				</line>
+				<line><regexp mark ='0' successMessage="FAIL Test 6 : Last value of array skipped"
+				 errorMessage="FAIL Test 6: Error with total.">.*[Tt]otal.*:.* 59.*</regexp>
+				</line>
+	
+
+
+
+
+			</alt>
+				
+				<line>
+					<regexp mark ='0' successMessage="	PASS"
+				 errorMessage="	FAIL: No line of - after total">-{10}</regexp>
+				</line>
+
+<!--MIN and MAX-->
+				<line>
+						<regexp >.*</regexp>
+				</line>
+
+				<alt>
+					<line><regexp mark ='2' successMessage="PASS Test 7"
+						 errorMessage="FAIL Test 7: Error in maximum.">.*[Mm]aximum.*ProductA.* 56.*</regexp>
+					</line>
+					
+					<line><regexp 
+						 successMessage="	FAIL: Too many blank lines.">^\s*$</regexp>
+					</line>
+				</alt>
+
+				<line><regexp mark ='2' successMessage="PASS Test 8"
+					 errorMessage="FAIL Test 8: Error in minimum">.*[Mm]inimum.*ProductB.* 3.*</regexp>
+				</line>
+
+
+				<!--ERROR-->
+	
+				<line>
+						<regexp mark ='2' successMessage="PASS Test 9" errorMessage="FAIL Test 9: You need a error message at the end"
+					 >(.*[Ee]rror.*)</regexp>
+				
+				</line>
+
+		</case>
+		<case id = '2'>
+			<arguments>
+				<arg file='true' input='true'>secondCase.txt</arg>	<!--doubled input: 3 2 3: max should give first 3 -->			
+			</arguments>
+	<!--heading-->
+				<line>
+						<regexp >.*</regexp>
+				</line>
+				<line>
+						<regexp >.*</regexp>
+				</line>
+				<line>
+						<regexp >.*</regexp>
+				</line>
+	<!--input-->
+				<line>
+						<regexp >.*</regexp>
+				</line>
+	<!--dashes-->
+				<line>
+						<regexp >.*</regexp>
+				</line>
+	<!--heading-->
+				<line>
+						<regexp >.*</regexp>
+				</line>
+	<!--dashes-->
+				<line>
+						<regexp >.*</regexp>
+				</line>
+	<!--sub headings-->
+				<line>
+						<regexp >.*</regexp>
+				</line>
+	<!--ProductA-->
+				<line>
+						<regexp >.*</regexp>
+				</line>
+	<!--ProductB-->
+				<line>
+						<regexp >.*</regexp>
+				</line>
+	<!--ProductC-->
+				<line>
+						<regexp >.*</regexp>
+				</line>
+	<!--dashes-->
+				<line>
+						<regexp >.*</regexp>
+				</line>
+	<!--total-->
+				<line>
+						<regexp >.*</regexp>
+				</line>
+	<!--dashes-->
+				<line>
+						<regexp >.*</regexp>
+				</line>
+	<!--blank-->
+				<line>
+						<regexp >.*</regexp>
+				</line>
+
+	<!--MAX--><!--doubled input: 23 4 5 6 4 23: max should give first 23 and min should give last 4-->	
+			<alt>
+
+				<line>
+						<regexp mark ='2' successMessage="PASS Test 10"
+					 >.*[Mm]aximum.*ProductA.* 3.*</regexp>
+				</line>
+				<line>
+						<regexp mark ='0' successMessage="FAIL Test 10: Use the first maximum value."
+						errorMessage="FAIL Test 10: Incorrect maximum value when doubles entered."
+					 >.*[Mm]aximum.*ProductC.* 3.*</regexp>
+				</line>
+			</alt>
+			
+				<line>
+						<regexp >.*</regexp>
+				</line>
+
+<!--<line>
+						<regexp mark ='2' successMessage="PASS Test 10: Correct minimum value."
+					 errorMessage="FAIL Test 13: Incorrect minimum value."></regexp>
+				</line>
+				<line>
+						<regexp mark ='0' successMessage="	FAIL: You are using the fisrt minimum value when there are doubles instead of the last minimum value."
+					 >.*[Mm]inimum.*medium.* 4.*</regexp>
+				</line>-->
+		</case>
+		<case id = '3'>
+			<arguments>
+				<arg file='true' input='true'>thirdCase.txt</arg>	<!--doubled input: 2 5 2: max should give first 3 -->			
+			</arguments>
+	<!--heading-->
+				<line>
+						<regexp >.*</regexp>
+				</line>
+				<line>
+						<regexp >.*</regexp>
+				</line>
+				<line>
+						<regexp >.*</regexp>
+				</line>
+	<!--input-->
+				<line>
+						<regexp >.*</regexp>
+				</line>
+	<!--dashes-->
+				<line>
+						<regexp >.*</regexp>
+				</line>
+	<!--heading-->
+				<line>
+						<regexp >.*</regexp>
+				</line>
+	<!--dashes-->
+				<line>
+						<regexp >.*</regexp>
+				</line>
+	<!--sub headings-->
+				<line>
+						<regexp >.*</regexp>
+				</line>
+	<!--ProductA-->
+				<line>
+						<regexp >.*</regexp>
+				</line>
+	<!--ProductB-->
+				<line>
+						<regexp >.*</regexp>
+				</line>
+	<!--ProductC-->
+				<line>
+						<regexp >.*</regexp>
+				</line>
+	<!--dashes-->
+				<line>
+						<regexp >.*</regexp>
+				</line>
+	<!--total-->
+				<line>
+						<regexp >.*</regexp>
+				</line>
+	<!--dashes-->
+				<line>
+						<regexp >.*</regexp>
+				</line>
+	<!--blank-->
+				<line>
+						<regexp >.*</regexp>
+				</line>
+
+	<!--MAX--><!--doubled input: 23 4 5 6 4 23: max should give first 23 and min should give last 4-->	
+			
+
+				<line>
+						<regexp>.*</regexp>
+				</line>
+				
+			<alt>
+
+				<line>
+						<regexp mark ='2' successMessage="PASS Test 11"
+					 >.*[Mm]inimum.*ProductC.* 2.*</regexp>
+				</line>
+				<line>
+						<regexp mark ='0' successMessage="FAIL Test 11: Use the last minimum value. "
+						errorMessage="FAIL Test 11: Incorrect minimum value when doubles entered."
+					 >.*[Mm]inimum.*ProductA.* 2.*</regexp>
+				</line>
+			</alt>
+		</case>
+
+
+		<case id = '4'>
+			<arguments>
+				<arg file='true' input='true'>fourthCase.txt</arg>	<!--Testing for incorrect output!: 0 -12 13 166 78 6-->			
+			</arguments>
+	<!--heading-->
+				<line>
+						<regexp >.*</regexp>
+				</line>
+				<line>
+						<regexp >.*</regexp>
+				</line>
+				<line>
+						<regexp >.*</regexp>
+				</line>
+	<!--input-->
+				<line>
+						<regexp >.*</regexp>
+				</line>
+	<!--dashes-->
+				<line>
+						<regexp >.*</regexp>
+				</line>
+	<!--heading-->
+				<line>
+						<regexp >.*</regexp>
+				</line>
+	<!--dashes-->
+				<line>
+						<regexp >.*</regexp>
+				</line>
+	<!--sub headings-->
+				<line>
+						<regexp >.*</regexp>
+				</line>
+
+<!--Testing for incorrect output!: 0 -12 13.99 -166 78 6-->			
+				
+
+				
+	<!--mild-->
+				<line>
+						<regexp mark ='1' successMessage="PASS Test12"
+					 errorMessage="FAIL Test12: incorrect error handling of 0">.*ProductA.* 0.*</regexp>
+				</line>
+	<!--medium-->
+				<line><regexp mark ='1' successMessage="PASS Test13"
+					 errorMessage="FAIL Test13: incorrect error handling of negative numbers">.*ProductB.* 0.*</regexp>
+				</line>
+	
+	<!--sweet-->
+				<line>
+						<regexp mark ='1' successMessage="PASS Test14"
+					 errorMessage="FAIL Test14: incorrect error handling of decimals">.*ProductC.* 13.*</regexp>
+				</line>
+	<!--dashes-->
+				<line>
+						<regexp >.*</regexp>
+				</line>
+	<!--total-->
+				<line>
+						<regexp >.*</regexp>
+				</line>
+	<!--dashes-->
+				<line>
+						<regexp >.*</regexp>
+				</line>
+	<!--blank-->
+				<line>
+						<regexp >.*</regexp>
+				</line>
+
+	<!--MAX-->
+				<line>
+						<regexp >.*</regexp>
+				</line>
+	<!--MIN-->
+				<line>
+						<regexp >.*</regexp>
+				</line>
+	<!--ERROR-->
+	
+				<line>
+						<regexp mark ='2' successMessage="PASS Test15" errorMessage="FAIL Test15: Error message is incorrect."
+					 >(.*[Ee]rror.*3.*|3.*[Ee]rror.*)</regexp>
+				
+				</line>
+		</case>
+		
+</output>
+</memo>

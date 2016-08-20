@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="ISO-8859-15"?>
+
+<memo version='0.4'>
+	<title>Prac3_SumOfSeries</title>
+	<!-- Kwan Sui Dave Ka and Vreda Pieterse -->
+	<config>
+		<random>0</random>
+		<sequence>1</sequence>
+		<parts>1</parts>
+		<chances>10</chances> 
+	</config>
+
+	<output part='1' fullmarks='10'>
+		<executable>series.out</executable>
+		
+		<delete-patterns>
+			<pattern>.+\.o$</pattern>
+			<pattern>.+~$</pattern>
+		</delete-patterns>
+
+		<source-patterns>
+			<pattern>.+\.cpp$</pattern>
+		</source-patterns>
+		
+		<extra-files>
+			<file overwrite='true' jail='true'>input0.txt</file>
+			<file overwrite='true' jail='true'>input1.txt</file>
+			<file overwrite='true' jail='true'>input10.txt</file>
+			<file overwrite='true' jail='true'>input3.txt</file>
+			<file overwrite='true' jail='true'>input7.txt</file>
+			<file overwrite='true' jail='true'>input18.txt</file>
+			<file overwrite='true' jail='true'>inputNeg.txt</file>
+			<file overwrite='true' jail='true'>makefile</file>
+		</extra-files>
+		
+		<!--Test user prompt-->
+		<case id='1'>
+			<arguments>
+				<arg file='true' input='true'>input7.txt</arg>
+			</arguments>
+			
+			<line><regexp mark = "1" successMessage = "OK: User input is prompt by a key word." 
+			errorMessage = "Hint: Indicate to the user what must done with a keyword.">.*[Ee]nter.*number.*</regexp></line>
+		</case>
+		
+		<case id='2'>
+			<arguments>
+				<arg file='true' input='true'>input7.txt</arg>
+			</arguments>
+			
+			<line><regexp mark = "1" successMessage = "OK: User input is prompt by a colon and space." 
+			errorMessage = "Hint: User must be prompt by a colon and space.">.*:\s</regexp></line>
+		</case>
+		
+		<!--check input 7-->
+		<case id='3'>
+			<arguments>
+				<arg file='true' input='true'>input7.txt</arg>
+			</arguments>
+			
+			<line><alt>
+				<regexp mark = "1" successMessage = "Use setw() rather than tabs for spacing" 
+				>\s*2\t\s*4\t\s*6\t\s*8\t\s*10\t\s*12\t\s*14$</regexp>
+				<regexp mark = "2" successMessage = "OK: Correct calculations for numerators." errorMessage = "Numerators (or their spacing) are incorrect."
+				>\s*2 +4 +6 +8 +10 +12 +14$</regexp>
+			</alt></line>
+			<line><alt>
+				<regexp mark = "2" 
+				successMessage = "WOW!: Lines to seperate fractions are exactly as specified.">\s*-{6}( \+ -{6}){6} = </regexp>
+				<regexp mark = "1" 
+				successMessage = "OK: Lines to seperate fractions when there are 7 terms"
+				errorMessage = "The lines to separate fractions are not as specified or not in the right place">\s*-{4,7}(\s+\+\s+\-{4,7}){6}\s+=\s+</regexp>
+				<regexp mark = "1" successMessage = "Numerators found where lines to separate fractions were expeceted - IGNORE FURTHER FEEDBACK"
+				>\s*2\s+4\s+6</regexp>
+			</alt></line>
+			<line><regexp mark = "1" successMessage = "OK: Correct calculations for denominators." errorMessage = "Hint: Denominators are incorrect."
+				>\s*1\s+4\s+9\s+16\s+25\s+36\s+49$</regexp></line>
+		</case>
+		
+		<case id='4'>
+			<arguments>
+				<arg file='true' input='true'>input7.txt</arg>
+			</arguments>
+			
+			<line><regexp>.*</regexp></line>
+			<line><regexp mark = "2" successMessage = "OK: Final answer is correct when 7 terms are added" 
+			errorMessage = "Hint: Final answer is wrong when 7 terms are added"
+				>\s+=\s+5\.18571$</regexp></line>
+		</case>
+		
+		<!-- check input 10 -->
+		<case id='5'>
+			<arguments>
+				<arg file='true' input='true'>input10.txt</arg>
+			</arguments>
+			
+			<line>
+				<regexp mark = "1" successMessage = "OK: Correct calculations for numerators." 
+				errorMessage = "Hint: Numerators are incorrect."
+				>\s*2\s+4\s+6\s+8\s+10\s+12\s+14\s+16\s+18\s+20$</regexp>
+			</line>
+			<line>
+				<regexp mark = "1" 
+				successMessage = "OK: Lines to seperate fractions when there are more than 7 terms"
+				errorMessage = "Number of terms may be wrong or a stray + on either side may cause your output to fail"
+				>\s*-{4,7}(\s+\+\s+\-{4,7}){9}\s+=\s+</regexp>
+			</line>
+			<line>
+				<regexp mark = "1" successMessage = "OK: Correct calculations for denominators." 
+				errorMessage = "Hint: Denominators are incorrect."
+				>\s*1\s+4\s+9\s+16\s+25\s+36\s+49\s+64\s+81\s+100$</regexp>
+			</line>
+		</case>
+
+		<case id='6'>
+			<arguments>
+				<arg file='true' input='true'>input10.txt</arg>
+			</arguments>
+			
+			<line><regexp>.*</regexp></line>
+			<line><regexp mark = "2" successMessage = "OK: Final answer is correct when more than 7 terms are added" 
+			errorMessage = "Hint: Final answer is wrong when more than 7 terms are added"
+			>\s+=\s+5\.85794$</regexp></line>
+		</case>
+
+		<!-- check input 3 -->
+		<case id='7'>
+			<arguments>
+				<arg file='true' input='true'>input3.txt</arg>
+			</arguments>
+			
+			<line>
+				<regexp mark = "2" successMessage = "OK: Correct calculations for numerators." 
+				errorMessage = "Hint: Numerators are incorrect."
+				>\s*2\s+4\s+6$</regexp>
+			</line>
+			<line><regexp>.*</regexp>
+			</line>
+			<line><regexp mark = "2" successMessage = "OK: Correct calculations for denominators." 
+			errorMessage = "Hint: Denominators are incorrect."
+			>\s*1\s+4\s+9$</regexp></line>
+		</case>
+
+		<case id='8'>
+			<arguments>
+				<arg file='true' input='true'>input3.txt</arg>
+			</arguments>
+			
+			<line><regexp>.*</regexp></line>
+			<line><regexp mark = "3" successMessage = "OK: Final answer is correct when less than 7 terms are added" 
+			errorMessage = "Hint: Final answer is wrong when less than 7 terms are added"
+			>\s+=\s+3\.66667$</regexp></line>
+		</case>
+
+		<!-- check input 1 -->
+		<case id='9'>
+			<arguments>
+				<arg file='true' input='true'>input1.txt</arg>
+			</arguments>
+			
+			<line><regexp mark = "1" successMessage = "OK: Numerator correct if one term is asked" errorMessage = "Something is wrong when one term is asked"
+				>\s*2$</regexp></line>
+			<line><regexp mark = "2" 
+				successMessage = "OK: Answer is correct when one term is asked"
+				errorMessage = "Answer is wrong when one term is asked"
+				>\s*-{4,7}\s+=\s+2$</regexp>
+			</line>
+			<line><regexp mark = "1" successMessage = "OK: Denominator correct if one term is asked" errorMessage = "Something is wrong when one term is asked"
+			>\s*1$</regexp></line>
+		</case>
+
+		<!-- check input 0 -->
+		<case id='10'>
+			<arguments>
+				<arg file='true' input='true'>input0.txt</arg>
+			</arguments>
+			
+			<line>
+			<regexp mark = "1" 
+			successMessage = "OK: Error message when zero or less terms are asked" 
+			errorMessage = "Error message when zero or less terms are asked can be improved"
+			>.*([Ee]rror|[Ii]nvalid|[Ww]rong|not|[Ii]ncorrect|greater than|less than).*</regexp></line>
+		</case>
+
+		<!-- check input 0 -->
+		<case id='11'>
+			<arguments>
+				<arg file='true' input='true'>input0.txt</arg>
+			</arguments>
+			
+			<line><regexp>.*</regexp></line>
+			<line>
+				<regexp successMessage="Hint: If the user ask for 0 or less terms the program should not display a series">.*----\s+=.*</regexp>
+			</line>
+		</case>
+
+
+		<!-- check too large input -->
+		<case id='12'>
+			<arguments>
+				<arg file='true' input='true'>input18.txt</arg>
+			</arguments>
+			<line>
+			<regexp 
+			successMessage = "Your program should not accept a number of terms that does not fit on a screen that is 160 characters wide"
+			errorMessage = "OK: Not accepting a request for too many terms"
+			>.*2\s+4\s+6\s+</regexp>
+			</line>
+		</case>
+
+		<!-- check nagative input (-5) -->
+		<case id='13'>
+			<arguments>
+				<arg file='true' input='true'>inputNeg.txt</arg>
+			</arguments>
+			
+			<line><regexp mark = "1" 
+			successMessage = "OK: Error message when zero or less terms are asked" 
+			errorMessage = "Error message should echo the wrong input"
+			>\D*-5\D*</regexp></line>
+		</case>
+
+		<!-- check too large input -->
+		<case id='14'>
+			<arguments>
+				<arg file='true' input='true'>input18.txt</arg>
+			</arguments>
+			
+			<line>
+			<regexp mark = "2" 
+			successMessage = "OK: Error message when too many terms are asked" 
+			errorMessage = "Error message when too many terms are requested can be improved"
+			>.*([Ee]rror|[Bb]ig|[Mm]any|[Ll]arge|[Ww]ide|[Gg]reat|less than).*</regexp>
+			</line>
+		</case>
+
+	</output>
+</memo>

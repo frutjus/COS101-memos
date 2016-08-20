@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- By Jason, 22/04/2016 -->
+<!-- COS 132 Prac 5 Task 5, Check Writing -->
+<memo version='0.3'>
+	<title>CheckWriting</title>
+
+	<config>
+		<random>0</random>
+		
+		<sequence>1</sequence>
+
+		<parts>1</parts>
+    
+		<chances>3</chances>
+	</config>
+
+	<output part='1' fullmarks='10'>
+		<delete-patterns>
+			<pattern>.+\.o$</pattern>
+			<pattern>.+~$</pattern>
+		</delete-patterns>
+
+		<source-patterns>
+			<pattern>.+\.(c|C)(\+\+|pp?|xx)?$</pattern>	
+			<pattern>.+\.ii?$</pattern>
+			<pattern>.+\.cc$</pattern>Page_Up
+		</source-patterns>
+		
+		<extra-files>
+			<file overwrite='true' jail='true'>chequeTools.h</file>
+			<file overwrite='true' jail='true'>case1.txt</file>
+			<file overwrite='true' jail='true'>case2.txt</file>
+			<file overwrite='true' jail='true'>case3.txt</file>
+			<file overwrite='true' jail='true'>chequeTools.cpp</file>
+			<file overwrite='true' jail='false'>chequeFacts.txt</file>
+		</extra-files>
+		
+		<!-- Test case 1: Testing prompts and positioning of text -->
+		<case id = '1'>
+			<arguments>
+				<arg file='true' input='true'>case1.txt</arg>				
+			</arguments>
+			<line>
+				<regexp mark = '1'
+					successMessage="PASS Test 1." 
+					errorMessage="FAIL Test 1: Cheque number is incorrect or missing from the first line of output.">
+					\bcnumber\b
+				</regexp>
+			</line>
+			<line>
+				<regexp>
+					[Uu]niversity [Oo]f [Pp]retoria
+				</regexp>
+			</line>
+			<line>
+				<regexp
+					errorMessage="Check vertical alignment! Feedback after this may be invalid">
+					\*+
+				</regexp>
+			</line>
+			<line>
+				<regexp mark = '1'
+					successMessage="PASS Test 2." 
+					errorMessage="FAIL Test 2: Date is missing or incorrect.">
+					\bgetdate\b				
+				</regexp>
+			</line>
+			<line>
+				<regexp mark = '1'
+					successMessage="PASS Test 3." 
+					errorMessage="FAIL Test 3: Recipient name is missing or in the incorrect format">
+					[Pp]ay.*Bill
+				</regexp>
+			</line>
+			<line>
+				<regexp mark = '1'
+					successMessage="PASS Test 4." 
+					errorMessage="FAIL Test 4: Numerical amount is missing or in the incorrect format">
+					R\s*814\.96
+				</regexp>
+			</line>
+			<line>
+				<regexp mark = '1'
+					successMessage="PASS Test 5." 
+					errorMessage="FAIL Test 5: String representation of amount is incorrect or missing.">
+					numtostring.*[Rr]and.*[Cc]ent
+				</regexp>
+			</line>
+			<line>
+				<regexp
+					errorMessage="Check vertical alignment! Feedback after this may be invalid">
+					\*+
+				</regexp>
+			</line>
+			<line>
+				<regexp
+					errorMessage="Check vertical alignment! Feedback after this may be invalid">
+					(CHEQUE|[Cc]heque)\s(NUMBER|[Nn]umber)
+				</regexp>
+			</line>	
+			<line>
+				<regexp mark = '1'
+					successMessage="PASS Test 6." 
+					errorMessage="FAIL Test 6. Cheque number, routing number or account number invalid.">
+					\brouting:account:cnumber\b
+				</regexp>
+			</line>		
+		</case>
+
+		<case id = '2'>
+			<arguments>
+				<arg file='true' input='true'>case2.txt</arg>				
+			</arguments>
+			<line><regexp></regexp></line>
+			<line><regexp></regexp></line>
+			<line><regexp></regexp></line>
+			<line><regexp></regexp></line>
+			<line>
+				<regexp mark = '1'
+					successMessage="PASS Test 7." 
+					errorMessage="FAIL Test 7. Check handling of multi-word names">
+					\babc\sdef\b
+				</regexp>
+			</line>
+			<line>
+				<regexp mark = '1'
+					successMessage="PASS Test 8." 
+					errorMessage="FAIL Test 8: Numerical amount is missing or in the incorrect format">
+					R\s*700\.00
+				</regexp>
+			</line>
+		</case>
+
+		<case id = '3'>
+			<arguments>
+				<arg file='true' input='true'>case3.txt</arg>				
+			</arguments>
+			<line><regexp></regexp></line>
+			<line><regexp></regexp></line>
+			<line><regexp></regexp></line>
+			<line><regexp></regexp></line>
+			<line>
+				<regexp mark = '1'
+					successMessage="PASS Test 9." 
+					errorMessage="FAIL Test 9. Check handling of multi-word names">
+					\babc\s'DEF\b
+				</regexp>
+			</line>
+			<line>
+				<regexp mark = '1'
+					successMessage="PASS Test 10." 
+					errorMessage="FAIL Test 10: Numerical amount is missing or in the incorrect format">
+					R\s*10\.10
+				</regexp>
+			</line>
+		</case>
+</output>
+</memo>

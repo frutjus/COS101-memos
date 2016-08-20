@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<memo version='0.4'>
+	<title>COS132_P5S4_lnSeries</title>
+	<!-- Vreda -->
+	<config>
+		<random>0</random>
+		<sequence>1</sequence>
+		<parts>1</parts>
+		<chances>10</chances> 
+	</config>
+
+<output part='1' fullmarks='20'> 
+	<executable>lnSeries.out</executable>
+			
+	<delete-patterns>
+		<pattern>.+\.o$</pattern>
+		<pattern>.+~$</pattern>
+	</delete-patterns>
+	
+	<source-patterns>
+		<pattern>.+\.cpp$</pattern>
+	</source-patterns>
+
+	<extra-files>
+		<file overwrite='true' jail='true'>driver-lnSeries.cpp</file>
+		<file overwrite='true' jail='true'>makefile</file>
+		<file overwrite='true' jail='true'>series.h</file>
+		<file overwrite='true' jail='true'>case1.txt</file>
+		<file overwrite='true' jail='true'>case2.txt</file>
+		<file overwrite='true' jail='true'>case3.txt</file>
+		<file overwrite='true' jail='true'>case4.txt</file>
+	</extra-files>
+
+	<case id='1'>
+		<arguments>
+			<arg file='true' input='true'>case1.txt</arg>
+		</arguments>
+		<!-- x = 0.3, t = 4   First four terms in array for positive x -->
+		<alt>
+			<line>
+				<regexp mark='3' 
+				successMessage="OK: lnSeries(double, double[], size_t) when x is positive" 
+				errorMessage="X: lnSeries(double, double[], size_t) FAILS when x is positive" 
+				>0\.3\t-0\.045\t0\.009\t-0\.002025\t999</regexp>
+			</line><line>
+				<regexp mark='2' 
+				successMessage="X: The signs (+ -) for the terms are wrong" 
+				>-0\.3\t0\.045\t-0\.009\t0\.002025\t999</regexp>
+			</line><line>
+				<regexp mark='1'
+				successMessage="X: first term not initialised" 
+				>999\t-0\.045\t0\.009\t-0\.002025\t999</regexp>
+			</line><line>
+				<regexp mark='2'
+				successMessage="X: terms are in right order but in the wrong place" 
+				>^-0\.045\t0\.009\t-0\.002025</regexp>
+			</line>
+			<line>
+				<regexp mark = '1'
+				successMessage="X: Accessing an element past the end of the array" 
+				>^((?!999).)*$</regexp>
+			</line>
+			<line>
+				<regexp mark='2'
+				successMessage="X: Too few terms entered in array" 
+				>0\.3\t-0\.045\t0\.009(\t999){2}</regexp>
+			</line>
+
+		</alt>
+		<!-- x = 1, t = 4    Check only first three terms in array for x = 1 -->
+		<alt>
+			<line>
+				<regexp mark='2' 
+				successMessage="OK: lnSeries(double, double[], size_t) when x = 1" 
+				errorMessage="X: lnSeries(double, double[], size_t) fails when x = 1"
+				>1\t-0\.5\t0\.3333</regexp>
+			</line><line>
+				<regexp mark = '1'
+				successMessage="X: second term is not negative" 
+				>-?1\t0\.5\t-?0\.3333</regexp>
+			</line><line>
+				<regexp mark = '1'
+				successMessage="X: first term not initialised" 
+				>999\t-0\.5\t0\.3333</regexp>
+			</line><line>
+				<regexp mark = '1'
+				successMessage="X: Division by zero in the first term" 
+				>^inf\t</regexp>
+			</line><line>
+				<regexp mark = '1'
+				successMessage="X: second term where first term was expected" 
+				>^-?0\.5\t-?0\.3333</regexp>
+			</line>
+		</alt>			
+		<!-- x = -0.2, t = 4    Second to fourth term in array for negative x -->
+		<line>
+			<regexp mark='1' 
+			successMessage="OK: lnSeries(double, double[], size_t) when x is negative" 
+			errorMessage="X: lnSeries(double, double[], size_t) fails when x is negative"
+			>-0\.02\t-0\.00266667\t-0.0004</regexp>
+		</line>
+		<!-- x = 0, t = 4    Check only first two terms in array for x = 0 -->
+		<line>
+			<regexp mark='2' 
+			successMessage="OK: lnSeries(double, double[], size_t) when x = 0" 
+			errorMessage="X: lnSeries(double, double[], size_t) fails when x = 0"
+			>0\t-?0</regexp>
+		</line>
+	</case>
+
+	<case id='2'>
+		<arguments>
+			<arg file='true' input='true'>case2.txt</arg>
+		</arguments>
+		<!-- x = 0.3, t = 4   First four terms in array for positive x -->
+		<alt>
+			<line>
+				<regexp mark='3' 
+				successMessage="OK: lnSeries(double, double[][2], size_t) when x is positive" 
+				errorMessage="X: lnSeries(double, double[][2], size_t) FAILS when x is positive" 
+				>0\.3H1\t-0\.09H2\t0\.027H3\t-0\.0081H4\t999H999</regexp>
+			</line><line>
+				<regexp mark='1' 
+				successMessage="X: The signs (+ -) for the terms are wrong" 
+				>-0\.3H1\t0\.09H2\t-0\.027H3\t0\.0081H4\t999H999</regexp>
+			</line><line>
+				<regexp mark='1'
+				successMessage="X: first term not initialised" 
+				>999H999\t-0\.09H2\t0\.027H3\t-0\.0081H4\t999H999</regexp>
+			</line><line>
+				<regexp mark='2'
+				successMessage="X: terms are in right order but in the wrong place" 
+				>^-0\.09H2\t0\.027H3\t-0\.0081H4</regexp>
+			</line>
+			<line>
+				<regexp mark = '1'
+				successMessage="X: Accessing an element past the end of the array" 
+				>^((?!999H999).)*$</regexp>
+			</line>
+			<line>
+				<regexp mark='2'
+				successMessage="X: Too few terms entered in array" 
+				>0\.3H1\t-0\.09H2\t0\.027H3(\t999H999){2}</regexp>
+			</line>
+		</alt>
+		<!-- x = 1, t = 4    Check only first three terms in array for x = 1 -->
+		<alt>
+			<line>
+				<regexp mark='2' 
+				successMessage="OK: lnSeries(double, double[][2], size_t) when x = 1" 
+				errorMessage="X: lnSeries(double, double[][2], size_t) fails when x = 1"
+				>1H1\t-1H2\t1H3</regexp>
+			</line><line>
+				<regexp mark = '1'
+				successMessage="X: second term is not negative" 
+				>-?1H1\t1H2\t-?1H3</regexp>
+			</line><line>
+				<regexp mark = '1'
+				successMessage="X: Division by zero in the first term" 
+				>^1H0\t</regexp>
+			</line><line>
+				<regexp mark = '1'
+				successMessage="X: first term not initialised" 
+				>999\t-1H2\t1H3</regexp>
+			</line><line>
+				<regexp mark = '1'
+				successMessage="X: second term where first term was expected" 
+				>^-?1H2\t-?1H3</regexp>
+			</line>
+		</alt>			
+		<!-- x = -0.2, t = 4    Second to fourth term in array for negative x -->
+		<line>
+			<regexp mark='1' 
+			successMessage="OK: lnSeries(double, double[][2], size_t) when x is negative" 
+			errorMessage="X: lnSeries(double, double[][2], size_t) fails when x is negative"
+			>-0\.04H2\t-0\.008H3\t-0\.0016H4</regexp>
+		</line>
+		<!-- x = 0, t = 4    Check only first two terms in array for x = 0 -->
+		<line>
+			<regexp mark='2' 
+			successMessage="OK: lnSeries(double, double[][2], size_t) when x = 0" 
+			errorMessage="X: nlSeries(double, double[][2], size_t) fails when x = 0"
+			>0H1\t-?0H2</regexp>
+		</line>
+	</case>
+
+	<case id='3'>
+		<!-- x = 0.3, t = 1    Only first term in array should be set to x = 0.3 -->
+		<alt>
+			<line>
+				<regexp mark='1' 
+				successMessage="OK: lnSeries(double, double[], size_t) when number of terms is one" 
+				errorMessage="X: lnSeries(double, double[], size_t) fails when number of terms is one"
+				>0\.3\t(999\t){4}</regexp>
+			</line>
+		</alt>
+		<!-- x = 0.3, t = 0    Array should not be set -->
+		<line>
+			<regexp mark='1' 
+			successMessage="OK: lnSeries(double, double[], size_t) when number of terms is zero" 
+			errorMessage="X: lnSeries(double, double[], size_t) fails when number of terms is zero"
+			>(999\t){5}</regexp>
+		</line>
+	</case>
+
+	<case id='4'>	
+		<!-- x = 0.3, t = 1    Only first term in array should be set to x i.e. 0.3-->
+		<alt>
+			<line>
+				<regexp mark='1' 
+				successMessage="OK: lnSeries(double, double[][2], size_t) when number of terms is one" 
+				errorMessage="X: lnSeries(double, double[][2], size_t) fails when number of terms is one"
+				>0\.3H1\t(999H999\t){4}</regexp>
+			</line>
+		</alt>
+		<!-- x = 0.3, t = 0    Array should not be set -->
+		<line>
+			<regexp mark='1' 
+			successMessage="OK: lnSeries(double, double[][2], size_t) when number of terms is zero" 
+			errorMessage="X: lnSeries(double, double[][2], size_t) fails when number of terms is zero"
+			>(999H999\t){5}</regexp>
+		</line>
+	</case>
+	
+</output>
+</memo>

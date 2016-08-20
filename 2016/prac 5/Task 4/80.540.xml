@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<memo version="0.3">
+	<title>PigLatinMainProgram</title>
+
+	<config>
+		<random>0</random>
+		<sequence>1</sequence>
+		<parts>1</parts>
+		<chances>3</chances>
+	</config>
+
+	<output part="1" fullmarks="13">
+		<delete-patterns>
+			<pattern>.+\.o(ut)?$</pattern>
+			<pattern>.+~$</pattern>
+		</delete-patterns>
+
+		<source-patterns>
+			<pattern>.+\.(c|C)(\+\+|pp?|xx)?$</pattern>	
+			<pattern>.+\.ii?$</pattern>
+			<pattern>.+\.cc$</pattern>
+		</source-patterns>
+
+		<extra-files>
+			<file overwrite="true" jail="true">makefile</file>
+			<file overwrite="true" jail="true">translate.h</file>
+			<file overwrite="true" jail="true">translate.cpp</file>
+			<file overwrite="true" jail="true">case1.txt</file>
+			<file overwrite="true" jail="true">case2.txt</file>
+			<file overwrite="true" jail="true">case3.txt</file>
+			<file overwrite="true" jail="true">case4.txt</file>
+			<file overwrite="true" jail="true">case5.txt</file>
+			<file overwrite="true" jail="true">case6.txt</file>
+			<file overwrite="true" jail="true">case7.txt</file>
+			<file overwrite="true" jail="true">case8.txt</file>
+			<file overwrite="true" jail="true">case9.txt</file>
+			<file overwrite="true" jail="true">case10.txt</file>
+			<file overwrite="true" jail="true">case11.txt</file>
+			<file overwrite="true" jail="true">case12.txt</file>
+			<file overwrite="true" jail="true">case13.txt</file>
+		</extra-files>
+
+		<case id="1">
+			<arguments>
+				<arg file="true" input="true">case1.txt</arg>
+			</arguments>
+
+			<line>
+				<regexp errorMessage="WARNING: PROMPT MAY BE MISSING, WHICH WOULD CAUSE THE REST OF THE ASSESSMENT TO FAIL"
+					>(?i)enter</regexp>
+			</line>
+			<line>
+				<regexp errorMessage="WARNING: OUTPUT HEADING MAY BE MISSING, WHICH WOULD CAUSE THE REST OF THE ASSESSMENT TO FAIL"
+					>(?i)pig\s*latin</regexp>
+			</line>
+			<alt>
+				<line>
+					<regexp mark="1"
+						successMessage="PASS Test 1"
+						>{Wabc}</regexp>
+				</line>
+				<line>
+					<regexp successMessage="FAIL Test 1: Not using provided function"
+						errorMessage="FAIL Test 1: Word not identified correctly"
+						>abcOB</regexp>
+				</line>
+				<line>
+					<regexp successMessage="WARNING: THE REST OF THE ASSESSMENT MAY BE INCORRECT"
+						></regexp>
+				</line>
+			</alt>
+		</case>
+
+		<case id="2">
+			<arguments>
+				<arg file="true" input="true">case2.txt</arg>
+			</arguments>
+
+			<line></line>
+			<line></line>
+			<alt>
+				<line>
+					<regexp mark="1"
+						successMessage="PASS Test 2"
+						>{I48879}</regexp>
+				</line>
+				<line>
+					<regexp successMessage="FAIL Test 2: Not using provided function"
+						errorMessage="FAIL Test 2: Integer not identified correctly"
+						>801\.18</regexp>
+				</line>
+				<line>
+					<regexp successMessage="HINT: Integer identified as real number"
+						>{R48879\.000000}</regexp>
+				</line>
+				<line>
+					<regexp successMessage="WARNING: THE REST OF THE ASSESSMENT MAY BE INCORRECT"
+						></regexp>
+				</line>
+			</alt>
+		</case>
+
+		<case id="3">
+			<arguments>
+				<arg file="true" input="true">case3.txt</arg>
+			</arguments>
+
+			<line></line>
+			<line></line>
+			<alt>
+				<line>
+					<regexp mark="1"
+						successMessage="PASS Test 3"
+						>{R123\.450000}</regexp>
+				</line>
+				<line>
+					<regexp successMessage="FAIL Test 3: Not using provided function"
+						errorMessage="FAIL Test 3: Real number not identified correctly"
+						>2\.45</regexp>
+				</line>
+				<line>
+					<regexp successMessage="HINT: The program should use double, not float"
+						>{R123\.449997}</regexp>
+				</line>
+				<line>
+					<regexp successMessage="WARNING: THE REST OF THE ASSESSMENT MAY BE INCORRECT"
+						></regexp>
+				</line>
+			</alt>
+		</case>
+
+		<case id="4">
+			<arguments>
+				<arg file="true" input="true">case4.txt</arg>
+			</arguments>
+
+			<line></line>
+			<line></line>
+			<line>
+				<regexp mark="1"
+					successMessage="PASS Test 4"
+					errorMessage="FAIL Test 4: Single letter word not identified correctly"
+					>{Wa}</regexp>
+			</line>
+		</case>
+
+		<case id="5">
+			<arguments>
+				<arg file="true" input="true">case5.txt</arg>
+			</arguments>
+
+			<line></line>
+			<line></line>
+			<line>
+				<regexp mark="1"
+					successMessage="PASS Test 5"
+					errorMessage="FAIL Test 5: Real number not identified correctly without integral part"
+					>{R0\.123000}</regexp>
+			</line>
+		</case>
+
+		<case id="6">
+			<arguments>
+				<arg file="true" input="true">case6.txt</arg>
+			</arguments>
+
+			<line></line>
+			<line></line>
+			<alt>
+				<line>
+					<regexp mark="1"
+						successMessage="PASS Test 6"
+						>^{Wabc} {I48879} {R123\.450000}$</regexp>
+				</line>
+				<line>
+					<regexp successMessage="FAIL Test 6: Spaces not preserved in output"
+						errorMessage="FAIL Test 6: Incorrect translation when spaces are used as separator"
+						>{Wabc}.*{I48879}.*{R123\.450000}</regexp>
+				</line>
+			</alt>
+		</case>
+
+		<case id="7">
+			<arguments>
+				<arg file="true" input="true">case7.txt</arg>
+			</arguments>
+
+			<line></line>
+			<line></line>
+			<line>
+				<regexp mark="1"
+					successMessage="PASS Test 7"
+					errorMessage="FAIL Test 7: Incorrect translation when repeated spaces are present"
+					>^{Wabc} {I48879} {R123\.450000}$</regexp>
+			</line>
+		</case>
+
+		<case id="8">
+			<arguments>
+				<arg file="true" input="true">case8.txt</arg>
+			</arguments>
+
+			<line></line>
+			<line></line>
+			<alt>
+				<line>
+					<regexp mark="1"
+						successMessage="PASS Test 8"
+						>^{Wabc},{I48879}/{R123\.450000}$</regexp>
+				</line>
+				<line>
+					<regexp successMessage="FAIL Test 8: Punctuation not preserved in output"
+						errorMessage="FAIL Test 8: Incorrect translation when punctuation is used as separator"
+						>{Wabc}.*{I48879}.*{R123\.450000}</regexp>
+				</line>
+			</alt>
+		</case>
+
+		<case id="9">
+			<arguments>
+				<arg file="true" input="true">case9.txt</arg>
+			</arguments>
+
+			<line></line>
+			<line></line>
+			<line>
+				<regexp mark="1"
+					successMessage="PASS Test 9"
+					errorMessage="FAIL Test 9: Incorrect translation when period is used as separator"
+					>^{Wabc}\.{Wdef}$</regexp>
+			</line>
+		</case>
+
+		<case id="10">
+			<arguments>
+				<arg file="true" input="true">case10.txt</arg>
+			</arguments>
+
+			<line></line>
+			<line></line>
+			<line>
+				<regexp mark="1"
+					successMessage="PASS Test 10"
+					errorMessage="FAIL Test 10: Incorrect translation when minus sign is present"
+					>^{Wabc}-{I48879}-{R123\.450000}$</regexp>
+			</line>
+		</case>
+
+		<case id="11">
+			<arguments>
+				<arg file="true" input="true">case11.txt</arg>
+			</arguments>
+
+			<line></line>
+			<line></line>
+			<line>
+				<regexp mark="1"
+					successMessage="PASS Test 11"
+					errorMessage="FAIL Test 11: Incorrect translation when repeated punctuation is present"
+					>^{Wabc}::{I48879}\+={R123\.450000}$</regexp>
+			</line>
+		</case>
+
+		<case id="12">
+			<arguments>
+				<arg file="true" input="true">case12.txt</arg>
+			</arguments>
+
+			<line></line>
+			<line></line>
+			<line>
+				<regexp mark="1"
+					successMessage="PASS Test 12"
+					errorMessage="FAIL Test 12: Incorrect translation when spaces and punctuation are used as separator"
+					>^{Wabc}, {I48879} \*{R123\.450000}$</regexp>
+			</line>
+		</case>
+
+		<case id="13">
+			<arguments>
+				<arg file="true" input="true">case13.txt</arg>
+			</arguments>
+
+			<line></line>
+			<line></line>
+			<line>
+				<regexp mark="1"
+					successMessage="PASS Test 13"
+					errorMessage="FAIL Test 13: Incorrect translation with punctuation at start or end of input"
+					>^@{Wabc}#$</regexp>
+			</line>
+		</case>
+	</output>
+</memo>

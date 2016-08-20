@@ -1,0 +1,1 @@
+Are there any comparisons between variables having different data types, e.g. comparing a char to number? Are there any mixed-mode comparisons or comparisons between variables of different lengths? If so, ensure that the conversion rule are well understood.

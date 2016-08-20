@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<memo version='0.4'>
+	<title>COS132_P5S1_tanSeries</title>
+	<!-- Mary -->
+	<config>
+		<random>0</random>
+		<sequence>1</sequence>
+		<parts>1</parts>
+		<chances>10</chances> 
+	</config>
+
+<output part='1' fullmarks='11'> 
+	<executable>tanSeries.out</executable>
+			
+	<delete-patterns>
+		<pattern>.+\.o$</pattern>
+		<pattern>.+~$</pattern>
+	</delete-patterns>
+	
+	<source-patterns>
+		<pattern>.+\.cpp$</pattern>
+	</source-patterns>
+
+	<extra-files>
+		<file overwrite='true' jail='true'>driver-tanSeries.cpp</file>
+		<file overwrite='true' jail='true'>makefile</file>
+		<file overwrite='true' jail='true'>series.h</file>
+	</extra-files>
+
+	<case id='1'>
+		<!-- Uses the radian values of the angles. {180, -68, 33, 500 }-->
+		<!-- angle = 180, term = 3-->
+		<alt>
+			<line>
+				<regexp mark='3' 
+				successMessage="OK: tanSeries(float, double[], double[], size_t) when angle is positive and a bit large" 
+				errorMessage="X: tanSeries(float, double[], double[], size_t) fails when angle is positive and a bit large" 
+				>3\.14159\t-5\.16771\t2\.55016\t1\t-4\.9348\t4\.05871</regexp>
+			</line><line>
+				<regexp mark='2' 
+				successMessage="X: The arrays for the sin and the cosine series have been swapped" 
+				>1\t-4\.9348\t4\.05871\t3\.14159\t-5\.16771\t2\.55016</regexp>
+			</line><line>
+				<regexp mark='1'
+				successMessage="X: The cosine series array was not initialised" 
+				>3\.14159\t-5\.16771\t2\.55016\t999\t999\t999</regexp>
+			</line><line>
+				<regexp mark='1'
+				successMessage="X: The sine series array was not initialised"
+				>999\t999\t999\t1\t-4\.9348\t4\.05871</regexp>
+			</line>
+			<line>
+				<regexp
+				successMessage="X: The sine and cosine series arrays were not initialised" 
+				>999\t999\t999\t999\t999\t999</regexp>
+			</line>
+		</alt>
+
+		<!-- angle = -68, term = 3  -->
+		<alt>
+		<line>
+			<regexp mark='3' 
+			successMessage="OK: tanSeries(float, double[], double[], size_t) when angle is negative" 
+			errorMessage="X: tanSeries(float, double[], double[], size_t) fails when angle is negative"
+			>-1\.18682\t0\.278617\t-0\.0196223\t1\t-0\.704275\t0\.0826673</regexp>
+		</line><line>
+			<regexp mark='2' 
+			successMessage="X: The signs (+ -) for the terms are wrong in the sine array when angle is negative" 
+			>1\.18682\t-0\.278617\t0\.0196223\t1\t-0\.704275\t0\.0826673</regexp>
+		</line><line>
+			<regexp mark='2' 
+			successMessage="X: The signs (+ -) for the terms are wrong in the cosine array when angle is negative" 
+			>-1\.18682\t0\.278617\t-0\.0196223\t-1\t0\.704275\t-0\.0826673</regexp>
+		</line><line>
+			<regexp mark='1' 
+			successMessage="X: The signs (+ -) for the terms are wrong in both arrays when angle is negative" 
+			>1\.18682\t-0\.278617\t0\.0196223\t-1\t0\.704275\t-0\.0826673</regexp>
+		</line>
+		</alt>
+
+		<!-- angle = 33, term = 3  -->
+		<alt>
+			<line>
+				<regexp mark='2' 
+				successMessage="OK: tanSeries(float, double[], double[], size_t) when angle is a bit small" 
+				errorMessage="X: tanSeries(float, double[], double[], size_t) fails when angle is a bit small"
+				>0\.575959\t-0\.0318436\t0\.000528172\t1\t-0\.165864\t0\.00458516</regexp>
+			</line><line>
+				<regexp mark = '1'
+				successMessage="X: first term in sine series array was not initialised" 
+				>999\t-0\.0318436\t0\.000528172\t1\-0\.165864\t0\.00458516</regexp>
+			</line><line>
+				<regexp mark = '1'
+				successMessage="X: first term in cosine series array was not initialised" 
+				>0\.575959\t-0\.0318436\t0\.000528172\t999\-0\.165864\t0\.00458516</regexp>
+			</line>
+		</alt>	
+		
+		<!-- angle = 500, term = 3   -->
+		<line>
+			<regexp mark='1' 
+			successMessage="OK: tanSeries(float, double[],double[],  size_t) when angle is quite large (> 360)" 
+			errorMessage="X: tanSeries(float, double[], double[], size_t) fails when angle is quite large (> 360)"
+			>8\.72665\t-110\.762\t421\.751\t1\t-38\.0772\t241\.645</regexp>
+		</line>
+
+		<!-- angle = 500, term = 1    Only first term in array should be set to 1 -->
+			<line>
+				<regexp mark='1' 
+				successMessage="OK: tanSeries(float, double[], double[], size_t) when number of terms is one" 
+				errorMessage="X: tanSeries(float, double[], double[], size_t) fails when number of terms is one"
+				>8.72665\t(999\t){2}1\t(999\t){2}</regexp>
+			</line>
+				
+		<!-- angle = 500, term = 0    Array should not be set -->
+		<line>
+			<regexp mark='1' 
+			successMessage="OK: tanSeries(float, double[], double[], size_t) when number of terms is zero" 
+			errorMessage="X: tanSeries(float, double[], double[], size_t) fails when number of terms is zero"
+			>(999\t){6}</regexp>
+		</line>
+	</case>
+</output>
+</memo>

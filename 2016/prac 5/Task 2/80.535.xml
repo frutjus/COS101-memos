@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<memo version='0.3'>
+<title>ArrayOfNumbers</title>
+
+<config>
+	<random>0</random>
+	<sequence>1</sequence>
+	<parts>1</parts>
+	<chances>40</chances>
+</config>
+
+<output part='1' fullmarks='30'>
+	<delete-patterns>
+		<pattern>.+\.o$</pattern>
+		<pattern>.+~$</pattern>
+	</delete-patterns>
+
+	<source-patterns>
+		<pattern>.+\.(c|C)(\+\+|pp?|xx)?$</pattern>	
+		<pattern>.+\.ii?$</pattern>
+		<pattern>.+\.cc$</pattern>
+	</source-patterns>
+
+	<extra-files>
+		<file overwrite='true' jail='true'>makefile</file>
+		<file overwrite='true' jail='true'>memo.cpp</file>
+	</extra-files>
+	
+	<case id = '1'>
+		<!-- Test -->
+		<alt>
+			<line>
+				<regexp mark="4"
+				 successMessage = "PASS Test 1"
+				 errorMessage = "Fail Test 1"
+				 >.+\s:\s*\[0\,1\,2\,3\,4\,5\,6\,7\,8\,9\]</regexp>
+			</line>
+			<line>
+				<regexp mark="2"
+				 successMessage = "Fail Test 1: Values displayed incorrectly"
+				 >.+\s:\s*\[\d\,\d\,\d\,\d\,\d\,\d\,\d\,\d\,\d\,\d\]</regexp>
+			</line>
+		</alt>	
+		
+		<line>
+				<regexp mark="2"
+				 successMessage = "PASS Test 2"
+				 errorMessage = "Fail Test 2 : Reverse order not correct"
+				 >..+\s:\s*\[9\,8\,7\,6\,5\,4\,3\,2\,1\,0\]</regexp>
+			</line>
+		
+		<line>
+				<regexp mark="2"
+				 successMessage = "PASS Test 3"
+				 errorMessage = "Fail Test 3 : Rotation with no distance parameters not correct."
+				 >.+:\s*\[9\,8\,7\,6\,5\,4\,3\,2\,1\,0\]</regexp>
+			</line>
+			
+		<line>
+				<regexp mark="2"
+				 successMessage = "PASS Test 4"
+				 errorMessage = "Fail Test 4 : Rotate not correct."
+				 >.+:\s*\[4\,3\,2\,1\,0\,9\,8\,7\,6\,5\]</regexp>
+			</line>
+			
+		<line>
+				<regexp mark="2"
+				 successMessage = "PASS Test 5"
+				 errorMessage = "Fail Test 5 : Rotate not correct."
+				 >.+:\s*\[9\,8\,7\,6\,5\,4\,3\,2\,1\,0\]</regexp>
+			</line>
+		<line>
+				<regexp mark="2"
+				 successMessage = "PASS Test 6"
+				 errorMessage = "Fail Test 6 : Shift with no distance parameter is not correct."
+				 >.+:\s*\[9\,8\,7\,6\,5\,4\,3\,2\,1\,0\]</regexp>
+			</line>
+		<line>
+				<regexp mark="2"
+				 successMessage = "PASS Test 7"
+				 errorMessage = "Fail Test 7 : Shift incorrect."
+				 >.+:\s*\[9\,9\,8\,7\,5\,4\,3\,2\,1\,0\]</regexp>
+			</line>
+		<line>
+				<regexp mark="2"
+				 successMessage = "PASS Test 8"
+				 errorMessage = "Fail Test 8 : Shift when moving indices out of bounds is incorrect."
+				 >.+:\s*\[9\,9\,8\,7\,5\,4\,3\,2\,1\,3\]</regexp>
+			</line>
+		
+		<line>
+				<regexp mark="2"
+				 successMessage = "PASS Test 10"
+				 errorMessage = "Fail Test 10 : Negative shift incorrect ."
+				 >.+:\s*\[9\,9\,8\,9\,9\,9\,8\,2\,1\,3\]</regexp>
+			</line>
+		<line>
+				<regexp mark="2"
+				 successMessage = "PASS Test 11"
+				 errorMessage = "Fail Test 11 : Negative shift when moving indices out of bounds is incorrect ."
+				 >.+:\s*\[8\,9\,8\,9\,9\,9\,8\,2\,1\,3\]</regexp>
+			</line>
+		<line>
+				<regexp mark="2"
+				 successMessage = "PASS Test 12"
+				 errorMessage = "Fail Test 12 : Negative shift when moving last index first is incorrect ."
+				 >.+:\s*\[8\,9\,8\,9\,9\,1\,3\,2\,1\,3\]</regexp>
+			</line>
+		<line>
+				<regexp mark="2"
+				 successMessage = "PASS Test 13"
+				 errorMessage = "Fail Test 13 : Shift function performs incorrectly when invalid parameters are entered."
+				 >.+:\s*Invalid\sparams</regexp>
+			</line>
+		<line>
+				<regexp mark="2"
+				 successMessage = "PASS Test 14"
+				 errorMessage = "Fail Test 14 : Shift function performs incorrectly when invalid parameters are entered."
+				 >.+:\s*Invalid\sparams</regexp>
+			</line>
+	</case>
+
+</output>
+</memo>

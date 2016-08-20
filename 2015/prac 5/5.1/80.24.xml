@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<memo version='0.4'>
+	<title>COS132_P5S1_cosSeries</title>
+	<!-- Mary -->
+	<config>
+		<random>0</random>
+		<sequence>1</sequence>
+		<parts>1</parts>
+		<chances>10</chances> 
+	</config>
+
+<output part='1' fullmarks='10'> 
+	<executable>cosSeries.out</executable>
+			
+	<delete-patterns>
+		<pattern>.+\.o$</pattern>
+		<pattern>.+~$</pattern>
+	</delete-patterns>
+	
+	<source-patterns>
+		<pattern>.+\.cpp$</pattern>
+	</source-patterns>
+
+	<extra-files>
+		<file overwrite='true' jail='true'>driver-cosSeries.cpp</file>
+		<file overwrite='true' jail='true'>makefile</file>
+		<file overwrite='true' jail='true'>series.h</file>
+	</extra-files>
+
+	<case id='1'>
+		<!-- Uses the radian values of the angles. {150, -115, 20, 0}-->
+		<!-- angle = 150, term = 5-->
+		<alt>
+			<line>
+				<regexp mark='3' 
+				successMessage="OK: cosSeries(float, double[], size_t) when angle is positive and a bit large"
+				errorMessage="X: cosSeries(float, double[], size_t) fails when angle is positive and a bit large" 
+				>1\t-3\.42695\t1\.95733\t-0\.447177\t0\.0547304\t999</regexp>
+			</line><line>
+				<regexp mark='2' 
+				successMessage="X: The signs (+ -) for the terms are wrong" 
+				>3\.42695\t-1\.95733\t0\.447177\t-0\.0547304\t999</regexp>
+			</line><line>
+				<regexp mark='1'
+				successMessage="X: first term not initialised" 
+				>999\t-3\.42695\t1\.95733\t-0\.447177\t0\.0547304\t999</regexp>
+			</line><line>
+				<regexp mark='2'
+				successMessage="X: terms are in right order but in the wrong place" 
+				>^-3\.42695\t1\.95733\t-0\.447177\t0\.0547304</regexp>
+			</line>
+			<line>
+				<regexp mark='1'
+				successMessage="X: Accessing an element past the end of the array" 
+				>^((?!999).)*$</regexp>
+			</line>
+			<line>
+				<regexp mark='2'
+				successMessage="X: Too few terms entered in array" 
+				>1\t-3\.42695\t1\.95733\t-0\.447177(\t999){2}</regexp>
+			</line>
+		</alt>
+		<!-- angle = -115, term = 5  check last 4 terms in array for negative angle -->
+		<line>
+			<regexp mark='2' 
+			successMessage="OK: cosSeries(float, double[], size_t) when angle is negative" 
+			errorMessage="X: cosSeries(float, double[], size_t) fails when angle is negative"
+			>-2\.01428\t0\.676223\t-0\.0908069\t0\.00653253</regexp>
+		</line>
+		<!-- angle = 20, term = 5    Check only first three terms in array for angle = 20 -->
+		<alt>
+			<line>
+				<regexp mark='2' 
+				successMessage="OK: cosSeries(float, double[], size_t) when angle is a bit small" 
+				errorMessage="X: cosSeries(float, double[], size_t) fails when angle is a bit small"
+				>1\t-0\.0609235\t0\.000618612</regexp>
+			</line><line>
+				<regexp mark = '1'
+				successMessage="X: first term not initialised" 
+				>999\t-0\.0609235\t0\.000618612</regexp>
+			</line><line>
+				<regexp mark = '1'
+				successMessage="X: second term where first term was expected" 
+				>^-0\.0609235\t0\.000618612</regexp>
+			</line>
+		</alt>			
+		
+		<!-- angle = 0, term = 5    Check only first two terms in array for angle = 0 -->
+		<alt>
+		<line>
+			<regexp mark='1' 
+			successMessage="OK: cosSeries(float, double[], size_t) when angle = 0" 
+			errorMessage="X: cosSeries(float, double[], size_t) fails when angle = 0"
+			>1\t-0</regexp>
+		</line>
+		<line>
+			<regexp successMessage="----- the negative - sign may be missing in some elements of the array"
+			>1\t0</regexp>
+		</line>
+		</alt>
+		<!-- angle = 0, term = 1    Only first term in array should be set to 1 -->
+		<alt>
+			<line>
+				<regexp mark='1' 
+				successMessage="OK: cosSeries(float, double[], size_t) when number of terms is one" 
+				errorMessage="X: cosSeries(float, double[], size_t) fails when number of terms is one"
+				>1\t(999\t){5}</regexp>
+			</line><line>
+				<regexp successMessage="----- first term should be 1" 
+				>-0\t(999\t){5}</regexp>
+			</line>
+		</alt>
+		<!-- angle = 0, term = 0    Array should not be set -->
+		<line>
+			<regexp mark='1' 
+			successMessage="OK: cosSeries(float, double[], size_t) when number of terms is zero" 
+			errorMessage="X: cosSeries(float, double[], size_t) fails when number of terms is zero"
+			>(999\t){6}</regexp>
+		</line>
+	</case>
+</output>
+</memo>

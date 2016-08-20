@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<memo version="0.3">
+	<title>PigLatinFunctions</title>
+
+	<config>
+		<random>0</random>
+		<sequence>1</sequence>
+		<parts>1</parts>
+		<chances>3</chances>
+	</config>
+
+	<output part="1" fullmarks="9">
+		<delete-patterns>
+			<pattern>.+\.o(ut)?$</pattern>
+			<pattern>.+~$</pattern>
+		</delete-patterns>
+
+		<source-patterns>
+			<pattern>.+\.(c|C)(\+\+|pp?|xx)?$</pattern>	
+			<pattern>.+\.ii?$</pattern>
+			<pattern>.+\.cc$</pattern>
+		</source-patterns>
+
+		<extra-files>
+			<file overwrite="true" jail="true">makefile</file>
+			<file overwrite="true" jail="true">test.cpp</file>
+		</extra-files>
+
+		<case id="1">
+			<alt>
+				<line>
+					<regexp mark="1"
+						successMessage="PASS Test 1"
+						>^AxYzOB,ExYzOB,IxYzOB,OxYzOB,UxYzOB,$</regexp>
+				</line>
+				<line>
+					<regexp successMessage="FAIL Test 1: Case is incorrect"
+						errorMessage="FAIL Test 1: Incorrect translation of word starting with uppercase vowel"
+						>(?i)^AxYzOB,ExYzOB,IxYzOB,OxYzOB,UxYzOB,$</regexp>
+				</line>
+			</alt>
+			<alt>
+				<line>
+					<regexp mark="1"
+						successMessage="PASS Test 2"
+						>^aXyZOB,eXyZOB,iXyZOB,oXyZOB,uXyZOB,$</regexp>
+				</line>
+				<line>
+					<regexp successMessage="FAIL Test 2: Case is incorrect"
+						errorMessage="FAIL Test 2: Incorrect translation of word starting with lowercase vowel"
+						>(?i)^aXyZOB,eXyZOB,iXyZOB,oXyZOB,uXyZOB,$</regexp>
+				</line>
+			</alt>
+			<alt>
+				<line>
+					<regexp mark="1"
+						successMessage="PASS Test 3"
+						>^xYzBOB,xYzFOB,xYzJOB,xYzPOB,xYzVOB,$</regexp>
+				</line>
+				<line>
+					<regexp successMessage="FAIL Test 3: Case is incorrect"
+						errorMessage="FAIL Test 3: Incorrect translation of word starting with uppercase consonant"
+						>(?i)^xYzBOB,xYzFOB,xYzJOB,xYzPOB,xYzVOB,$</regexp>
+				</line>
+			</alt>
+			<alt>
+				<line>
+					<regexp mark="1"
+						successMessage="PASS Test 4"
+						>^XyZbOB,XyZfOB,XyZjOB,XyZpOB,XyZvOB,$</regexp>
+				</line>
+				<line>
+					<regexp successMessage="FAIL Test 4: Case is incorrect"
+						errorMessage="FAIL Test 4: Incorrect translation of word starting with lowercase consonant"
+						>(?i)^XyZbOB,XyZfOB,XyZjOB,XyZpOB,XyZvOB,$</regexp>
+				</line>
+			</alt>
+			<alt>
+				<line>
+					<regexp mark="1"
+						successMessage="PASS Test 5"
+						>^aOB,bOB$</regexp>
+				</line>
+				<line>
+					<regexp successMessage="FAIL Test 5: Case is incorrect"
+						errorMessage="FAIL Test 5: Incorrect translation of single-letter word"
+						>(?i)^aOB,bOB$</regexp>
+				</line>
+			</alt>
+			<line>
+				<regexp mark="2"
+					successMessage="PASS Test 6"
+					errorMessage="FAIL Test 6: Integer translated incorrectly"
+					>^801\.18$</regexp>
+			</line>
+			<line>
+				<regexp mark="2"
+					successMessage="PASS Test 7"
+					errorMessage="FAIL Test 7: Real number translated incorrectly"
+					>^2\.45</regexp>
+			</line>
+		</case>
+	</output>
+</memo>

@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<memo version='0.4'>
+	<title>COS132_P5S1_main</title>
+	<!-- Mary -->
+	<config>
+		<random>0</random>
+		<sequence>1</sequence>
+		<parts>1</parts>
+		<chances>10</chances> 
+	</config>
+
+<output part='1' fullmarks='9'> 
+	<executable>series.out</executable>
+			
+	<delete-patterns>
+		<pattern>.+\.o$</pattern>
+		<pattern>.+~$</pattern>
+	</delete-patterns>
+	
+	<source-patterns>
+		<pattern>.+\.(c|C)(\+\+|pp?|xx)?$</pattern>	
+		<pattern>.+\.ii?$</pattern>
+		<pattern>.+\.cc$</pattern>
+	</source-patterns>
+
+	<extra-files>
+		<file overwrite='true' jail='true'>series.cpp</file>
+		<file overwrite='true' jail='true'>makefile</file>
+		<file overwrite='true' jail='true'>series.h</file>
+		<file overwrite='true' jail='true'>sin_45.txt</file>
+		<file overwrite='true' jail='true'>cos150.txt</file>
+		<file overwrite='true' jail='true'>tan17_5.txt</file>
+		<file overwrite='true' jail='true'>negativeterms.txt</file>
+		<file overwrite='true' jail='true'>wrongchoice.txt</file>
+	</extra-files>
+
+	<case id='1'>
+		<arguments>
+			<arg file='true' input='true'>sin_45.txt</arg>
+		</arguments>
+		<!-- angle = -45, choice = 1  terms = 14  -->
+		<line>
+			<regexp mark='1' 
+			successMessage="OK: First menu line PASS" 
+			errorMessage="X: First menu line FAIL" 
+			>1\.?\s+[Cc]alc.*\s[Ss]in\s?\(\s?-45\s?\)</regexp>
+		</line><line>
+			<regexp mark='1' 
+			successMessage="OK: Second menu line PASS" 
+			errorMessage="X: Second menu line FAIL" 
+			>2\.?\s+[Cc]alc.*\s[Cc]os\s?\(\s?-45\s?\)</regexp>
+		</line><line>
+			<regexp mark='1' 
+			successMessage="OK: Third menu line PASS" 
+			errorMessage="X: third menu line FAIL" 
+			>3\.?\s+[Cc]alc.*\s[Tt]an\s?\(\s?-45\s?\)</regexp>
+		</line>
+		<line><regexp>.*</regexp></line>
+		<line>
+			<regexp mark='1'
+			successMessage="OK: Second to the last line of output display PASSED" 
+			errorMessage="X: Second to the last line of output display FAIL" 
+			>\scmath\s+.*sin\s.*</regexp>
+		</line>
+		<line>
+			<regexp mark='1'
+			successMessage="OK: Correct calculation of sin using the cmath sin function" 
+			errorMessage="X: Output showing calculation sin function using the cmath library FAIL" 
+			>[Ss]in\s?\(\s?-45\s?\)\s?.*(\s|=)\s*-0\.707107$</regexp>
+		</line>
+	</case>
+
+	<case id='2'>
+		<arguments>
+			<arg file='true' input='true'>cos150.txt</arg>
+		</arguments>
+		<!-- angle = 150, choice = 2  terms = 10  -->
+		<line><regexp>.*</regexp></line>
+		<line><regexp>.*</regexp></line>
+		<line><regexp>.*</regexp></line>
+		<line><regexp>.*</regexp></line>
+		<line><regexp>.*</regexp></line>
+		<line>
+			<regexp mark='1'
+			successMessage="OK: Correct calculation of cos using the cmath cos function" 
+			errorMessage="X: Output showing calculation of cos using the cmath cos function FAIL" 
+			>[Cc]os\s?\(\s?150\s?\)\s?.*(\s|=)\s*-0\.866026$</regexp>
+		</line>
+	</case>
+	
+	<case id='3'>
+		<arguments>
+			<arg file='true' input='true'>tan17_5.txt</arg>
+		</arguments>
+		<!-- angle = 17.5, choice = 3  terms = 3  -->
+		<line><regexp>.*</regexp></line>
+		<line><regexp>.*</regexp></line>
+		<line><regexp>.*</regexp></line>
+		<line><regexp>.*</regexp></line>
+		<line><regexp>.*</regexp></line>
+		<line><regexp>.*</regexp></line>
+		<line><regexp>.*</regexp></line>
+		<line><regexp>.*</regexp></line>
+		<line><regexp>.*</regexp></line>
+		<line>
+			<regexp mark='1'
+			successMessage="OK: Correct calculation of tan using the cmath tan function" 
+			errorMessage="X: Output showing calculation of tan using the cmath tan function FAIL" 
+			>[Tt]an\s?\(\s?17\.5\s?\)\s?.*(\s|=)\s*0\.315299$</regexp>
+		</line>
+	</case>
+<case id='4'>
+		<arguments>
+			<arg file='true' input='true'>wrongchoice.txt</arg>
+		</arguments>
+		<!-- angle = 150, choice = 4  terms = 1  -->
+		<line><regexp>.*</regexp></line>
+		<line><regexp>.*</regexp></line>
+		<line><regexp>.*</regexp></line>
+		<line><regexp mark='1'
+			successMessage = "OK: Program informs user if wrong choice is selected"		
+			errorMessage="X: Program FAILS to inform user if wrong choice is selected"
+			>.*[iI]nvalid.*</regexp>
+		</line>
+</case>
+<case id='5'>
+		<arguments>
+			<arg file='true' input='true'>negativeterms.txt</arg>
+		</arguments>
+		<!-- angle = 150, choice = 2  terms = -1  -->
+		<line><regexp>.*</regexp></line>
+		<line><regexp>.*</regexp></line>
+		<line><regexp>.*</regexp></line>
+		<line><regexp mark='1'
+			successMessage = "OK: Program informs user if negative number of terms is entered"		
+			errorMessage="X: Program FAILS to inform user if negative number of terms is entered"
+			>.*([Nn]egative|[Ii]nvalid).*</regexp>
+		</line>
+</case>
+
+</output>
+</memo>

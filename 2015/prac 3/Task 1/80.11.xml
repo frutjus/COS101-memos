@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<memo version='0.4'>
+	<title>Prac3_CostOfFailing</title>
+	<!-- Kwan Sui Dave Ka -->
+	<config>
+		<random>0</random>
+		<sequence>1</sequence>
+		<parts>1</parts>
+		<chances>10</chances> <!-- todo: remember to reset to 10 for students -->
+	</config>
+	
+	<output part='1' fullmarks='10'>
+		<executable>cost.out</executable>
+				
+		<delete-patterns>
+			<pattern>.+\.o$</pattern>
+			<pattern>.+~$</pattern>
+		</delete-patterns>
+		
+		<source-patterns>
+			<pattern>.+\.cpp$</pattern>
+		</source-patterns>
+		
+		<extra-files>
+			<file overwrite='true' jail='true'>makefile</file>
+			<file overwrite='true' jail='true'>beer.txt</file>
+			<file overwrite='true' jail='true'>burger.txt</file>
+			<file overwrite='true' jail='true'>movie.txt</file>
+		</extra-files>
+		
+		<!--input and prompt-->
+		<case id='1'>
+			<arguments>
+				<arg file='true' input='true'>burger.txt</arg>
+			</arguments>
+			<line><alt>
+				<regexp errorMessage="Hint: It is COS132 not COS123.">.*([Cc]os|COS)\s*132</regexp>
+			</alt></line>
+		</case>
+		
+		<case id='2'>
+			<arguments>
+				<arg file='true' input='true'>burger.txt</arg>
+			</arguments>
+			<line>
+				<regexp errorMessage="Hint: When you prompt an user for input, use colon and a space.">.*:\s</regexp>
+			</line>
+		</case>
+		
+		<case id='3'>
+			<arguments>
+				<arg file='true' input='true'>burger.txt</arg>
+			</arguments>
+			<line><alt>
+				<regexp errorMessage="Hint: Indicate, using a keyword, to the user that they must enter something.">((^|\s)[Ee]nter|[Ss]elect)\s.*</regexp>
+			</alt></line>
+		</case>
+
+		<!--testing out put for burger-->
+		<case id='4'>
+			<arguments>
+				<arg file='true' input='true'>burger.txt</arg>
+			</arguments>
+			<line><alt>
+				<regexp mark='2' successMessage="OK: Calculation is correct." errorMessage="Calculation is wrong.">.*\D228\s+.*</regexp>
+			</alt></line>
+		</case>
+		
+		<case id='5'>
+			<arguments>
+				<arg file='true' input='true'>burger.txt</arg>
+			</arguments>
+			<line><alt>
+				<regexp mark='1' successMessage="OK: Currency keyword is correct" errorMessage="Currency keyword missing or not spelled correctly">.*\d\s+burger.*</regexp>
+			</alt></line>
+		</case>
+		
+		<!--testing out put for beer-->
+		<case id='6'>
+			<arguments>
+				<arg file='true' input='true'>beer.txt</arg>
+			</arguments>
+			<line>
+				<regexp mark='2' successMessage="OK: Calculation is correct." errorMessage="Calculation may be wrong.">.*\D380\s+.*</regexp>
+			</line>
+			<line>
+				<regexp mark='1' successMessage="Calculation may be correct but appears on the wrong line (no new line at the end of your prompt please)">.*\D380\s+.*</regexp>
+			</line>
+		</case>
+		
+		<case id='7'>
+			<arguments>
+				<arg file='true' input='true'>beer.txt</arg>
+			</arguments>
+			<line><alt>
+				<regexp mark='1' successMessage="OK: Currency keyword is correct" errorMessage="Currency keyword missing or not spelled correctly">.*\d\s+beer.*</regexp>
+			</alt></line>
+		</case>
+		
+		<!--testing out put for movie-->
+		<case id='8'>
+			<arguments>
+				<arg file='true' input='true'>movie.txt</arg>
+			</arguments>
+			<line><alt>
+				<regexp mark='2' successMessage="OK: Calculation is correct." errorMessage="Calculation is wrong.">.*\D190\s+.*</regexp>
+			</alt></line>
+		</case>
+		
+		<case id='9'>
+			<arguments>
+				<arg file='true' input='true'>movie.txt</arg>
+			</arguments>
+			<line><alt>
+				<regexp mark='1' successMessage="OK: Currency keyword is correct" errorMessage="Currency keyword missing or not spelled correctly">.*\d\s+movie.*</regexp>
+			</alt></line>
+		</case>
+		
+		<!-- Test if the single quotation marks are used in the prompt as required -->
+		<case id='10'>
+			<arguments>
+				<arg file='true' input='true'>burger.txt</arg>
+			</arguments>
+			<line><alt>
+				<regexp mark='1' successMessage="OK: Prompt for user input is correct." errorMessage="Hint: Surround 'currency' with single quotation marks">.*'currency'.*:\s</regexp>
+			</alt></line>
+		</case>
+	</output>
+</memo>

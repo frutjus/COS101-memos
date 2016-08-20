@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<memo version='0.1'>
+	<title>Prac2 Task3</title>
+
+	<config>
+		<random>0</random>
+		
+		<sequence>1</sequence>
+
+		<parts>1</parts>
+		
+		<chances>10</chances>
+	</config>
+
+	<output part='1' fullmarks='6'>
+		<executable>asciiConverter.out</executable>
+		
+		<delete-patterns>
+			<pattern>.+\.o$</pattern>
+			<pattern>.+~$</pattern>
+		</delete-patterns>
+
+		<source-patterns>
+			<pattern>.+\.(c|C)(\+\+|pp?|xx)?$</pattern>	
+			<pattern>.+\.ii?$</pattern>
+			<pattern>.+\.cc$</pattern>
+		</source-patterns>
+		
+		<extra-files>
+			<file overwrite='true' jail='true'>input0</file>
+			<file overwrite='true' jail='true'>input1</file>
+			<file overwrite='true' jail='true'>makefile</file>
+		</extra-files>
+		
+		<case id='1'>
+			<arguments>
+				<arg file='true' input='true'>input0</arg>
+			</arguments>
+			<alt>
+				<line><regexp mark='3' errorMessage="Hint: You should have both the input character and the ASCII value in your output">.*[Aa](scii|SCII).*~.*\s126$</regexp></line>
+				<line><regexp mark='2' successMessage="Hint: It seems that your output is missing the character that was entered by the user.">.*[Aa](scii|SCII).*\s+126$</regexp></line>
+				<line><regexp mark='1' errorMessage="Hint: Your output shows the wrong ASCII value. Are you actually using the input?">.*\s126$</regexp></line>
+			</alt>
+		</case>
+		<case id='2'>
+			<arguments>
+				<arg file='true' input='true'>input1</arg>
+			</arguments>
+			<alt>
+				<line><regexp mark='3' errorMessage="Hint: You should have both the input character and the ASCII value in your output">.*[Aa](scii|SCII).*r.*\s114$</regexp></line>
+				<line><regexp mark='2' successMessage="Hint: It seems that your output is missing the character that was entered by the user.">.*[Aa](scii|SCII).*\s114$</regexp></line>
+				<line><regexp mark='1' errorMessage="Hint: Your output shows the wrong ASCII value. Are you actually using the input?">.*\s114$</regexp></line>
+			</alt>
+		</case>
+	</output>
+</memo>

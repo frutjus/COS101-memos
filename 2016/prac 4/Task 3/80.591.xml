@@ -1,0 +1,831 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- By Jason, 12/04/2016 -->
+<!-- COS 132 Prac 4 Task 5, Tic Tac Toe -->
+<memo version='0.3'>
+	<title>TicTacToe</title>
+
+	<config>
+		<random>0</random>
+		
+		<sequence>1</sequence>
+
+		<parts>1</parts>
+    
+		<chances>10</chances>
+	</config>
+
+	<output part='1' fullmarks='17'>
+		<delete-patterns>
+			<pattern>.+\.o$</pattern>
+			<pattern>.+~$</pattern>
+		</delete-patterns>
+
+		<source-patterns>
+			<pattern>.+\.(c|C)(\+\+|pp?|xx)?$</pattern>	
+			<pattern>.+\.ii?$</pattern>
+			<pattern>.+\.cc$</pattern>
+		</source-patterns>
+		
+		<extra-files>
+			<file overwrite='true' jail='true'>case1.txt</file>
+			<file overwrite='true' jail='true'>case2.txt</file>
+			<file overwrite='true' jail='true'>case3.txt</file>
+			<file overwrite='true' jail='true'>case4.txt</file>
+			<file overwrite='true' jail='true'>case5.txt</file>
+			<file overwrite='true' jail='true'>case6.txt</file>
+			<file overwrite='true' jail='true'>case7.txt</file>
+			<file overwrite='true' jail='true'>case8.txt</file>
+			<file overwrite='true' jail='true'>case9.txt</file>
+			<file overwrite='true' jail='true'>case10.txt</file>
+		</extra-files>
+		
+		<!-- Test case 1: Testing prompts, and that basic positioning works -->
+		<case id = '1'>
+			<arguments>
+				<arg file='true' input='true'>case1.txt</arg>				
+			</arguments>
+			<alt>
+				<line>
+					<regexp errorMessage="FAIL Test 1: First line is wrong">^###\sTIC\sTAC\sTOE\sGAME\s###$</regexp>
+				</line>
+				<line>
+					<regexp errorMessage="IF YOUR FIRST LINE IS WRONG, THE REST OF THE ASSESSMENT IS INVALID">^###\sTIC\sTAC\sTOE\sGAME\s###$</regexp>
+				</line>
+			</alt>
+			<line>
+				<regexp>^.*$</regexp>
+			</line>
+			<line>
+				<regexp>^.*$</regexp>
+			</line>
+			<line>
+				<regexp>^.*$</regexp>
+			</line>
+			<line>
+				<regexp>^.*$</regexp>
+			</line>
+			<line>
+				<regexp>^.*$</regexp>
+			</line>
+			<line>
+				<regexp mark = '1'
+					successMessage="PASS Test 1"
+					errorMessage="FAIL Test 1: Player 1 prompt is incorrect or on the wrong line"
+				>[Pp]layer.*1</regexp>
+			</line>
+			<line>
+				<regexp mark = '1'
+					successMessage="PASS Test 2"
+					errorMessage="FAIL Test 2: Player 1 board position is incorrect"
+					>\*.*[xX].*\*</regexp>
+			</line>
+			<line>
+				<regexp mark = '1'
+					successMessage="PASS Test 3"
+					errorMessage="FAIL Test 2: Line 2 of board output incorrect."
+					>\*.*\*.*\*</regexp>
+			</line>
+			<line>
+				<regexp mark = '1'
+					successMessage="PASS Test 4"
+					errorMessage="FAIL Test 4: Line 3 of board output incorrect."
+					>\*.*\*.*\*</regexp>
+			</line>
+			<line>
+				<regexp>^.*$</regexp>
+			</line>
+			<line>
+				<regexp mark = '1'
+					successMessage="PASS Test 5"
+					errorMessage="FAIL Test 5: Player 2 prompt is incorrect or on the wrong line"
+				>[Pp]layer.*2</regexp>
+			</line>
+			<line>
+				<regexp mark = '1'
+					successMessage="PASS Test 6"
+					errorMessage="FAIL Test 6: Line 1 of board output incorrect."
+					>\*.*[xX].*\*</regexp>
+			</line>
+			<line>
+				<regexp mark = '1'
+					successMessage="PASS Test 7"
+					errorMessage="FAIL Test 7: Line 2 of board output incorrect."
+					>\*.*[oO0].*\*</regexp>
+			</line>
+			<line>
+				<regexp mark = '1'
+					successMessage="PASS Test 8"
+					errorMessage="FAIL Test 8: Line 3 of board output incorrect."
+					>\*.*\*.*\*
+				</regexp>
+			</line>
+		</case> 
+
+		<!-- Test case 2: Testing that 3 in the top row is a win (Player 1)-->
+		<case id = '2'>
+			<arguments>
+				<arg file='true' input='true'>case2.txt</arg>				
+			</arguments>
+			<!-- 31 lines of output -->
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+
+			<alt>
+				<line>
+					<regexp 
+						errorMessage="Error in vertical alignment. Check vertical spacing, such as new lines."
+					>[Pp]layer.*1</regexp>
+				</line>
+				<line>
+					<regexp 
+						errorMessage="WARNING: ANY FEEDBACK AFTER THIS MAY BE INCORRECT."
+					>[Pp]layer.*1</regexp>
+				</line>
+			</alt>
+
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+
+			<alt>
+				<line>
+					<regexp 
+						errorMessage="Error in vertical alignment. Check vertical spacing, such as new lines."
+					>[Pp]layer.*1</regexp>
+				</line>
+				<line>
+					<regexp 
+						errorMessage="WARNING: ANY FEEDBACK AFTER THIS MAY BE INCORRECT."
+					>[Pp]layer.*1</regexp>
+				</line>
+			</alt>
+
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+
+			<line>
+				<regexp mark = '1'
+					successMessage="PASS Test 9"
+					errorMessage="FAIL Test 9: Output in the case of a win in the first row is wrong."
+					>(\D(1|one)\D.*(win|won)|(win|won).*\D(1|one)\D)
+				</regexp>
+			</line>
+		</case>
+
+		<!-- Test case 3: Testing that 3 in the middle row is a win (Player 2)-->
+		<case id = '3'>
+			<arguments>
+				<arg file='true' input='true'>case3.txt</arg>				
+			</arguments>
+			<!-- 36 lines of output -->
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+
+			<alt>
+				<line>
+					<regexp 
+						errorMessage="Error in vertical alignment. Check vertical spacing, such as new lines."
+					>[Pp]layer.*2</regexp>
+				</line>
+				<line>
+					<regexp 
+						errorMessage="WARNING: ANY FEEDBACK AFTER THIS MAY BE INCORRECT."
+					>[Pp]layer.*2</regexp>
+				</line>
+			</alt>
+
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+
+			<line>
+				<regexp mark = '1'
+					successMessage="PASS Test 10"
+					errorMessage="FAIL Test 10: Output in the case of a win in the second row is wrong."
+					>(\D(2|two)\D.*(win|won)|(win|won).*\D(2|two)\D)
+				</regexp>
+			</line>
+		</case>
+
+		<!-- Test case 4: Testing that 3 in the bottom row is a win (Player 1)-->
+		<case id = '4'>
+			<arguments>
+				<arg file='true' input='true'>case4.txt</arg>				
+			</arguments>
+			<!-- 31 lines of output -->
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+
+			<alt>
+				<line>
+					<regexp 
+						errorMessage="Error in vertical alignment. Check vertical spacing, such as new lines."
+					>\*.*\*.*\*</regexp>
+				</line>
+				<line>
+					<regexp 
+						errorMessage="WARNING: ANY FEEDBACK AFTER THIS MAY BE INCORRECT."
+					>\*.*\*.*\*</regexp>
+				</line>
+			</alt>
+
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+
+			<alt>
+				<line>
+					<regexp 
+						errorMessage="Error in vertical alignment. Check vertical spacing, such as new lines."
+					>[Pp]layer.*1</regexp>
+				</line>
+				<line>
+					<regexp 
+						errorMessage="WARNING: ANY FEEDBACK AFTER THIS MAY BE INCORRECT."
+					>[Pp]layer.*1</regexp>
+				</line>
+			</alt>
+
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+
+			<line>
+				<regexp mark = '1'
+					successMessage="PASS Test 11"
+					errorMessage="FAIL Test 11: Output in the case of a win in the third row is wrong."
+					>(\D(1|one)\D.*(win|won)|(win|won).*\D(1|one)\D)
+				</regexp>
+			</line>
+		</case>
+
+		<!-- Test case 5: Testing that 3 in the first column is a win (Player 2)-->
+		<case id = '5'>
+			<arguments>
+				<arg file='true' input='true'>case5.txt</arg>				
+			</arguments>
+			<!-- 36 lines of output -->
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+
+			<alt>
+				<line>
+					<regexp 
+						errorMessage="Error in vertical alignment. Check vertical spacing, such as new lines."
+					>\*.*\*.*\*</regexp>
+				</line>
+				<line>
+					<regexp 
+						errorMessage="WARNING: ANY FEEDBACK AFTER THIS MAY BE INCORRECT."
+					>\*.*\*.*\*</regexp>
+				</line>
+			</alt>
+
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+
+			<alt>
+				<line>
+					<regexp 
+						errorMessage="Error in vertical alignment. Check vertical spacing, such as new lines."
+					>[Pp]layer.*2</regexp>
+				</line>
+				<line>
+					<regexp 
+						errorMessage="WARNING: ANY FEEDBACK AFTER THIS MAY BE INCORRECT."
+					>[Pp]layer.*2</regexp>
+				</line>
+			</alt>
+
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+
+			<line>
+				<regexp mark = '1'
+					successMessage="PASS Test 12"
+					errorMessage="FAIL Test 12: Output in the case of a win in the first column is wrong."
+					>(\D(2|two)\D.*(win|won)|(win|won).*\D(2|two)\D)
+				</regexp>
+			</line>
+		</case>
+
+		<!-- Test case 6: Testing that 3 in the second column is a win (Player 1)-->
+		<case id = '6'>
+			<arguments>
+				<arg file='true' input='true'>case6.txt</arg>				
+			</arguments>
+			<!-- 31 lines of output -->
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+
+			<alt>
+				<line>
+					<regexp 
+						errorMessage="Error in vertical alignment. Check vertical spacing, such as new lines."
+					>[Pp]layer.*1</regexp>
+				</line>
+				<line>
+					<regexp 
+						errorMessage="WARNING: ANY FEEDBACK AFTER THIS MAY BE INCORRECT."
+					>[Pp]layer.*1</regexp>
+				</line>
+			</alt>
+
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+
+			<alt>
+				<line>
+					<regexp 
+						errorMessage="Error in vertical alignment. Check vertical spacing, such as new lines."
+					>[Pp]layer.*1</regexp>
+				</line>
+				<line>
+					<regexp 
+						errorMessage="WARNING: ANY FEEDBACK AFTER THIS MAY BE INCORRECT."
+					>[Pp]layer.*1</regexp>
+				</line>
+			</alt>
+
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+
+			<line>
+				<regexp mark = '1'
+					successMessage="PASS Test 13"
+					errorMessage="FAIL Test 13: Output in the case of a win in the second column is wrong."
+					>(\D(1|one)\D.*(win|won)|(win|won).*\D(1|one)\D)
+				</regexp>
+			</line>
+		</case>
+
+		<!-- Test case 7: Testing that 3 in the last column is a win (Player 2)-->
+		<case id = '7'>
+			<arguments>
+				<arg file='true' input='true'>case7.txt</arg>				
+			</arguments>
+			<!-- 36 lines of output -->
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+
+			<alt>
+				<line>
+					<regexp 
+						errorMessage="Error in vertical alignment. Check vertical spacing, such as new lines."
+					>\s*\*\s+[xX]\s+\*\s*</regexp>
+				</line>
+				<line>
+					<regexp 
+						errorMessage="WARNING: ANY FEEDBACK AFTER THIS MAY BE INCORRECT."
+					>\s*\*\s+[xX]\s+\*\s*</regexp>
+				</line>
+			</alt>
+
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+
+			<line><regexp>.*</regexp></line>
+
+			<alt>
+				<line>
+					<regexp 
+						errorMessage="Error in vertical alignment. Check vertical spacing, such as new lines."
+					>[Pp]layer.*2</regexp>
+				</line>
+				<line>
+					<regexp 
+						errorMessage="WARNING: ANY FEEDBACK AFTER THIS MAY BE INCORRECT."
+					>[Pp]layer.*2</regexp>
+				</line>
+			</alt>
+
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+
+			<line>
+				<regexp mark = '1'
+					successMessage="PASS Test 14"
+					errorMessage="FAIL Test 14: Output in the case of a win in the last column is wrong."
+					>(\D(2|two)\D.*(win|won)|(win|won).*\D(2|two)\D)
+				</regexp>
+			</line>
+		</case>
+
+		<!-- Test case 8: Testing that 3 in the right diagonal is a win (Player 1)-->
+		<case id = '8'>
+			<arguments>
+				<arg file='true' input='true'>case8.txt</arg>				
+			</arguments>
+			<!-- 31 lines of output -->
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+
+			<alt>
+				<line>
+					<regexp 
+						errorMessage="Error in vertical alignment. Check vertical spacing, such as new lines."
+					>[xX].*\*.*\*</regexp>
+				</line>
+				<line>
+					<regexp 
+						errorMessage="WARNING: ANY FEEDBACK AFTER THIS MAY BE INCORRECT."
+					>[xX].*\*.*\*</regexp>
+				</line>
+			</alt>
+
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+
+			<alt>
+				<line>
+					<regexp 
+						errorMessage="Error in vertical alignment. Check vertical spacing, such as new lines."
+					>[Pp]layer.*1</regexp>
+				</line>
+				<line>
+					<regexp 
+						errorMessage="WARNING: ANY FEEDBACK AFTER THIS MAY BE INCORRECT."
+					>[Pp]layer.*1</regexp>
+				</line>
+			</alt>
+
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+
+			<line>
+				<regexp mark = '1'
+					successMessage="PASS Test 15"
+					errorMessage="FAIL Test 15: Output in the case of a win in the right diagonal is wrong."
+					>(\D(1|one)\D.*(win|won)|(win|won).*\D(1|one)\D)
+				</regexp>
+			</line>
+		</case>
+
+		<!-- Test case 9: Testing that 3 in the left diagonal is a win (Player 2)-->
+		<case id = '9'>
+			<arguments>
+				<arg file='true' input='true'>case9.txt</arg>				
+			</arguments>
+			<!-- 35 lines of output -->
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+
+			<alt>
+				<line>
+					<regexp 
+						errorMessage="Error in vertical alignment. Check vertical spacing, such as new lines."
+					>[xX].*\*.*[oO0]</regexp>
+				</line>
+				<line>
+					<regexp 
+						errorMessage="WARNING: ANY FEEDBACK AFTER THIS MAY BE INCORRECT."
+					>[xX].*\*.*[oO0]</regexp>
+				</line>
+			</alt>
+
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+
+			<alt>
+				<line>
+					<regexp 
+						errorMessage="Error in vertical alignment. Check vertical spacing, such as new lines."
+					>[Pp]layer.*2</regexp>
+				</line>
+				<line>
+					<regexp 
+						errorMessage="WARNING: ANY FEEDBACK AFTER THIS MAY BE INCORRECT."
+					>[Pp]layer.*2</regexp>
+				</line>
+			</alt>
+
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+
+			<line>
+				<regexp mark = '1'
+					successMessage="PASS Test 16"
+					errorMessage="FAIL Test 16: Output in the case of a win in the left diagonal is wrong.">
+					(\D(2|two)\D.*(win|won)|(win|won).*\D(2|two)\D)
+				</regexp>
+			</line>
+		</case>
+
+		<!-- Test case 10: Testing that a full board is correctly handled (A draw) -->
+		<case id = '10'>
+			<arguments>
+				<arg file='true' input='true'>case10.txt</arg>				
+			</arguments>
+			<!-- 36 lines of output -->
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+
+			<alt>
+				<line>
+					<regexp 
+						errorMessage="Error in vertical alignment. Check vertical spacing, such as new lines."
+					>[xX].*[oO0].*\*</regexp>
+				</line>
+				<line>
+					<regexp 
+						errorMessage="WARNING: ANY FEEDBACK AFTER THIS MAY BE INCORRECT."
+					>[xX].*[oO0].*\*</regexp>
+				</line>
+			</alt>
+
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+
+			<alt>
+				<line>
+					<regexp 
+						errorMessage="Error in vertical alignment. Check vertical spacing, such as new lines."
+					>[Pp]layer.*1</regexp>
+				</line>
+				<line>
+					<regexp 
+						errorMessage="WARNING: ANY FEEDBACK AFTER THIS MAY BE INCORRECT."
+					>[Pp]layer.*1</regexp>
+				</line>
+			</alt>
+
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+
+			<!-- Fixed this line not accepting the word 'tie' -->
+			<line>
+				<regexp mark = '1'
+					successMessage="PASS Test 17"
+					errorMessage="FAIL Test 17: The output when a draw happens can be improved"
+					>\b([Dd]raw|[Tt]ie)\b
+				</regexp>
+			</line>
+		</case>
+
+</output>
+</memo>

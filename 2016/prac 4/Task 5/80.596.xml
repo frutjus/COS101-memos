@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- By Ulrik, 08/04/2016 -->
+<!-- COS 132 Prac 4 Task 5, Reducing a Fraction -->
+<memo version="0.3">
+	<title>FractionFunctions</title>
+
+	<config>
+		<random>0</random>
+		<sequence>1</sequence>
+		<parts>1</parts>
+		<chances>3</chances>
+	</config>
+
+	<output part="1" fullmarks="10">
+		<delete-patterns>
+			<pattern>.+\.o(ut)?$</pattern>
+			<pattern>.+~$</pattern>
+		</delete-patterns>
+
+		<source-patterns>
+			<pattern>.+\.(c|C)(\+\+|pp?|xx)?$</pattern>	
+			<pattern>.+\.ii?$</pattern>
+			<pattern>.+\.cc$</pattern>
+		</source-patterns>
+
+		<extra-files>
+			<file overwrite="true" jail="true">makefile</file>
+			<file overwrite="true" jail="true">reduce.h</file>
+			<file overwrite="true" jail="true">test.cpp</file>
+		</extra-files>
+
+		<case id="1">
+			<line>
+				<regexp mark="2"
+					successMessage="PASS Test 1"
+					errorMessage="FAIL Test 1: gcd() returns incorrect result"
+					>^6$</regexp>
+			</line>
+			<line>
+				<regexp mark="1"
+					successMessage="PASS Test 2"
+					errorMessage="FAIL Test 2: gcd() returns incorrect value for invalid arguments"
+					>^-1,-1$</regexp>
+			</line>
+			<line>
+				<regexp mark="1"
+					successMessage="PASS Test 3"
+					errorMessage="FAIL Test 3: reduceFraction() returns incorrect value for valid arguments"
+					>^1$</regexp>
+			</line>
+			<line>
+				<regexp mark="2"
+					successMessage="PASS Test 4"
+					errorMessage="FAIL Test 4: reduceFraction() does not reduce fraction correctly"
+					>^3,4$</regexp>
+			</line>
+			<line>
+				<regexp mark="1"
+					successMessage="PASS Test 5"
+					errorMessage="FAIL Test 5: reduceFraction() returns incorrect value for invalid arguments"
+					>^0,0$</regexp>
+			</line>
+			<line>
+				<regexp mark="2"
+					successMessage="PASS Test 6"
+					errorMessage="FAIL Test 6: displayFraction() produces incorrect output"
+					>18\s*\/\s*24</regexp>
+			</line>
+			<alt>
+				<line>
+					<regexp successMessage="FAIL Test 7: displayFraction() should not print a newline. This will cause test 8 to fail"
+						errorMessage="PASS Test 7"
+						>^$</regexp>
+				</line>
+				<line>
+					<regexp mark="1"
+						successMessage="PASS Test 8"
+						errorMessage="FAIL Test 8: displayFraction() should print invalid arguments unaltered"
+						>-2\s*\/\s*0</regexp>
+				</line>
+			</alt>
+		</case>
+	</output>
+</memo>

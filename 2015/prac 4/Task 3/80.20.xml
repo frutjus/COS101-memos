@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<memo version='0.4'>
+	<title>Prac4_arrayElementsSwap</title>
+	<config>
+		<random>0</random>
+		<sequence>1</sequence>
+		<parts>1</parts>
+		<chances>10</chances> 
+	</config>
+	
+	<output part='1' fullmarks='12'>
+		<executable>arrayReverse.out</executable>
+				
+		<delete-patterns>
+			<pattern>.+\.o$</pattern>
+			<pattern>.+~$</pattern>
+		</delete-patterns>
+		
+		<source-patterns>
+			<pattern>.+\.cpp$</pattern>
+		</source-patterns>
+		
+		<extra-files>
+			<file overwrite='true' jail='true'>makefile</file>
+			<file overwrite='true' jail='true'>main.cpp</file>
+			<file overwrite='true' jail='true'>data01</file>
+			<file overwrite='true' jail='true'>data02</file>
+			<file overwrite='true' jail='true'>data03</file>
+		</extra-files>
+
+		<case id='1'>
+			<arguments>
+				<arg file='true' input='true'>data01</arg>
+			</arguments>
+	
+			<line>
+				<exact mark='1' errorMessage="Hint: your 'readElements' function must be able to read at least all integers from a file and assign the int-to-char conversion to an array's entries ">10</exact>
+			</line>
+
+			<line>
+				<regexp mark='1' errorMessage="Hint: the 'print' function must work appropriately, after elements printing a newline must be printed ">C\s+D\s+E\s+F\s+G\s+H\s+I\s+J\s+K\s+L</regexp>
+			</line>
+			<line>
+				<regexp mark='3' errorMessage="Hint: the 'reverseArray' function together with the 'swap' must execute appropriately">L\s+K\s+J\s+I\s+H\s+G\s+F\s+E\s+D\s+C</regexp>
+			</line>
+	
+			<arguments>
+				<arg file='true' input='true'>data02</arg>
+			</arguments>
+
+			<line>
+				<exact mark='1' errorMessage="Hint: the reverse array function must handle element reversal for any array size">9</exact>
+			</line>
+			<line>
+				<regexp mark='2' errorMessage="Hint: your 'readElements' function must be able to read at least all characters with integer conversion within the sets {a..z} and {A..Z}">G\s+y\s+z\s+f\s+t\s+E\s+c\s+B\s+a</regexp>
+			</line>
+
+			<arguments>
+				<arg file='true' input='true'>data03</arg>
+			</arguments>
+
+			<line>
+				<exact mark='1' errorMessage="Hint: Your function 'readElements' must filter appropriate input integers read from a file ">10</exact>
+			</line>
+			<line>
+				<regexp mark='3'>G\s+h\s+y\s+z\s+f\s+t\s+E\s+c\s+B\s+a</regexp>
+			</line>
+		</case>
+	</output>
+</memo>

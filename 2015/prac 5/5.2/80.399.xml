@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<memo version='0.4'>
+	<title>COS132_P5S2_subtract</title>
+	<!-- hannes jvv -->
+	<config>
+		<random>0</random>
+		<sequence>1</sequence>
+		<parts>1</parts>
+		<chances>30</chances> <!-- TODO: change appropriately -->
+	</config>
+
+<output part='1' fullmarks='4'> 
+	<executable>test.out</executable>
+			
+	<delete-patterns>
+		<pattern>.+\.o$</pattern>
+		<pattern>.+~$</pattern>
+	</delete-patterns>
+	
+	<source-patterns>
+		<pattern>.+\.cpp$</pattern>
+	</source-patterns>
+
+	<extra-files>
+		<file overwrite='true' jail='true'>harness-subtract.cpp</file>
+		<file overwrite='true' jail='true'>makefile</file>
+		<file overwrite='true' jail='true'>input-add1</file>
+		<file overwrite='true' jail='true'>input-add6</file>
+		<file overwrite='true' jail='true'>input-neqvecs2</file>
+		<file overwrite='true' jail='true'>inputVector.cpp</file>
+	</extra-files>
+
+	<case id='1'>
+		<arguments>
+			<arg file='true' input='true'>input-add1</arg>
+		</arguments>
+		<line>
+			<regexp mark='1' successMessage="" errorMessage="">\D-9\D</regexp>
+		</line>
+	</case>
+
+	<case id='2'>
+		<arguments>
+			<arg file='true' input='true'>input-add6</arg>
+		</arguments>
+		<line>
+			<regexp mark='2' successMessage="" errorMessage="">\D0\D+1\D+-1\D+5\D+18\D+-2\D</regexp>
+		</line>
+	</case>
+
+	<case id='3'>
+		<arguments>
+			<arg file='true' input='true'>input-neqvecs2</arg>
+		</arguments>
+		<line>
+			<regexp mark='1' successMessage="" errorMessage="">12.+113.+-8</regexp>
+		</line>
+	</case>
+</output>
+</memo>

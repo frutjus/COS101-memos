@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<memo version='0.4'>
+	<title>Prac3_ColourMixer</title>
+	<config>
+		<random>0</random>
+		<sequence>1</sequence>
+		<parts>1</parts>
+		<chances>8</chances> 
+	</config>
+	
+	<output part='1' fullmarks='15'>
+		<executable>colour.out</executable>
+				
+		<delete-patterns>
+			<pattern>.+\.o$</pattern>
+			<pattern>.+~$</pattern>
+		</delete-patterns>
+		
+		<source-patterns>
+			<pattern>.+\.cpp$</pattern>
+		</source-patterns>
+		
+		<extra-files>
+			<file overwrite='true' jail='true'>makefile</file>
+			<file overwrite='true' jail='true'>blackred.txt</file>
+			<file overwrite='true' jail='true'>bluered.txt</file>
+			<file overwrite='true' jail='true'>blueyellow.txt</file>
+			<file overwrite='true' jail='true'>redred.txt</file>
+			<file overwrite='true' jail='true'>redblack.txt</file>
+			<file overwrite='true' jail='true'>redblue.txt</file>
+			<file overwrite='true' jail='true'>redyellow.txt</file>
+			<file overwrite='true' jail='true'>yellowblue.txt</file>
+			<file overwrite='true' jail='true'>yellowred.txt</file>
+		</extra-files>
+
+		<!-- determine if the input prompts have colons and expect input on the same line (no marks) -->
+		<case id='1'>
+			<arguments>
+				<arg file='true' input='true'>redblue.txt</arg>
+			</arguments>
+
+			<line><regexp errorMessage="Hint: The prompts should end with a colon and have a space after the colon">.*:\s.*:\s</regexp></line>
+			<line><regexp successMessage="Hint: You should not have endl; at the end of your prompt">.*[Ee]nter.*</regexp></line>
+		</case>
+
+		<!-- Determine if input values are echoed in the output -->
+		<case id='2'>
+			<arguments>
+				<arg file='true' input='true'>redyellow.txt</arg>
+			</arguments>
+			<line><regexp mark='1' errorMessage="Hint: The colours that was entered by the user should be shown in the output">.*\sred[\s\.,;:!].*\syellow[\s\.,;:!].*</regexp></line>
+		</case>
+
+		<!-- Determine if program give correct output when red and yellow are mixed -->
+		<case id='3'>
+			<arguments>
+				<arg file='true' input='true'>redyellow.txt</arg>
+			</arguments>
+			<line><alt>
+				<regexp successMessage="XXXXXXX - Are you learning??"
+				>\s((purple|orange|green).*){3}</regexp>
+				<regexp mark='2' errorMessage="One of the colour pairs does not produce the correct result">.*\sorange([\s\.,;:!]|$)</regexp>
+				<regexp successMessage="Hint: Write all output in only lower case letters and ensure you spell the colours correct"> ^((?!orange).)*$</regexp>
+			</alt></line>
+		</case>
+
+		<!-- Determine if program give correct output when red and blue are mixed -->
+		<case id='4'>
+			<arguments>
+				<arg file='true' input='true'>redblue.txt</arg>
+			</arguments>
+			<line><alt>
+			<regexp successMessage="XXXXXXX - Are you learning??"
+			>\s((purple|orange|green).*){3}</regexp>
+			<regexp mark='2' errorMessage="One of the colour pairs does not produce the correct result"
+			>\spurple([\s\.,;:!]|$)</regexp>
+			</alt></line>
+		</case>
+		
+		<!-- Determine if program give correct output when blue and yellow are mixed -->
+		<case id='5'>
+			<arguments>
+				<arg file='true' input='true'>blueyellow.txt</arg>
+			</arguments>
+			<line><alt>
+			<regexp successMessage="XXXXXXX - Are you learning??"
+			>\s((purple|orange|green).*){3}</regexp>
+			<regexp mark='2' errorMessage="One of the colour pairs does not produce the correct result">.*\sgreen([\s\.,;:!]|$)</regexp>
+			</alt></line>
+		</case>
+
+		<!-- Determine if program give correct output when yellow and red are mixed -->
+		<case id='6'>
+			<arguments>
+				<arg file='true' input='true'>yellowred.txt</arg>
+			</arguments>
+			<line><alt>
+			<regexp successMessage="XXXXXXX - Are you learning??"
+			>\s((purple|orange|green).*){3}</regexp>
+			<regexp mark='1' errorMessage="Hint: The user may enter the colours in any order">.*\sorange([\s\.,;:!]|$)</regexp>
+			</alt></line>
+		</case>
+		
+		<!-- Determine if program give correct output when blue and red are mixed -->
+		<case id='7'>
+			<arguments>
+				<arg file='true' input='true'>bluered.txt</arg>
+			</arguments>
+			<line><alt>
+			<regexp successMessage="XXXXXXX - Are you learning??"
+			>\s((purple|orange|green).*){3}</regexp>
+			<regexp mark='1' errorMessage="Hint: The user may enter the colours in any order">.*\spurple([\s\.,;:!]|$)</regexp>
+			</alt></line>
+		</case>
+		
+		<!-- Determine if program give correct output when yellow and blue are mixed -->
+		<case id='8'>
+			<arguments>
+				<arg file='true' input='true'>yellowblue.txt</arg>
+			</arguments>
+			<line><alt>
+			<regexp successMessage="XXXXXXX - Are you learning??"
+			>\s((purple|orange|green).*){3}</regexp>
+			<regexp mark='1' errorMessage="Hint: The user may enter the colours in any order">.*\sgreen([\s\.,;:!]|$)</regexp>
+			</alt></line>
+		</case>
+
+
+		<!-- Determine if program gives an error message that echoes the wrong colour if the second colour is invalid : red black -->
+		<case id='9'>
+			<arguments>
+				<arg file='true' input='true'>redblack.txt</arg>
+			</arguments>
+			<line>
+				<regexp mark='1' errorMessage="Hint: The error message must echo the colour(s) that was entered">.*\sblack([\s\.,;:!]|$)</regexp>
+			</line>
+		</case>
+
+		<!-- Determine if program gives an error message with appropriate keyword if the second colour is invalid : red black -->
+		<case id='10'>
+			<arguments>
+				<arg file='true' input='true'>redblack.txt</arg>
+			</arguments>
+			<line>
+				<regexp mark='1' errorMessage="Hint: The error message for invalid colour can be improved">.*([Ii]nvalid|[Ww]rong|not|[Ii]ncorrect).*</regexp>
+			</line>
+		</case>
+
+		<!-- Determine if program gives an error message that echoes the input if the same colour is entered to both prompts -->
+		<case id='11'>
+			<arguments>
+				<arg file='true' input='true'>redred.txt</arg>
+			</arguments>
+			<line>
+				<regexp mark='1' errorMessage="Hint: The error message must echo the colour(s) that was entered">.*\sred([\s\.,;:!]|$)</regexp>
+			</line>
+		</case>
+		
+		<!-- Determine if program gives an error message with appropriate keyword if the same colour is entered to both prompts -->
+		<case id='12'>
+			<arguments>
+				<arg file='true' input='true'>redred.txt</arg>
+			</arguments>
+			<line>
+				<regexp mark='1' errorMessage="Hint: The error message when entering the same colour twice can be improved">.*([Ss]ame|[Tt]wice|[Ww]rong|not)([\s\.,;:!]|$)</regexp>
+			</line>
+		</case>
+
+		<!-- Determine if program breaks after the first colour was invalid : black red -->
+		<!-- Award one mark if the string 'second colour' does not appear -->
+		<case id='13'>
+			<arguments>
+				<arg file='true' input='true'>blackred.txt</arg>
+			</arguments>
+			<line><alt>
+				<regexp successMessage="Hint: If the user enters an invalid colour the program should terminate immidiatly">.*second colour.*</regexp>
+				<regexp mark='1' > ^((?!second colour).)*$</regexp>
+			</alt></line>
+		</case>
+	</output>
+</memo>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<memo version='0.4'>
+	<title>Prac5_Task1_PolynomialAdd</title>
+	<config>
+		<random>0</random>
+		<sequence>1</sequence>
+		<parts>1</parts>
+		<chances>10</chances> 
+	</config>
+	
+	<output part='1' fullmarks='6'>
+		<executable>polynomials.o</executable>
+				
+		<delete-patterns>
+			<pattern>.+\.o$</pattern>
+			<pattern>.+~$</pattern>
+		</delete-patterns>
+		
+		<source-patterns>
+			<pattern>.+\.cpp$</pattern>
+		</source-patterns>
+		
+		<extra-files>
+			<file overwrite='true' jail='true'>makefile</file>
+			<file overwrite='true' jail='true'>main.cpp</file>
+			<file overwrite='true' jail='true'>printData</file>
+		</extra-files>
+
+<!-- Give 1 mark for having a working print function  -->
+		<case id='1'>
+			<arguments>
+				<arg file='true' input='true'>printData</arg>
+			</arguments>
+	
+			<line>
+				<regexp mark='2' errorMessage="Hint: The function must print a polynomial using the right format and the polynomial order (powers of x) must be in a descending order ">5x\^3.*\+.*4x\^2.*\+.*3x\^1.*\+.*2x\^0</regexp>
+			</line>
+			<line>
+				<regexp mark='1' errorMessage="Hint: The function must print a polynomial of any polynomial order">0x\^2.*\+.*0x\^1.*\+.*0x\^0</regexp>
+			</line>
+			<line>
+				<regexp mark='1' errorMessage="Hint: The function should be able to print appropriately for a constant term (order zero) polynomial ">-100x\^0</regexp>
+			</line>
+			<line>
+				<alt>
+					<regexp mark='1' errorMessage="Hint: The function should print both negative and positive terms ">-5x\^4.*\+.*0x\^3.*-10x\^2.*-1x\^1.*\+.*5x\^0</regexp>	
+				</alt>	
+				<alt>
+					<regexp mark='0' errorMessage="Hint: All terms of the polynomial must have a power printed including both the constant term and that with x^1">-5x\^4.*\+.*0x\^3.*-10x\^2.*-1x\^1.*\+.*5</regexp>	
+				</alt>	
+				<alt>
+					<regexp mark='0' errorMessage="Hint: All terms of the polynomial must have a power printed including the constant term ">-5x\^4.*\+.*0x\^3.*-10x\^2.*-1x.*\+.*5</regexp>
+				</alt>
+				<alt>
+					<regexp mark='0' errorMessage="Hint: All signs (positive/negative) of terms must be handled appropriately ">-5x\^4.*\+.*0x\^3.*\+.*-10x\^2.*\+.*-1x\^1.*\+.*5x\^0</regexp>	
+				</alt>			
+			</line>
+			<line>
+				<regexp mark='1' errorMessage="Hint: you must prepare an error message for empty polynomial arrays: It must contain the keyword 'Empty array' ">.*[Ee]mpty [Aa]rray.*</regexp>
+			</line>
+		</case>
+	</output>
+</memo>

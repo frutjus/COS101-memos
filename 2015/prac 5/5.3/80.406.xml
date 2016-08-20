@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<memo version='0.4'>
+	<title>Prac5_Task1_PolynomialAdd</title>
+	<config>
+		<random>0</random>
+		<sequence>1</sequence>
+		<parts>1</parts>
+		<chances>10</chances> 
+	</config>
+	
+	<output part='1' fullmarks='7'>
+		<executable>polynomials.o</executable>
+				
+		<delete-patterns>
+			<pattern>.+\.o$</pattern>
+			<pattern>.+~$</pattern>
+		</delete-patterns>
+		
+		<source-patterns>
+			<pattern>.+\.cpp$</pattern>
+		</source-patterns>
+		
+		<extra-files>
+			<file overwrite='true' jail='true'>makefile</file>
+			<file overwrite='true' jail='true'>main.cpp</file>
+			<file overwrite='true' jail='true'>subtractData</file>
+		</extra-files>
+
+		<case id='1'>
+			<arguments>
+				<arg file='true' input='true'>subtractData</arg>
+			</arguments>
+	
+			<line>
+				<regexp mark='2' errorMessage="Hint: Subtract corresponding polynomial coefficients together, and assign them into the corresponding index on result polynomial array ">-3\s+-3\s+-3\s+-3</regexp>
+			</line>
+			<line>
+				<regexp mark='2' errorMessage="Hint: Your polynomial Subtraction must add both negative and positive terms">7\s+49\s+31\s+24</regexp>
+			</line>
+			<line>
+				<regexp mark='1' errorMessage="Hint: Your function must handle properly all array sizes, even empty arrays "></regexp>
+			</line>
+			<line>
+				<alt>
+					<regexp mark='2' errorMessage="Hint: Subtracting polynomial with different orders; resulting polynomial takes the order of the polynomial with the highest order among the subtracted polynomials. When one polynomial have extra terms (higher order), we assign them into the results polynomial">0\s+7\s+17\s+8\s+-5\s+4</regexp>
+				</alt>
+				<alt>
+					<regexp mark='1' errorMessage="Hint: check off-by-one errors">7\s+17\s+8\s+-5\s+4</regexp>
+				</alt>
+				<alt>
+					<regexp mark='1' errorMessage="Hint: Hint: check off-by-one errors">0\s+7\s+17\s+8\s+-5</regexp>
+				</alt>
+				<alt>
+					<regexp mark='0' errorMessage="Hint: Hint: check off-by-one erros">7\s+17\s+8\s+-5</regexp>
+				</alt>
+			</line>
+		</case>
+	</output>
+</memo>

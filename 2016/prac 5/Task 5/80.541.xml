@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- By Jason, 10/05/2016 -->
+<!-- COS 132 Prac 5 Task 5, Check Writing -->
+<memo version='0.3'>
+	<title>CheckWriting</title>
+
+	<config>
+		<random>0</random>
+		
+		<sequence>1</sequence>
+
+		<parts>1</parts>
+    
+		<chances>3</chances>
+	</config>
+
+	<output part='1' fullmarks='15'>
+		<delete-patterns>
+			<pattern>.+\.o$</pattern>
+			<pattern>.+~$</pattern>
+		</delete-patterns>
+
+		<source-patterns>
+			<pattern>.+\.(c|C)(\+\+|pp?|xx)?$</pattern>	
+			<pattern>.+\.ii?$</pattern>
+			<pattern>.+\.cc$</pattern>
+		</source-patterns>
+		
+		<extra-files>
+			<file overwrite='true' jail='true'>chequeTools.h</file>
+			<file overwrite='true' jail='true'>chequeMain.cpp</file>
+			<file overwrite='true' jail='true'>makefile</file>
+			<file overwrite='true' jail='false'>chequeFacts.txt</file>
+		</extra-files>
+
+		<case id = '1'>
+			<alt>
+				<line>
+					<regexp mark = '1'
+						successMessage="PASS Test 1." 
+						errorMessage="FAIL Test 1: getDate() is returning the wrong date, or the date is in the wrong format.">
+						TimeCorrect			
+					</regexp>
+				</line>
+				<line>
+					<regexp
+						successMessage="getDate() is printing out nothing. Try changing the size of your buffer in strftime().">
+						$^		
+					</regexp>
+				</line>
+				<line>
+					<regexp
+						successMessage="getDate() is printing out garbage. Try changing the size of your buffer in strftime().">
+						(\w*(?:[^a-zA-Z0-9_ \t\n\r\f\v,.?!;:]\w*)+)
+					</regexp>
+				</line>
+			</alt>
+			<line>
+				<regexp mark = '1'
+					successMessage="PASS Test 2." 
+					errorMessage="FAIL Test 2: numToString() is not working for all cases.">
+					[Tt]en\s[Tt]housand	
+				</regexp>
+			</line>
+			<line>
+				<regexp mark = '1'
+					successMessage="PASS Test 3." 
+					errorMessage="FAIL Test 3: numToString() is not working for all cases.">
+					[Ff]ive\s[Tt]housand\s[Tt]hree\s[Hh]undred\s[Aa]nd\s[Tt]wenty
+				</regexp>
+			</line>
+			<line>
+				<regexp mark = '1'
+					successMessage="PASS Test 4." 
+					errorMessage="FAIL Test 4: numToString() is not working for all cases.">
+					[Oo]ne\s[Tt]housand 
+				</regexp>
+			</line>
+			<line>
+				<regexp mark = '1'
+					successMessage="PASS Test 5." 
+					errorMessage="FAIL Test 5: numToString() is not working for all cases.">
+					[Ee]ight\s[Hh]undred\s[Aa]nd\s[Ff]ourteen
+				</regexp>
+			</line>
+			<line>
+				<regexp mark = '1'
+					successMessage="PASS Test 6." 
+					errorMessage="FAIL Test 6: numToString() is not working for all cases.">
+					[Oo]ne\s[Hh]undred
+				</regexp>
+			</line>
+			<line>
+				<regexp mark = '1'
+					successMessage="PASS Test 7." 
+					errorMessage="FAIL Test 7: numToString() is not working for all cases.">
+					[Ss]eventy\s[Ss]ix
+				</regexp>
+			</line>
+			<line>
+				<regexp mark = '1'
+					successMessage="PASS Test 8." 
+					errorMessage="FAIL Test 8: numToString() is not working for all cases.">
+					[Tt]wenty
+				</regexp>
+			</line>
+			<line>
+				<regexp mark = '1'
+					successMessage="PASS Test 9." 
+					errorMessage="FAIL Test 9: numToString() is not working for all cases.">
+					[Ff]ourteen
+				</regexp>
+			</line>
+			<line>
+				<regexp mark = '1'
+					successMessage="PASS Test 10." 
+					errorMessage="FAIL Test 10: numToString() is not working for all cases.">
+					[Ff]ive
+				</regexp>
+			</line>
+			<line>
+				<regexp mark = '1'
+					successMessage="PASS Test 11." 
+					errorMessage="FAIL Test 11: numToString() is not working for all cases.">
+					[Zz]ero
+				</regexp>
+			</line>
+			<line>
+				<regexp mark = '1'
+					successMessage="PASS Test 12." 
+					errorMessage="FAIL Test 12: Routing number not returned correctly.">
+					RoutingCorrect
+				</regexp>
+			</line>
+			<line>
+				<regexp mark = '1'
+					successMessage="PASS Test 13." 
+					errorMessage="FAIL Test 13: Account number not returned correctly.">
+					AccountCorrect
+				</regexp>
+			</line>
+			<line>
+				<regexp mark = '1'
+					successMessage="PASS Test 14." 
+					errorMessage="FAIL Test 14: Cheque number not returned correctly.">
+					NumberCorrect
+				</regexp>
+			</line>
+			<line>
+				<regexp mark = '1'
+					successMessage="PASS Test 15." 
+					errorMessage="FAIL Test 15: Cheque number not incremented correctly.">
+					IncrementCorrect
+				</regexp>
+			</line>
+		</case>
+</output>
+</memo>

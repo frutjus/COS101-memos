@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<memo version='0.4'>
+	<title>toPigLatin</title>
+	
+	<config>
+		<random>0</random>
+		<sequence>1</sequence>
+		<parts>1</parts>
+		<chances>11</chances>
+	</config>
+	
+	<output part='1' fullmarks='15'>		
+		<delete-patterns>
+			<pattern>.+\.o$</pattern>
+			<pattern>.+~$</pattern>
+		</delete-patterns>
+		
+		<source-patterns>
+			<pattern>.+\.cpp$</pattern>
+		</source-patterns>
+		
+		<extra-files>
+			<file overwrite='true' jail='true'>makefile</file>
+			<file overwrite='true' jail='true'>main.cpp</file>
+			<file overwrite='true' jail='true'>piglatin.h</file>
+			<file overwrite='true' jail='true'>vowels.txt</file>
+			<file overwrite='true' jail='true'>consonants.txt</file>
+			<file overwrite='true' jail='true'>extreme.txt</file>
+		</extra-files>
+		<case id='1'>
+			<arguments>
+				<arg file='true' input='true'>vowels.txt</arg> <!-- a eat upper oooooo -->
+			</arguments>
+			<line mark='1' errorMessage="X: Failed to translate a word starting with a vowel"
+			successMessage="OK: translated a word starting with a vowel correctly"
+			><regexp>^away$</regexp></line>
+
+			<line mark='2' 
+			><regexp>^eatway$</regexp></line>
+			
+			<line mark='1' 
+			><regexp>^upperway$</regexp></line>
+
+			<line mark='1' errorMessage="X: Failed to translate a word consisting only of vowels"
+			successMessage="OK: translated a word consisting only of vowels correctly"
+			><regexp>^o{6}way$</regexp></line>
+		</case>
+
+		<case id='2'>
+			<arguments>
+				<arg file='true' input='true'>consonants.txt</arg>  <!-- table start strings plkwstga -->
+			</arguments>
+			<line mark='2' errorMessage="X: Failed to translate a word starting with a consonant"
+			successMessage="OK: translated a word starting with a consonant correctly"
+			><regexp>^abletay$</regexp></line>
+			
+			<line mark='1' 
+			><regexp>^artstay$</regexp></line>
+			
+			<line mark='1' 
+			><regexp>^ingsstray$</regexp></line>
+			
+			<line mark='1' errorMessage="X: Failed to translate a word starting with a consonant cluster"
+			successMessage="OK: translated a word starting with a consonant cluster correctly"
+			><regexp>^aplkwstgay$</regexp></line>		
+		</case>
+		
+		<case id='3'>
+			<arguments>
+				<arg file='true' input='true'>extreme.txt</arg>  <!-- table start strings plkwstga -->
+			</arguments>
+			<line mark='2' 
+			><regexp>^okway$</regexp></line>
+			
+			<line mark='1' errorMessage="X: Failed an extreme case"
+			successMessage="OK: function behaves correctly with empty input"
+			><regexp>-{3}\+{3}</regexp></line>
+			
+			<line mark='1' errorMessage="X: Failed when given word is only one character"
+			successMessage="OK: Pass an extreme case"
+			><regexp>^bay$</regexp></line>
+			
+			<line mark='1' errorMessage="X: Failed to translate a word consisting only of consonants"
+			successMessage="OK: translated a word consisting only of consonants correctly"
+			><regexp>^pssstay$</regexp></line>		
+		</case>
+		
+	</output>
+</memo>

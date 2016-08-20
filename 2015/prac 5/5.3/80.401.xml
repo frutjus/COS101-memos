@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<memo version='0.4'>
+	<title>Prac5_Task1_PolynomialAdd</title>
+	<config>
+		<random>0</random>
+		<sequence>1</sequence>
+		<parts>1</parts>
+		<chances>10</chances> 
+	</config>
+	
+	<output part='1' fullmarks='7'>
+		<executable>polynomials.o</executable>
+				
+		<delete-patterns>
+			<pattern>.+\.o$</pattern>
+			<pattern>.+~$</pattern>
+		</delete-patterns>
+		
+		<source-patterns>
+			<pattern>.+\.cpp$</pattern>
+		</source-patterns>
+		
+		<extra-files>
+			<file overwrite='true' jail='true'>makefile</file>
+			<file overwrite='true' jail='true'>main.cpp</file>
+			<file overwrite='true' jail='true'>pxData</file>
+		</extra-files>
+
+		<case id='1'>
+			<arguments>
+				<arg file='true' input='true'>pxData</arg>
+			</arguments>
+<!-- Test a polynomial for x = 0  -->
+			<line>
+				<exact mark='1' errorMessage="Hint: check if your function gives the correct value even for simple polynomials. You must multiply each term by a scalar value">2</exact>
+			</line>
+<!-- Test a polynomial for x > 0  -->
+			<line>
+				<exact mark='0' errorMessage="Hint: Your function must calculate the y-intercept of a polynomial accurately">398</exact>
+			</line>
+<!-- Test a polynomial for x < 0  -->
+			<line>
+				<exact mark='1' errorMessage="Hint: Your value function should calculate the values for any number (positive/negative)">-12976</exact>
+			</line>
+<!-- Test a polynomial of with all coefficients equals zero  -->
+			<line>
+				<exact mark='1' errorMessage="Hint: Your function should calculate the values for any number (positive/negative)">0</exact>
+			</line>
+<!-- Test a polynomial of order 0 (i.e. constant polynomial)  -->
+			<line>
+				<exact mark='1' errorMessage="Hint: Your Evaluete function must accommodate polynomials of any order ">-100</exact>
+			</line>
+<!-- Test a polynomial of with negative coefficients  -->
+			<line>
+				<alt>
+					<exact mark='1' errorMessage="Hint: Check the correctness of all values accumulated: pay attention to their (negative/positive) signs ">7904</exact>
+				</alt>
+				<alt>
+					<exact mark='0' errorMessage="Hint: check off-by-one errors">8000</exact>
+				</alt>
+				<alt>
+					<exact mark='0' errorMessage="Hint: Hint: check off-by-one errors">-1006</exact>
+				</alt>
+				<alt>
+					<exact mark='0' errorMessage="Hint: Hint: check off-by-one erros">-1000</exact>
+				</alt>
+			</line>
+<!-- Test a polynomial of with mixed sign coefficients  -->
+			<line>
+				<exact mark='1' errorMessage="Hint: ">-50985</exact>
+			</line>
+<!-- Test an array with size -->
+			<line>
+				<exact mark='1' errorMessage="Hint: Your value function must accommodate polynomials of any order">0</exact>
+			</line>
+		</case>
+	</output>
+</memo>

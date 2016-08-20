@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<memo version='0.1'>
+	<title>prac4task1</title>
+
+	<config>
+		<random>0</random>
+		
+		<sequence>1</sequence>
+
+		<parts>1</parts>
+		
+		<chances>3</chances>
+	</config>
+
+	<output part='1' fullmarks='35'>
+		<delete-patterns>
+			<pattern>.+\.o$</pattern>
+			<pattern>.+~$</pattern>
+		</delete-patterns>
+
+		<source-patterns>
+			<pattern>.+\.(c|C)(\+\+|pp?|xx)?$</pattern>	
+			<pattern>.+\.ii?$</pattern>
+			<pattern>.+\.cc$</pattern>
+		</source-patterns>
+		
+		<extra-files>
+			<file overwrite='true' jail='true'>makefile</file>
+			<file overwrite='true' jail='true'>tenCorrectValues.txt</file>
+			<file overwrite='true' jail='true'>wrongInput.txt</file>
+			<file overwrite='true' jail='true'>inputZero.txt</file>
+			<file overwrite='true' jail='true'>TenAB.txt</file>
+			<file overwrite='true' jail='true'>borderCases.txt</file>
+		</extra-files>
+		
+		<!--Testing that program compiles-->
+		<case id="1">
+			<arguments>
+				<arg file="true" input="true">tenCorrectValues.txt</arg>
+			</arguments>
+				<!-- Line 1 -->
+				<line>
+					<regexp>Enter 999 to stop input</regexp>
+				</line>
+				
+				<!-- Line 2 -->
+				<alt>
+					<line>
+						<regexp mark="5" 
+							successMessage="PASS Test 1">[Ee]nter\s\D*1\D*2\D*3\D*4\D*5\D*6\D*7\D*8\D*9\D*10\D*11\D\s*</regexp>
+					</line>
+					<line>
+						<regexp mark="3" 
+							successMessage="FAIL Test 1: Your array is incomplete"
+							errorMessage="FAIL Test 1: The values entered was not displayed correctly"
+							>[Ee]nter\s\D*1\D*2\D*3\D*4\D*5\D*6\D*7\D*8\D*9\D*10\D\s*</regexp>	
+					</line>
+				</alt>
+
+				
+				<!-- Line 3 -->
+				<alt>
+					<line>
+						<regexp mark="5" successMessage="PASS Test 2">\D*10\D*40\D*15\D*35\D*12\D*11\D*19\D*25\D*27\D*20\D*</regexp>
+					</line>
+					<line>
+						<regexp mark="3" 
+							successMessage="FAIL Test 2: Yor array output may be off by one"
+							>\D*10\D*40\D*15\D*35\D*12\D*11\D*19\D*25\D*27\D*</regexp>
+					</line>
+					<line>
+						<regexp mark="3"
+							errorMessage="FAIL Test 2: Your array output is incorrect" 
+							successMessage="FAIL Test 2: Yor array output may be off by one"
+							>\D*40\D*15\D*35\D*12\D*11\D*19\D*25\D*27\D*20\D*</regexp>
+					</line>
+				</alt>
+
+				<!-- Line 4 -->
+				<alt>
+					<line>	
+						<regexp mark="3" successMessage="PASS Test 3">\D*21.4\D*</regexp>
+					</line>
+					<line>
+						<regexp mark="1"
+							errorMessage="FAIL Test 3: Your average calculation does not work" 
+							successMessage="FAIL Test 3: Your average calculation is partially correct. Does not support decimals"
+							>\D*21\D*</regexp>
+					</line>
+				</alt>
+		</case>
+
+		<case id="2">
+			<arguments>
+				<arg file="true" input="true">wrongInput.txt</arg>
+			</arguments>
+				<!-- Line 1 -->
+				<line>
+					<regexp>Enter 999 to stop input</regexp>
+				</line>
+				
+				<!-- Line 2 -->
+				<line>
+					<regexp mark="2" successMessage="PASS Test 4"
+						errorMessage = "FAIL Test 4: Your formatting is incorrect">.*-------</regexp>
+				</line>
+				
+				<!-- Line 3 -->
+				<alt>
+					<line>
+						<regexp mark="3" successMessage="PASS Test 5">\D*-12\D.*\binvalid\b</regexp>
+					</line>
+					<line>
+						<regexp mark="1" successMessage="FAIL Test 5: Output does not include the incorrect value input by user"
+							errorMessage = "FAIL Test 4">\D*invalid\D*</regexp>
+					</line>
+				</alt>
+		</case>
+
+		<case id="3">
+			<arguments>
+				<arg file="true" input="true">inputZero.txt</arg>
+			</arguments>
+				<!-- Line 1 -->
+				<line>
+					<regexp>Enter 999 to stop input</regexp>
+				</line>
+				
+				<!-- Line 2 -->
+				<line>
+					<regexp mark="3" successMessage="PASS Test 6"
+						errorMessage = "FAIL Test 6: Your output is incorrect for abnormal values">\D*0\D*abnormal\D*</regexp> 
+				</line>
+				
+				<!-- Line 3 -->
+				<line>
+					<regexp mark="3" successMessage="PASS Test 7"
+						errorMessage = "FAIL Test 7: Your program did not terminate correctly when abnormal input is invalid"
+						>\D*0\D*invalid\D*</regexp>
+				</line>
+		</case>
+		<case id="4">
+			<arguments>
+				<arg file="true" input="true">TenAB.txt</arg>
+			</arguments>
+				<!-- Line 1 -->
+				<line>
+					<regexp>Enter 999 to stop input</regexp>
+				</line>
+				
+				<!-- Line 2 -->
+				<line>
+					<regexp mark="3" successMessage="PASS Test 8"
+						errorMessage = "FAIL Test 8: Your output is incorrect for abnormal values">.*\D45\D.*\babnormal\b</regexp>
+				</line>
+				
+				<!-- Line 3 -->
+				<line>
+					<regexp mark="3" successMessage="PASS Test 9"
+						errorMessage = "FAIL Test 9: Your array is incorrect when abnormal values are used">\D*10\D*12\D*33\D*45\D* 13\D*20\D*25\D*22\D*23\D*24\D*</regexp>
+				</line>
+		</case>
+			<case id="5">
+			<arguments>
+				<arg file="true" input="true">borderCases.txt</arg>
+			</arguments>
+				<!-- Line 1 -->
+				<line>
+					<regexp>Enter 999 to stop input</regexp>
+				</line>
+				
+				<!-- Line 2 -->
+				<line>
+					<regexp mark="3" successMessage="PASS Test 10"
+						errorMessage = "FAIL Test 10: Your output is incorrect for abnormal values (Special Test)">.*\D41\D.*\babnormal\b</regexp>
+				</line>
+				
+				<!-- Line 3 -->
+				<line>
+					<regexp mark="3" successMessage="PASS Test 11"
+						errorMessage = "FAIL Test 11: Your array is incorrect when abnormal values are used (Special Test)"
+						>\D*0\D*40\D*41\D*</regexp>
+				</line>
+		</case>
+
+	</output>
+</memo>

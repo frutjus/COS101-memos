@@ -1,0 +1,454 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<memo version='0.3'>
+	<title>prac5task4</title>
+	<config>
+		<random>0</random>
+		<sequence>1</sequence>
+		<parts>1</parts>
+		<chances>3</chances>
+	</config>
+	<output part='1' fullmarks='44'>
+		<delete-patterns>
+			<pattern>.+\.o(ut)?$</pattern>
+			<pattern>.+~$</pattern>
+		</delete-patterns>
+
+		<source-patterns>
+			<pattern>.+\.(c|C)(\+\+|pp?|xx)?$</pattern>	
+			<pattern>.+\.ii?$</pattern>
+			<pattern>.+\.cc$</pattern>
+		</source-patterns>
+		
+		
+		
+		<extra-files>
+			<file overwrite='true' jail='true'>_test0.txt</file>
+			<file overwrite='true' jail='true'>_test1.txt</file>
+			<file overwrite='true' jail='true'>_test2.txt</file>
+			<file overwrite='true' jail='true'>_test3.txt</file>
+			<file overwrite='true' jail='true'>_test4.txt</file>
+			<file overwrite='true' jail='true'>_test5.txt</file>
+			<file overwrite='true' jail='true'>_test6.txt</file>
+			<file overwrite='true' jail='true'>_test7.txt</file>
+			<file overwrite='true' jail='true'>_test8.txt</file>
+			
+			
+			<file overwrite='true' jail='true'>arrayUtilities.h</file>
+			
+			
+			<file overwrite='true' jail='true'>ff_driver.cpp</file>
+			<file overwrite='true' jail='true'>ff_memory.cpp</file>
+			<file overwrite='true' jail='true'>ff_memory.h</file>
+			<file overwrite='true' jail='true'>ff_rain_graph_utilities.cpp</file>
+			<file overwrite='true' jail='true'>ff_rain_graph_utilities.h</file>
+			
+			<file overwrite='true' jail='true'>ff_raindata.txt</file>
+			<file overwrite='true' jail='true'>makefile</file>
+		</extra-files>
+			<!-- overwrite='true' jail='true'>MAKEFILE -->
+			
+<!--START Version Info -->
+		<case id = '0'>
+			<arguments><arg file='true' input='true'>_test0.txt</arg></arguments>
+			<line><regexp>|_____MEMO-VERSION-03_____</regexp></line>
+		</case><!-- END Version Info -->
+		
+		
+<!--START Memory Alocation -->
+		<case id = '1'>
+			<arguments><arg file='true' input='true'>_test1.txt</arg></arguments>
+			<!--case description (for tutors)-->
+			<line><regexp>.*</regexp></line>
+			<!-- Row dimension -->
+			<alt>
+				<line>
+					<regexp mark='2'
+					 successMessage="PASS TEST 1"
+					>PASS
+					</regexp>
+				</line>
+				<line>
+					<regexp mark='1'
+					 successMessage="FAIL TEST 1: the function newShort2d's row allocation is off by one"
+					 errorMessage="FAIL TEST 1: the function newShort2d's row allocation is wrong"
+					>OFF-BY-ONE
+					</regexp>
+				</line>
+			</alt>
+			<!-- Row[0] dimension -->
+			<alt>
+				<line>
+					<regexp mark='2'
+					 successMessage="PASS TEST 2"
+					>PASS
+					</regexp>
+				</line>
+				<line>
+					<regexp mark='1'
+					 successMessage="FAIL TEST 2: one of the row's size is off by one, at the function newShort2d"
+					 errorMessage="FAIL TEST 2: one of the row's size is wrong, at the function newShort2d"
+					>OFF-BY-ONE
+					</regexp>
+				</line>
+			</alt>
+			<!-- Row[n - 1] dimension -->
+			<alt>
+				<line>
+					<regexp mark='2'
+					 successMessage="PASS TEST 3"
+					>PASS
+					</regexp>
+				</line>
+				<line>
+					<regexp mark='1'
+					 successMessage="FAIL TEST 3: one of the row's size is off by one, at the function newShort2d"
+					 errorMessage="FAIL TEST 3: one of the row's size is wrong, at the function newShort2d"
+					>OFF-BY-ONE
+					</regexp>
+				</line>
+			</alt>
+		</case><!-- END Memory Alocation -->
+		
+		
+<!--START caseMemoryDeallocation -->
+		<case id = '4'>
+			<arguments><arg file='true' input='true'>_test2.txt</arg></arguments>
+			<!--case description (for tutors)-->
+			<line><regexp>.*</regexp></line>
+			<!--ponter value after delete (must be set to zero)-->
+			<line>
+				<regexp mark='1'
+				 successMessage="PASS TEST 4"
+				 errorMessage="FAIL TEST 4: deleteShort2d is not setting the pointer to the expected value"
+				>\D0$
+				</regexp>
+			</line>
+			<!--Deallocate ptr-->
+			<line>
+				<regexp mark='1'
+				 successMessage="PASS TEST 5"
+				 errorMessage="FAIL TEST 5: deleteShort2d is not performing the expected operation on the pointer"
+				>PASS
+				</regexp>
+			</line>
+			<!--Deallocate ptr[0]-->
+			<line>
+				<regexp mark='1'
+				 successMessage="PASS TEST 6"
+				 errorMessage="FAIL TEST 6: deleteShort2d is not performing the expected operation on one of ptr's elements"
+				>PASS
+				</regexp>
+			</line>
+			<!--Deallocate ptr[n - 1]-->
+			<line>
+				<regexp mark='1'
+				 successMessage="PASS TEST 7"
+				 errorMessage="FAIL TEST 7: deleteShort2d is not performing the expected operation on one of ptr's elements"
+				>PASS
+				</regexp>
+			</line>
+			<!--Not calling delete on a invalid pointer in the function-->
+			<line>
+				<regexp mark='2'
+				 successMessage="PASS TEST 8"
+				 errorMessage="FAIL TEST 8: deleteShort2d has tried to delete an invalid pointer"
+				>PASS
+				</regexp>
+			</line>
+		</case><!--END caseMemoryDeallocation -->
+		
+		
+		
+		<case id = '9'>
+			<arguments><arg file='true' input='true'>_test3.txt</arg></arguments>
+			<line><regexp>.*</regexp></line>
+			<alt>
+				<line>
+					<!--NOTE: Error message might be ambiguous if the context is not explained (i.e. ptr value of zero)--> 
+					<regexp mark='2'
+					 successMessage="PASS TEST 9"
+					 errorMessage='FAIL TEST 9: reallocShort3d fails, when ptr is passed with a value of zero'
+					>PASS
+					</regexp>
+				</line>
+				<line>
+					<regexp mark='1'
+					 successMessage="	ptr's size is off by one, after returnig from function reallocShort3d"
+					>off by one
+					</regexp>
+				</line>
+				<line>
+					<regexp
+					 successMessage="	reallocShort3d encountered a total failure, ptr might not being set"
+					 errorMessage="	ptr's size is off by more than one, after returnig from reallocShort3d"
+					>TOTAL-FAIL
+					</regexp>
+				</line>
+			</alt>
+			<alt>
+				<line>
+					<regexp mark='1'
+					 successMessage="PASS TEST 10"
+					 errorMessage="FAIL TEST 10: reallocShort3d might not be working correctly,"
+					>PASS
+					</regexp>
+				</line>
+				<line>
+					<regexp errorMessage="	if ptr is passed with a value of zero">PASS
+					</regexp>
+				</line>
+			</alt>
+			<alt>
+				<line>
+					<regexp mark='2'
+					 successMessage="PASS TEST 11"
+					>PASS
+					</regexp>
+				</line>
+				<line>
+					<regexp mark='1'
+					 successMessage="FAIL TEST 11: ptr's size is off by one after a call to reallocShort3d"
+					 errorMessage="FAIL TEST 11: ptr's size is off by more than one after a call to reallocShort3d"
+					>size off by one
+					</regexp>
+				</line>
+			</alt>
+			<line><!-- test first element-->
+				<regexp mark='1'
+				 successMessage="PASS TEST 12"
+				 errorMessage="FAIL TEST 12: an elements of ptr does not points to the original 2D-array after reallocShort3d"
+				>PASS
+				</regexp>
+			</line>
+			<line><!-- test last element-->
+				<regexp mark='1'
+				 successMessage="PASS TEST 13"
+				 errorMessage="FAIL TEST 13: an elements of ptr does not points to the original 2D-array after reallocShort3d"
+				>PASS
+				</regexp>
+			</line>
+			<alt>
+				<line>
+					<regexp mark='2'
+					 successMessage="PASS TEST 14"
+					>PASS
+					</regexp>
+				</line>
+				<line>
+					<regexp mark='1'
+					 successMessage="FAIL TEST 14: one of the elements in a 2D array changed after calling reallocShort3d"
+					 errorMessage="FAIL TEST 14: multiple elements in a 2D array changed after calling reallocShort3d"
+					>TABLE-INTEGRITY-FAIL: one of the
+					</regexp>
+				</line>
+			</alt>
+			<line>
+				<regexp mark='1'
+				 successMessage="PASS TEST 15"
+				 errorMessage="FAIL TEST 15: reallocShort3d might have tried to delete an invalid pointer"
+				>PASS
+				</regexp>
+			</line>
+			<line>
+				<regexp mark='1'
+				 successMessage="PASS TEST 16"
+				 errorMessage="FIAL TEST 16: memory leak detected in reallocShort3d"
+				>PASS
+				</regexp>
+			</line>
+			<line><regexp>.*</regexp></line>
+		</case>
+		
+		
+		
+		<case id = '17'>
+			<arguments><arg file='true' input='true'>_test4.txt</arg></arguments>
+			<line><regexp>.*</regexp></line>
+			<line>
+				<regexp mark='1'
+				 successMessage="PASS TEST 17"
+				 errorMessage="FAIL TEST 17: numDaysInMonth returns a incorrect value for a month with 31 days"
+				>:31:
+				</regexp>
+			</line>
+			<line>
+				<regexp mark='1'
+				 successMessage="PASS TEST 18"
+				 errorMessage="FAIL TEST 18: numDaysInMonth returns a incorrect value for a month with 30 days"
+				>:30:
+				</regexp>
+			</line>
+			<line>
+				<regexp mark='1'
+				 successMessage="PASS TEST 19"
+				 errorMessage="FAIL TEST 19: numDaysInMonth returns a incorrect value for a month with 31 days"
+				>:31:
+				</regexp>
+			</line>
+			<line>
+				<regexp mark='1'
+				 successMessage="PASS TEST 20"
+				 errorMessage="FAIL TEST 20: numDaysInMonth returns a incorrect value for a month with 28 days"
+				>:28:
+				</regexp>
+			</line>
+			<line>
+				<regexp mark='1'
+				 successMessage="PASS TEST 21"
+				 errorMessage="FAIL TEST 21: numDaysInMonth returns a incorrect value when it is a leap year"
+				>:29:
+				</regexp>
+			</line>
+			<!-- test year = 1700, when year % 100 == 0 && year % 400 != 0-->
+			<line>
+				<regexp mark='1'
+				 successMessage="PASS TEST 22"
+				 errorMessage="FAIL TEST 22: numDaysInMonth fails for a special case of year"
+				>:28:
+				</regexp>
+			</line>
+		</case>
+		
+		
+		
+		<case id = '22'>
+			<arguments><arg file='true' input='true'>_test5.txt</arg></arguments>
+			<line><regexp>.*</regexp></line>
+			<line>
+				<regexp mark='1'
+				 successMessage="PASS TEST 23"
+				 errorMessage="FAIL TEST 23: yearsMonthSize's retrun value is incorrect near the first element/month"
+				>#DAYS CORRECT AT JAN
+				</regexp>
+			</line>
+			<line>
+				<regexp mark='1'
+				 successMessage="PASS TEST 24"
+				 errorMessage="FAIL TEST 24: yearsMonthSize's retrun value is incorrect near the last element/month"
+				>#DAYS CORRECT AT NOV
+				</regexp>
+			</line>
+			<line>
+				<regexp mark='1'
+				 successMessage="PASS TEST 25"
+				 errorMessage="FAIL TEST 25: yearsMonthSize's retrun value is incorrect near the middle element/month"
+				>#DAYS CORRECT AT FEB
+				</regexp>
+			</line>
+		</case>
+		<case id = '25'>
+			<arguments><arg file='true' input='true'>_test6.txt</arg></arguments>
+			<line><regexp>.*</regexp></line>
+			<line>
+				<regexp mark='1'
+				 successMessage="PASS TEST 26"
+				 errorMessage="FAIL TEST 26: parseDateStamp read a wrong year value into parameter stampArray"
+				>YEAR:2013$
+				</regexp>
+			</line>
+			<line>
+				<regexp mark='1'
+				 successMessage="PASS TEST 27"
+				 errorMessage="FAIL TEST 27: parseDateStamp read a wrong mont value into parameter stampArray"
+				>MONTH:5$
+				</regexp>
+			</line>
+			<line>
+				<regexp mark='1'
+				 successMessage="PASS TEST 28"
+				 errorMessage="FAIL TEST 28: parseDateStamp read a wrong day value into parameter stampArray"
+				>DAY:13$
+				</regexp>
+			</line>
+			<line>
+				<regexp mark='1'
+				 successMessage="PASS TEST 29"
+				 errorMessage="FAIL TEST 29: parseDateStamp behaves incorrectly when stampString has an invalid date"
+				>YEAR:2011$
+				</regexp>
+			</line>
+			<line>
+				<regexp mark='1'
+				 successMessage="PASS TEST 30"
+				 errorMessage="FAIL TEST 30: parseDateStamp behaves incorrectly when stampString has an invalid date"
+				>MONTH:-1$
+				</regexp>
+			</line>
+		</case>
+		
+		
+		
+		<case id = '29'>
+			<arguments><arg file='true' input='true'>_test7.txt</arg></arguments>
+			<line><regexp>.*</regexp></line>
+			<line>
+				<regexp mark='1'
+				 successMessage="PASS TEST 31"
+				 errorMessage="FAIL TEST 31: parseDataFile returns an incorrect number of years"
+				>#years = 26,
+				</regexp>
+			</line>
+			<line>
+				<regexp mark='1'
+				 successMessage="PASS TEST 32"
+				 errorMessage="FAIL TEST 32: parseDataFile sets parameter firstYear incorrectly"
+				>firstYear = 1990,
+				</regexp>
+			</line>
+			<line>
+				<regexp mark='1'
+				 successMessage="PASS TEST 33"
+				 errorMessage="FAIL TEST 33: parseDataFile set a value of an element incorrectly at parameter dataPtr"
+				>rainfall = 121,
+				</regexp>
+			</line>
+			<line>
+				<regexp mark='1'
+				 successMessage="PASS TEST 34"
+				 errorMessage="FAIL TEST 34: parseDataFile set a value of an element incorrectly at parameter dataPtr"
+				>rainfall = -1,
+				</regexp>
+			</line>
+			<line>
+				<regexp mark='1'
+				 successMessage="PASS TEST 35"
+				 errorMessage="FAIL TEST 35: parseDataFile set a value of an element incorrectly at parameter dataPtr"
+				>rainfall = -1,
+				</regexp>
+			</line>
+			<line>
+				<regexp mark='1'
+				 successMessage="PASS TEST 36"
+				 errorMessage="FAIL TEST 36: parseDataFile set a value of an element incorrectly at parameter dataPtr"
+				>rainfall = 6,
+				</regexp>
+			</line>
+		</case>
+		<case id = '35'>
+			<arguments><arg file='true' input='true'>_test8.txt</arg></arguments>
+			<line>
+				<regexp mark='1'
+				 successMessage="PASS TEST 37"
+				 errorMessage="FAIL TEST 37: parseDataFile returned a incorrect value at a specific 'corner case'"
+				>PASS
+				</regexp>
+			</line>
+		</case>
+	</output>
+</memo>
+
+
+<!--START Template->
+		<case id = ''>
+			<arguments>
+				<arg file='true' input='true'></arg>
+			</arguments>
+			<line><regexp>.*</regexp></line>
+			<line>
+				<regexp mark=''
+				 successMessage="PASS TEST :"
+				 errorMessage="FAIL TEST :"
+				>(?i)
+				</regexp>
+			</line>
+		</case><!-END Template -->

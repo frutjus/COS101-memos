@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<memo version='0.4'>
+	<title>COS132_Prac4_LoShu</title>
+	<!-- hannes jvv -->
+	<config>
+		<random>0</random>
+		<sequence>1</sequence>
+		<parts>1</parts>
+		<chances>10</chances> <!-- todo: remember to reset to 10 for students -->
+	</config>
+	
+	<output part='1' fullmarks='13'>
+		
+		<delete-patterns>
+			<pattern>.+\.o$</pattern>
+			<pattern>.+~$</pattern>
+		</delete-patterns>
+		
+		<source-patterns>
+			<pattern>.+\.(cpp|h)$</pattern>
+		</source-patterns>
+		
+		<extra-files>
+			<file overwrite='true' jail='true'>obvious-nonmagic.txt</file>
+			<file overwrite='true' jail='true'>nonmagic.txt</file>
+			<file overwrite='true' jail='true'>magic.txt</file>
+			<file overwrite='true' jail='true'>ones.txt</file>
+			<file overwrite='true' jail='true'>ninety.txt</file>
+			<file overwrite='true' jail='true'>sixthree-nonmagic.txt</file>
+			<file overwrite='true' jail='true'>loshu1.txt</file>
+			<file overwrite='true' jail='true'>loshu2.txt</file>
+		</extra-files>
+		
+		<!--title line and prompts-->
+		<case id='1'>
+			<arguments>
+				<arg file='true' input='true'>obvious-nonmagic.txt</arg>
+			</arguments>
+			<line mark='1'>
+				<regexp successMessage="OK: title line present"
+				errorMessage="Hint: title line missing at top of output?"
+				>[Mm]agic|Lo.Shu</regexp>
+			</line>
+			<line mark='1'>
+				<alt>
+					<regexp mark='2' successMessage="OK: all three prompts."
+					errorMessage="Warning: fewer than three prompts detected. Prompts should not end in a linebreak. Each prompt MUST end in a colon followed by zero or more spaces."
+					>(\s*[EentrInpuTyeGiv]+.+(value.+row|row.+value).+[:]\s*){3}</regexp>
+					<regexp mark='1' 
+					>(\s*[EentrInpuTyeGiv]+.+(value.+row|row.+value).+[:]\s*){2}</regexp>
+					<regexp mark='0' 
+					>(\s*[EentrInpuTyeGiv]+.+(value.+row|row.+value).+[:]\s*){1}</regexp> 
+				</alt>
+			</line>
+		</case>
+
+		<!-- 
+		<case id='2'>
+			<arguments>
+				<arg file='true' input='true'>obvious-nonmagic.txt</arg>
+			</arguments>
+			<line><regexp mark='0'>.*</regexp></line>
+			<line successMessage="OK: program seems to detect non-magic squares correctly so far."
+				errorMessage="Fail: program does not detect an obviously non-magic square as such.">
+				<regexp mark='1'>:\s*[Tthegridvn ]*\s*(is)?\s+(not|NOT)\s*a?n?\s*[Mm]agic\s+[Ss]quare.{0,5}$</regexp>
+			</line>
+		</case>
+		-->
+		
+		<case id='2'>
+			<arguments>
+				<arg file='true' input='true'>nonmagic.txt</arg>
+			</arguments>
+			<line><regexp mark='0'>.*</regexp></line>
+			<line errorMessage="Fail: program does not detect non-Lo Shu square as such. Make sure to check the sums of rows, columns and both diagonals!">
+				<regexp mark='1'>[NnOoTt]{3}.*\s*Lo.Shu</regexp>
+			</line>
+		</case>
+		
+		<case id='3'>
+			<arguments>
+				<arg file='true' input='true'>sixthree-nonmagic.txt</arg>
+			</arguments>
+			<line><regexp mark='0'>.*</regexp></line>
+			<line errorMessage="Fail: program does not identify non-Lo Shu square.">
+				<regexp mark='1'>[NnOoTt]{3}.*\s*Lo.Shu</regexp>
+			</line>
+		</case>
+		
+		<case id='4'>
+			<arguments>
+				<arg file='true' input='true'>ones.txt</arg>
+			</arguments>
+			<line><regexp mark='0'>.*</regexp></line>
+			<line errorMessage="Fail: program does not identify non-Lo Shu square.">
+				<regexp mark='1'>[NnOoTt]{3}.*\s*Lo.Shu</regexp>
+			</line>
+		</case>
+		
+		<case id='5'>
+			<arguments>
+				<arg file='true' input='true'>ninety.txt</arg>
+			</arguments>
+			<line><regexp mark='0'>.*</regexp></line>
+			<line errorMessage="Fail: program does not identify non-Lo Shu square consisting of a single number repeated.">
+				<regexp mark='1'>[NnOoTt]{3}.*\s*Lo.Shu</regexp>
+			</line>
+		</case>
+		
+		<case id='6'>
+			<arguments>
+				<arg file='true' input='true'>magic.txt</arg>
+			</arguments>
+			<line><regexp mark='0'>.*</regexp></line>
+			<line errorMessage="Fail: program does not identify non-Lo Shu square.">
+				<regexp mark='1'>[NnOoTt]{3}.*\s*Lo.Shu</regexp>
+			</line>
+		</case>
+		
+		<case id='7'>
+			<arguments>
+				<arg file='true' input='true'>loshu1.txt</arg>
+			</arguments>
+			<line><regexp mark='0'>.*</regexp></line>
+			<line errorMessage="Fail: program does not identify first Lo Shu square correctly"
+				successMessage="OK: program identifies Lo Shu square correctly!">
+				<regexp mark='2'>[Ii][Ss].+Lo.Shu</regexp>
+			</line>
+		</case>
+
+		<case id='8'>
+			<arguments>
+				<arg file='true' input='true'>loshu2.txt</arg>
+			</arguments>
+			<line><regexp mark='0'>.*</regexp></line>
+			<line errorMessage="Fail: program does not identify second Lo Shu square correctly.">
+				<regexp mark='2'>[Ii][Ss].+Lo.Shu</regexp>
+			</line>
+		</case>
+	</output>
+</memo>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<memo version='0.4'>
+	<title>Prac3_ConvertTable-Functions</title>
+	<config>
+		<random>0</random>
+		<sequence>1</sequence>
+		<parts>1</parts>
+		<chances>8</chances> 
+	</config>
+	
+	<output part='1' fullmarks='15'>
+		<executable>convert.out</executable>
+				
+		<delete-patterns>
+			<pattern>.+\.o$</pattern>
+			<pattern>.+~$</pattern>
+		</delete-patterns>
+		
+		<source-patterns>
+			<pattern>.+\.cpp$</pattern>
+		</source-patterns>
+		
+		<extra-files>
+			<file overwrite='true' jail='true'>5enters.txt</file>
+			<file overwrite='true' jail='true'>makefile</file>
+			<file overwrite='true' jail='true'>convert.cpp</file>
+			<file overwrite='true' jail='true'>inchToMill.h</file>
+		</extra-files>
+
+		<!-- Call the functions with hard coded values in the main file that is uploaded with this memo -->
+		<case id='1'>
+			<line><exact mark = '5' 
+				successMessage="OK: AddInches() adds correctly"
+				errorMessage="X: AddInches() does not add correctly">1'2" + 9" = 1'11"</exact></line>
+			<line><exact mark = '5' 
+				successMessage="OK: AddInches() carries correctly" 
+				errorMessage="X: AddInches() does not carry correctly">1'10" + 9" = 2'7"</exact></line>
+			<line><exact mark = '5' 
+				successMessage="OK: millimeters() calculates correctly"
+				errorMessage="X: millimeters() does not calculate correctly">1'2" = 355.6 mm</exact></line>
+		</case>
+	</output>
+</memo>

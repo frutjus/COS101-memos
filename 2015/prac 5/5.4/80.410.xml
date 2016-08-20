@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<memo version='0.4'>
+	<title>COS132_P5S1_printSeries(const double[], size_t)</title>
+	<!-- Vreda -->
+	<config>
+		<random>0</random>
+		<sequence>1</sequence>
+		<parts>1</parts>
+		<chances>10</chances> 
+	</config>
+
+<output part='1' fullmarks='6'> 
+			
+	<delete-patterns>
+		<pattern>.+\.o$</pattern>
+		<pattern>.+~$</pattern>
+	</delete-patterns>
+	
+	<source-patterns>
+		<pattern>.+\.cpp$</pattern>
+	</source-patterns>
+
+	<extra-files>
+		<file overwrite='true' jail='true'>driver-printSeries.cpp</file>
+		<file overwrite='true' jail='true'>makefile</file>
+		<file overwrite='true' jail='true'>series.h</file>
+		<file overwrite='true' jail='true'>input4.txt</file>
+		<file overwrite='true' jail='true'>input1.txt</file>
+		<file overwrite='true' jail='true'>input0.txt</file>
+	</extra-files>
+
+	<case id='1'>
+		<!-- Test for vertical alignment only -->
+		<arguments>
+			<arg file='true' input='true'>input1.txt</arg>
+		</arguments>
+		<alt>
+			<line>
+				<regexp
+				errorMessage="XXX: printSeries(v[], size_t) NOT PRINTING ON THE CURRENT LINE. PLEASE FIX BEFORE PAYING ATTENTION TO ANY FURTHER FEEDBACK" 
+				>A{6}</regexp></line>
+			<line>
+				<regexp mark='1'
+				successMessage="OK: Vertical alignment seems fine"
+				errorMessage="X: printSeries(v[], size_t) should not print any \n or endl" 
+				>A{6}.*H{6}</regexp></line>
+			<line>
+				<regexp
+				successMessage="X: printSeries(v[], size_t) should not print the = sign" 
+				>=</regexp></line>
+			<line><regexp
+				successMessage="X: stray + sign detected" 
+				>\+</regexp> </line>
+		</alt>
+	</case>
+	
+	<case id='2'>
+		<!-- first four elements of {5,-1,0,3,9} should be printed -->
+		<arguments>
+			<arg file='true' input='true'>input4.txt</arg>
+		</arguments>
+		<alt>
+			<line>
+				<regexp mark='3' 
+				successMessage="OK: printSeries(v[], size_t) displays values perfectly. WOW!!" 
+				>5 - 1 \+ 0 \+ 3</regexp></line>
+			<line>
+				<regexp mark='3' 
+				successMessage="OK: printSeries(v[], size_t) displays values as specified" 
+				>5\s+\+\s+-1\s+\+\s+0\s+\+\s+3</regexp></line>
+			<line>
+				<regexp mark='2' 
+				successMessage="X: printSeries(v[], size_t) should have spaces on both sides of the + sign" 
+				>5(\+-|-)1\+0\+3</regexp></line>
+			<line>
+				<regexp
+				successMessage="X: printSeries(v[], size_t) may be off-by-one" 
+				>9</regexp></line>
+			<line>
+				<regexp
+				errorMessage="X: printSeries(v[], size_t) may be off-by-one" 
+				>3</regexp></line>
+		</alt>
+	</case>
+
+	<case id='3'>
+		<!-- only first elements of {5,-1,0,3,9} should be printed -->
+		<arguments>
+			<arg file='true' input='true'>input1.txt</arg>
+		</arguments>
+		<alt>
+			<line><regexp mark='1' 
+				successMessage="OK: printSeries(const double[], size_t) when terms is 1" 
+				errorMessage="X: printSeries(const double[], size_t) fails when terms is 1"
+				>A{6}5H{6}</regexp> </line>
+		</alt>
+	</case>
+
+	<case id='4'>
+		<!-- When array size is zero nothing should be printed -->
+		<arguments>
+			<arg file='true' input='true'>input0.txt</arg>
+		</arguments>
+		<alt>
+			<line><regexp mark='1' 
+				successMessage="OK: printSeries(const double[], size_t) when series is empty" 
+				errorMessage="X: printSeries(const double[], size_t) fails when series is empty"
+				>A{6}H{6}</regexp> </line>
+		</alt>
+	</case>
+</output>
+</memo>

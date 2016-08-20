@@ -1,0 +1,106 @@
+<memo version="1.0">
+	<title>FractionFunctions</title>
+	<config>
+	<random>0</random>
+	<sequence>1</sequence>
+	<parts>1</parts>
+	<chances>3</chances>
+	</config>
+	<output part="1" fullmarks="25">
+		<delete-patterns>
+		<pattern>.+\.o(ut)?$</pattern>
+		<pattern>.+~$</pattern>
+		</delete-patterns>
+		<source-patterns>
+		<pattern>.+\.(c|C)(\+\+|pp?|xx)?$</pattern>
+		<pattern>.+\.ii?$</pattern>
+		<pattern>.+\.cc$</pattern>
+		</source-patterns>
+
+		<extra-files>
+			<file overwrite="true" jail="true">makefile</file>
+			<file overwrite="true" jail="true">vectorFunctions.h</file>
+			<file overwrite="true" jail="true">harness.cpp</file>
+		</extra-files>
+
+		<case id="1">
+			<line>
+				<regexp mark="1" successMessage="PASS Test 1" errorMessage="FAIL Test 1: Your addVectors() may be incorrect"
+					>\[3]</regexp>
+			</line>
+			<line>
+				<regexp mark="2" successMessage="PASS Test 2" errorMessage="FAIL Test 2: Your addVectors() may be incorrect"
+					>\[1,1,2]</regexp>
+			</line>
+			<line>
+				<regexp mark="3" successMessage="PASS Test 3" errorMessage="FAIL Test 3: Your addVectors() may be incorrect for negative numbers"
+					>\[18,38,86,84,1101,27,46,120,-44,-880]</regexp>
+			</line>
+			<line>
+				<regexp mark="1" successMessage="PASS Test 4" errorMessage="FAIL Test 4: Your subtractVectors() may be incorrect"
+					>\[-1]</regexp>
+			</line>
+			<line>
+				<regexp mark="2" successMessage="PASS Test 5" errorMessage="FAIL Test 5: Your subtractVectors() may be incorrect"
+					>\[5,9,16]</regexp>
+			</line>
+			<line>
+				<regexp mark="3" successMessage="PASS Test 6" errorMessage="FAIL Test 6: Your subtractVectors() may be incorrect for negative numbers"
+					>\[10,30,70,80,901,-23,-38,-100,36,-720]</regexp>
+			</line>
+			<line>
+				<regexp mark="1" successMessage="PASS Test 7" errorMessage="FAIL Test 7: Your magnitude() may be incorrect"
+					>10</regexp>
+			</line>
+			<line>
+				<regexp mark="1" successMessage="PASS Test 8" errorMessage="FAIL Test 8: Your magnitude() may be incorrect with negative values"
+					>1286</regexp>
+			</line>
+			<line>
+				<regexp mark="1" successMessage="PASS Test 9" errorMessage="FAIL Test 9: Your equalVectors() may be incorrect"
+					>NOT EQUAL</regexp>
+			</line>
+			<line>
+				<regexp mark="1" successMessage="PASS Test 10" errorMessage="FAIL Test 10: Your equalVectors() may be incorrect"
+					>NOT EQUAL</regexp>
+			</line>
+			<line>
+				<regexp mark="1" successMessage="PASS Test 11" errorMessage="FAIL Test 11: Your equalVectors() may be incorrect with negative numbers"
+					>EQUAL</regexp>
+			</line>
+			<line>
+				<regexp mark="1" successMessage="PASS Test 12" errorMessage="FAIL Test 12: Your dotProduct() may be incorrect"
+					>2</regexp>
+			</line>
+			<line>
+				<regexp mark="1" successMessage="PASS Test 13" errorMessage="FAIL Test 13: Your dotProduct() may be incorrect when result is negative"
+					>-89</regexp>
+			</line>
+			<line>
+				<regexp mark="1" successMessage="PASS Test 14" errorMessage="FAIL Test 14: Your dotProduct() may be incorrect with negative values"
+					>166558</regexp>
+			</line>
+			<line>
+				<regexp mark="1" successMessage="PASS Test 15" errorMessage="FAIL Test 15: Your printVector() function may be incorrect"
+					>\[1]</regexp>
+			</line>
+			<alt>
+				<line>
+					<regexp mark="3" successMessage="PASS Test 16" errorMessage="FAIL Test 16: Your formatting of the printVector() may be incorrect."
+					>\[3, 5, 9]</regexp>
+				</line>
+				<line>
+					<regexp mark="1" successMessage="FAIL Test 16: Your printVector() function is partially correct"
+					>\[3,5,9]</regexp>
+				</line>
+				<line>
+					<regexp mark="1" successMessage="FAIL Test 16: Your printVector() function is partially correct"
+					>\[3, 5, 9, ]</regexp>
+				</line>
+			</alt>
+			<line>
+					<regexp mark="1" successMessage="PASS Test 1" errorMessage="FAIL Test 17: Your printVector() does not work for an empty array">\[]</regexp>
+			</line>
+		</case>
+	</output>
+</memo>

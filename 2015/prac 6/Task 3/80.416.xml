@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<memo version='0.4'>
+	<title>pigLatinMain</title>
+	
+	<config>
+		<random>0</random>
+		<sequence>1</sequence>
+		<parts>1</parts>
+		<chances>10</chances>
+	</config>
+	
+	<output part='1' fullmarks='15'>		
+		<delete-patterns>
+			<pattern>.+\.o$</pattern>
+			<pattern>.+~$</pattern>
+		</delete-patterns>
+		
+		<source-patterns>
+			<pattern>.+\.cpp$</pattern>
+		</source-patterns>
+		
+		<extra-files>
+			<file overwrite='true' jail='true'>invalid.txt</file>
+			<file overwrite='true' jail='true'>white.txt</file>
+			<file overwrite='true' jail='true'>ZOOM.txt</file>
+			<file overwrite='true' jail='true'>Blade.txt</file>
+			<file overwrite='true' jail='true'>camel.txt</file>
+		</extra-files>
+		
+		<case id='1'> <!-- Evaluate the prompt -->
+			<arguments>
+				<arg file='true' input='true'>white.txt</arg> 
+			</arguments>
+			<alt>
+				<line mark='2' errorMessage="X: Prompt to ask an English word can be improved."
+				successMessage="OK: Prompt to ask English word"
+				><regexp>([Ee]nter|[Ii]nput|[Tt]ype).*\bword\b</regexp></line>
+			</alt>
+		</case>
+		
+		<case id='2'><!-- Prompt ends with colon and is not followed by a new-line -->
+			<arguments>
+				<arg file='true' input='true'>white.txt</arg> 
+			</arguments>
+			<alt>
+				<line mark='1'  successMessage="OK: Prompt ends with colon and a space"
+				><regexp>.+:\s</regexp></line>
+				<line 
+				successMessage="WARNING: It seems you have a new line after your prompt, this may cause your output to be unaligned with the memo."
+				><regexp>.+:\s*$</regexp></line>
+			</alt>
+		</case>
+		
+		<case id='3'><!-- Error message upon invalid input -->
+			<arguments>
+				<arg file='true' input='true'>invalid.txt</arg> 
+			</arguments>
+			<alt>
+				<line mark='1' 
+				successMessage="OK: Error message when input is invalid detected"
+				><regexp>(\bno|\bcontains?\b|\binvalid\b|\bincorr?ect\b)</regexp></line>
+				<line mark='2' errorMessage="X: Error message when input is invalid can be improved"
+				successMessage="OK: Error message when input is invalid seems fine"
+				><regexp>\bword_123w1th@!.*(\bno|\bcontains?\b|\binvalid\b|\bincorr?ect\b)</regexp></line>
+			</alt>
+		</case>
+
+		<case id='4'><!-- Error message upon invalid input -->
+			<arguments>
+				<arg file='true' input='true'>invalid.txt</arg> 
+			</arguments>
+			<alt>
+				<line mark = '1' errorMessage="X: The error message should echo the wrong input"
+				successMessage="OK: The input is echoed in the output when the input was invalid"
+				><regexp>word_123w1th@!</regexp></line>
+			</alt>
+		</case>
+		
+		<case id='5'><!-- Conversion to lower case -->
+			<arguments>
+				<arg file='true' input='true'>white.txt</arg> 
+			</arguments>
+			<alt>
+				<line mark='3' 
+				successMessage="OK: Pass when input is in lower case"
+				><regexp>\bwhite\b.*\b[whiteay]{5,8}</regexp></line>
+				<line mark='1' errorMessage="X: Translated word should be in lower case"
+				successMessage="OK: Pass when input is in lower case but output does not echo the input"
+				><regexp>\b[whiteay]{5,8}</regexp></line>
+			</alt>
+		</case>
+		
+		<case id='6'><!-- Conversion to lower case -->
+			<arguments>
+				<arg file='true' input='true'>ZOOM.txt</arg> 
+			</arguments>
+			<alt>
+				<line mark='3' errorMessage="X: Output not as expected when input is upper case"
+				successMessage="OK: Conversion to lower case"
+				><regexp>\bZOOM\b.*\b[zomway]{4,7}</regexp></line>
+				<line mark='2' 
+				successMessage="X: Output not as expected when input is upper case"
+				><regexp>\bzoom\b.*\b[zomway]{4,7}</regexp></line>
+				<line mark='1' 
+				successMessage="OK: Pass when input is in lower case but output does not echo the input"
+				><regexp>.*\b[zomway]{4,7}</regexp></line>
+			</alt>
+		</case>
+
+		<case id='7'><!-- Conversion to lower case -->
+			<arguments>
+				<arg file='true' input='true'>Blade.txt</arg> 
+			</arguments>
+			<alt>
+				<line mark='2'
+				successMessage="OK: Conversion to lower case"
+				><regexp>\b[Bb]lade\b.*\b[bladewy]{5,8}</regexp></line>
+				<line errorMessage="X: Translated word should be in lower case"
+				successMessage="X: Convesrion to lowercase seems OK but the input is not echoed in the output"
+				><regexp>\b[bladewy]{5,8}</regexp></line>
+			</alt>
+		</case>
+	
+		<case id='8'><!-- Conversion to lower case -->
+			<arguments>
+				<arg file='true' input='true'>camel.txt</arg> 
+			</arguments>
+			<alt>
+				<line mark='1' errorMessage="X: Original word should be as entered and translated word should be in lower case"
+				successMessage="OK: Conversion to lower case"
+				><regexp>\bsulkingCamelCase\b.*\b[sulkingcamewy]{16,19}</regexp></line>
+			</alt>
+		</case>
+		
+</output>
+</memo>

@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- By Nikki, 04/03/2016 -->
+<!-- COS 132 Prac 5 Task 3, Name Sorting -->
+<memo version='0.3'>
+	<title>Name_Sorting</title>
+
+	<config>
+		<random>0</random>
+		
+		<sequence>1</sequence>
+
+		<parts>1</parts>
+    
+		<chances>5</chances>
+	</config>
+
+	<output part='1' fullmarks='3'>
+		<delete-patterns>
+			<pattern>.+\.o$</pattern>
+			<pattern>.+~$</pattern>
+		</delete-patterns>
+
+		<source-patterns>
+			<pattern>.+\.(c|C)(\+\+|pp?|xx)?$</pattern>	
+			<pattern>.+\.ii?$</pattern>
+			<pattern>.+\.cc$</pattern>
+		</source-patterns>
+		
+		<extra-files>
+			<file overwrite='true' jail='true'>makefile</file>
+			<file overwrite='true' jail='true'>nameSort.cpp</file>
+			<file overwrite='true' jail='true'>names.txt</file>
+			<file overwrite='true' jail='true'>caseOne.txt</file>
+			<file overwrite='true' jail='true'>caseTwo.txt</file>
+		</extra-files>
+		
+		<case id = '1'>
+			<arguments>
+				<arg file='true' input='true'>caseOne.txt</arg>				
+			</arguments>
+		
+	<!--Heading -->
+				<line>
+					<regexp>.*</regexp>
+				</line>
+
+	<!--dashes-->
+				<line>
+					<regexp>.*</regexp>
+				</line>	
+
+	<!-- Line 1 menu-->
+				<line>
+					<regexp>.*</regexp>
+				</line>	
+
+	<!-- Line two menu-->
+				<line>
+					<regexp> .*</regexp>
+				</line>	
+
+	<!-- Enter choice and echo choice-->
+				<line>
+					<regexp> .*</regexp>
+				</line>	
+
+	<!-- Empty Line-->
+				<line>
+					<regexp> .*</regexp>
+				</line>
+
+	<!-- Print Function-->
+				<alt>
+					<!-- if the content is on the right line-->
+					<line>
+						<regexp mark="1" successMessage=" "> CONTENT</regexp>
+					</line>	
+					<!-- if it is instead a blank line-->
+					<line>
+						<regexp successMessage="Sub-headings in wrong place." > $</regexp>
+					</line>	
+					<!--if it is instead a line of dashes-->
+					<line>
+						<regexp successMessage="Sub-headings in wrong place."> -{5}</regexp>
+					</line>	
+				</alt>
+	<!-- dashes-->
+				<line>
+					<regexp> .*</regexp>
+				</line>	
+	<!--output-->
+				<line>
+					<regexp mark="1" errorMessage="Incorrect call to function"> S{3}\s+S{2}</regexp>
+				</line>	
+	<!--output-->
+				<line>
+					<regexp> S{3}\s+S{2}</regexp>
+				</line>	
+	<!--output-->
+				<line>
+					<regexp> S{3}\s+S{2}</regexp>
+				</line>	
+		</case>
+
+
+
+		<case id = '2'>
+			<arguments>
+				<arg file='true' input='true'>caseTwo.txt</arg>				
+			</arguments>
+		
+	<!--Heading -->
+				<line>
+					<regexp>.*</regexp>
+				</line>
+
+	<!--dashes-->
+				<line>
+					<regexp>.*</regexp>
+				</line>	
+
+	<!-- Line 1 menu-->
+				<line>
+					<regexp>.*</regexp>
+				</line>	
+
+	<!-- Line two menu-->
+				<line>
+					<regexp> .*</regexp>
+				</line>	
+
+	<!-- Enter choice and echo choice-->
+				<line>
+					<regexp> .*</regexp>
+				</line>	
+
+	<!-- Empty Line-->
+				<line>
+					<regexp> .*</regexp>
+				</line>
+
+	<!-- Print Function-->
+				<line>
+					<regexp> .*</regexp>
+				</line>
+	<!-- dashes-->
+				<line>
+					<regexp> .*</regexp>
+				</line>	
+	<!--output-->
+				<line>
+					<regexp mark="1" errorMessage="Incorrect call to function"> N{3}\s+N{2}</regexp>
+				</line>	
+	<!--output-->
+				<line>
+					<regexp> N{3}\s+N{2}</regexp>
+				</line>	
+	<!--output-->
+				<line>
+					<regexp> N{3}\s+N{2}</regexp>
+				</line>	
+		</case>
+
+</output>
+</memo>

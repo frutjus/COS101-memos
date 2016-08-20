@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<memo version='0.4'>
+	<title>Prac5_Task1_PolynomialAdd</title>
+	<config>
+		<random>0</random>
+		<sequence>1</sequence>
+		<parts>1</parts>
+		<chances>10</chances> 
+	</config>
+	
+	<output part='1' fullmarks='6'>
+		<executable>polynomials.o</executable>
+				
+		<delete-patterns>
+			<pattern>.+\.o$</pattern>
+			<pattern>.+~$</pattern>
+		</delete-patterns>
+		
+		<source-patterns>
+			<pattern>.+\.cpp$</pattern>
+		</source-patterns>
+		
+		<extra-files>
+			<file overwrite='true' jail='true'>makefile</file>
+			<file overwrite='true' jail='true'>main.cpp</file>
+			<file overwrite='true' jail='true'>scalarData</file>
+		</extra-files>
+
+		<case id='1'>
+			<arguments>
+				<arg file='true' input='true'>scalarData</arg>
+			</arguments>
+	
+			<line>
+				<regexp mark='1' errorMessage="Hint: Your must multiply all array elements by a scalar ">44\s+66\s+88\s+110</regexp>
+			</line>
+			<line>
+				<regexp mark='1' errorMessage="Hint: your function must work for both negative and positive scalar values">-4\s+-6\s+-8\s+-10</regexp>
+			</line>
+			<line>
+				<regexp mark='1' errorMessage="Hint: Check if your function works with scalar value types again ">0\s+0\s+0\s+0</regexp>
+			</line>
+			<line>
+				<regexp mark='1' errorMessage="Hint: Your arrays must execute appropriately for all integer values of your array ">0\s+0\s+0\s+0</regexp>
+			</line>
+			<line>
+				<regexp mark='1' errorMessage="Hint: Your function must execute appropriately for all polynomials of any order ">-300</regexp>
+			</line>
+			<line>
+				<regexp mark='0' errorMessage="Hint: Your function must execute appropriately for all polynomials of any order"></regexp>
+			</line>
+			<line>
+				<regexp mark='1' errorMessage="Hint: Your arrays must execute appropriately for all integer values of your array">25\s+-5\s+-50\s+0\s+-25</regexp>
+			</line>
+		</case>
+	</output>
+</memo>

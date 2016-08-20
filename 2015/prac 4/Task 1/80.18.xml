@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<memo version='0.4'>
+	<title>Prac4_Vowels</title>
+	<config>
+		<random>0</random>
+		<sequence>1</sequence>
+		<parts>1</parts>
+		<chances>10</chances> 
+	</config>
+	
+	<output part='1' fullmarks='5'>
+		<executable>vowels.out</executable>
+				
+		<delete-patterns>
+			<pattern>.+\.o$</pattern>
+			<pattern>.+~$</pattern>
+		</delete-patterns>
+		
+		<source-patterns>
+			<pattern>.+\.cpp$</pattern>
+		</source-patterns>
+		
+		<extra-files>
+			<file overwrite='true' jail='true'>makefile</file>
+			<file overwrite='true' jail='true'>main.cpp</file>
+			<file overwrite='true' jail='true'>testfile1</file>
+		</extra-files>
+
+		<case id='1'>
+			<arguments>
+				<arg file='true' input='true'>testfile1</arg>
+			</arguments>
+	
+			<line>
+				<exact mark='1' errorMessage="Hint: for a given character, your function must return true if the character is a vowel otherwise false">1 0 1 0</exact>
+			</line>
+
+			<line>
+				<exact mark='1' errorMessage="Hint: Your function must function properly even for special characters">0 0 0</exact>
+			</line>
+
+			<line>
+				<regexp mark='2' errorMessage="Hint: Your function must pass a large number of tests, even when used on a list of characters">E\se\sa\se\si\se\so\sa\sa\se\s10</regexp>
+			</line>
+
+			<line>
+				<exact mark='1' errorMessage="Hint: Your function must handle all cases; upper and lower cases">83</exact>
+			</line>
+		</case>
+	</output>
+</memo>

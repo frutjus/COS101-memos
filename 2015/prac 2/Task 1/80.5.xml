@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="ISO-8859-15"?>
+<memo version='0.4'>
+	<title>Prac2 Task1</title>
+
+	<config>
+		<random>0</random>
+		
+		<sequence>1</sequence>
+
+		<parts>1</parts>
+		
+		<chances>10</chances>
+	</config>
+
+	<output part='1' fullmarks='6'>
+		<executable>prac2task1.out</executable>
+		
+		<delete-patterns>
+			<pattern>.+\.o$</pattern>
+			<pattern>.+~$</pattern>
+		</delete-patterns>
+
+		<source-patterns>
+			<pattern>.+\.(c|C)(\+\+|pp?|xx)?$</pattern>	
+			<pattern>.+\.ii?$</pattern>
+			<pattern>.+\.cc$</pattern>
+		</source-patterns>
+		
+		<extra-files>
+			<file overwrite='true' jail='true'>input0.txt</file>
+			<file overwrite='true' jail='true'>makefile</file>
+		</extra-files>
+		
+		<case id='1'>
+			<arguments>
+				<arg file='true' input='true'>input0.txt</arg>
+			</arguments>
+			
+			<line><regexp errorMessage= "Hint: Make sure the first line consist of dashes only">-*</regexp></line>
+			<line><regexp mark='1' errorMessage="It seems you modified the string literals in the code">This\s+program\s+divides\s+the\s+first\s+number\s+entered\s+by\s+the\s+user\s+with\s+the\s+second\s+one.</regexp></line>
+
+			<line><regexp mark='1'>-*</regexp></line>
+
+			<alt>
+			<line><regexp errorMessage="It seems you modified the string literals in the code">The\s+first\s+number\s+is\s+an\s+integer\s+and\s+the\s+value\s+is\s+18</regexp></line>
+			<line><regexp successMessage="The numbers entered need to be displayed in the output lines">The\s+first\s+number\s+is\s+an\s+integer\s+and\s+the\s+value\s+is\s+</regexp></line>
+			</alt>
+
+			<alt>
+			<line><regexp mark='1' errorMessage="It seems you modified the string literals in the code">The\s+second\s+number\s+is\s+an\s+integer\s+and\s+the\s+value\s+is\s+21</regexp></line>
+		<line><regexp successMessage="The numbers entered need to be displayed in the output lines">The\s+first\s+number\s+is\s+an\s+integer\s+and\s+the\s+value\s+is\s+</regexp></line>
+			</alt>
+			
+			<alt>
+			<line><regexp mark='1'>The\s+result\s+of\s+18 ?/ ?21\s+is\s+0.857143</regexp></line>
+			<line><regexp successMessage="The result need to be displayed in a sentence. Check that you did not modify the string literals.">0.857143</regexp></line>
+			</alt>
+		
+			<line><regexp mark='1'>I\s+fixed\s+the\s+problem\s+with\s+the\s+char\s+and\s+the\s+value\s+is\s+U</regexp></line>
+			<line mark='1' errorMessage="It seems you modified the last string literal in the code"><exact>I fixed all the errors!</exact></line>
+		</case>
+	</output>
+</memo>

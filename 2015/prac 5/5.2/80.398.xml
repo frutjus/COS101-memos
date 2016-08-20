@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<memo version='0.4'>
+	<title>COS132_P5S2_printvector</title>
+	<!-- hannes jvv -->
+	<config>
+		<random>0</random>
+		<sequence>1</sequence>
+		<parts>1</parts>
+		<chances>30</chances> <!-- TODO: change appropriately -->
+	</config>
+
+<output part='1' fullmarks='6'>
+	<executable>test.out</executable>
+			
+	<delete-patterns>
+		<pattern>.+\.o$</pattern>
+		<pattern>.+~$</pattern>
+	</delete-patterns>
+	
+	<source-patterns>
+		<pattern>.+\.cpp$</pattern>
+	</source-patterns>
+	
+	<extra-files>
+		<file overwrite='true' jail='true'>harness-printvector.cpp</file>
+		<file overwrite='true' jail='true'>input-vectorl1</file>
+		<file overwrite='true' jail='true'>input-vectorl6</file>
+		<file overwrite='true' jail='true'>makefile</file>
+	</extra-files>
+
+	<case id='1'>
+	<!-- test vector with one element -->
+		<arguments>
+			<arg file='true' input='true'>input-vectorl1</arg>
+		</arguments>
+		<line>
+			<regexp mark='1' successMessage="" errorMessage="">(^|\D)1337(\D|$)</regexp>
+		</line>
+	</case>
+
+	<case id='2'>
+	<!-- test for [brackets] around output -->
+		<arguments>
+			<arg file='true' input='true'>input-vectorl6</arg>
+		</arguments>
+		<line>
+			<alt>
+			<regexp mark='2' successMessage="" errorMessage="">\[.+\]</regexp>
+			<regexp mark='1' successMessage="" errorMessage="">[({].+[})]</regexp>
+			</alt>
+		</line>
+	</case>
+
+	<case id='3'>
+	<!-- test vector with six elements -->
+		<arguments>
+			<arg file='true' input='true'>input-vectorl6</arg>
+		</arguments>
+		<line>
+			<regexp mark='3' successMessage="" errorMessage="">\s*-99,\s*23,\s*1968,\s*19,\s*-33,\s*16\s*</regexp> <!-- no trailing comma, best solution -->
+			<regexp mark='2' successMessage="" errorMessage="">\s*-99\s*,\s*23\s*,\s*1968\s*,\s*19\s*,\s*-33\s*,\s*16\s*,?\s*</regexp>
+			<regexp mark='1' successMessage="" errorMessage="">-99\D+23\D+1968\D+19\D+-33\D+16(\D|$)</regexp>
+		</line>
+	</case>
+
+</output>
+</memo>

@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<memo version='0.4'>
+	<title>Prac4_JuliusCaesar</title>
+	<config>
+		<random>0</random>
+		<sequence>1</sequence>
+		<parts>1</parts>
+		<chances>10</chances> 
+	</config>
+
+<output part='1' fullmarks='17'> 
+	<executable>caesar.out</executable>
+			
+	<delete-patterns>
+		<pattern>.+\.o$</pattern>
+		<pattern>.+~$</pattern>
+	</delete-patterns>
+	
+	<source-patterns>
+		<pattern>.+\.cpp$</pattern>
+	</source-patterns>
+
+	<extra-files>
+		<file overwrite='true' jail='true'>main.cpp</file>
+		<file overwrite='true' jail='true'>makefile</file>
+		<file overwrite='true' jail='true'>caesar.h</file>
+	</extra-files>
+
+	<case id='1'>
+		<line><regexp mark = '1' 
+				successMessage= "OK: shift function PASS when shift happens within range a - z or A - Z" 
+				errorMessage="X: shift function FAILS when shift happens within range a - z or A - Z"
+				>L$
+		</regexp></line>
+		<line><regexp mark = '1' 
+				successMessage= "OK: shift function PASS when shift value goes beyond z or Z" 
+				errorMessage="X: shift function FAILS when shift value goes beyond z or Z"
+				>F$
+		</regexp></line>
+		<line><regexp mark = '1' 
+				successMessage= "OK: shift function PASS when shifting negative goes beyond a or A" 
+				errorMessage="X: shift function FAILS when shifting negative goes beyond a or A"
+				>W$
+		</regexp></line>
+		<line><regexp mark = '1' 
+				successMessage= "OK: shift function PASS when shifting with 0 value" 
+				errorMessage="X: shift function FAILS when with 0 value"
+				>B$
+		</regexp></line>
+		<line><regexp mark = '1' 
+				successMessage= "OK: shift function PASS when shifting 1 position" 
+				errorMessage="X:  shift function FAILS when shifting 1 position" 
+				>C$
+		</regexp></line>
+		<line><regexp mark = '1' 
+				successMessage= "OK: shift function PASS when shifting alphabets around the margin" 
+				errorMessage="X: shift function FAILS when shifting alphabets around the margin" 
+				>z$
+		</regexp></line>
+		<line><regexp mark = '1' 
+				successMessage= "OK: shift function PASS when shifting alphabets around the margin with negative shift" 
+				errorMessage="X: shift function FAILS when shifting alphabets around the margin with negative shift" 
+				>a$
+		</regexp></line>
+		<line><regexp mark = '1' 
+				successMessage= "OK: shift function PASS when shifting alphabets around the margin with negative shift" 
+				errorMessage="X: shift function FAILS when shifting alphabets around the margin with negative shift" 
+				>y$
+		</regexp></line>
+		<line><regexp mark = '1' 
+				successMessage= "OK: shift function PASS when shifting with large negative shift key" 
+				errorMessage="X: shift function FAILS when shifting with large negative shift key"  
+				>E$
+		</regexp></line>
+		<line><regexp mark = '1' 
+				successMessage= "OK: shift function PASS when shifting with large positive shift key" 
+				errorMessage="X: shift function FAILS when shifting with large positive shift key - check for overflow"  
+				>q$
+		</regexp></line>
+		<line><regexp mark = '1' 
+				successMessage= "OK: shift function PASS when applied to special characters" 
+				errorMessage="X: shift function FAILS when applied to special characters"  
+				>\.\*@\$\%\^\(\{\"$
+		</regexp></line>
+		<line><regexp mark = '1' 
+				successMessage= "OK: cipher function PASS on string when shift key is zero" 
+				errorMessage="X: cipher function FAILS on string  when shift key is zero" 
+				>I\sLove\sCOS132!!!\sI\sJust\sKnoW\sIT!\s#-myName\sis\sabyzmn\.\.\.$
+		</regexp></line>
+		<line><regexp mark = '1' 
+				successMessage= "OK: cipher function PASS on string  when shift key is positive" 
+				errorMessage="X: cipher function FAILS on string when shift key is positive" 
+				>N\sQtaj\sHTX132!!!\sN\sOzxy\sPstB\sNY!\s#-rdSfrj\snx\sfgders\.\.\.$
+		</regexp></line>
+		<line><regexp mark = '1' 
+				successMessage= "OK: cipher function PASS on string when shift key is negative" 
+				errorMessage="X: cipher function FAILS on string when shift key is negative" 
+				>I\sLove\sCOS132!!!\sI\sJust\sKnoW\sIT!\s#-myName\sis\sabyzmn\.\.\.$
+		</regexp></line>
+		<line><regexp mark = '1' 
+				successMessage= "OK: cipher function PASS on string when shift key is large and positive" 
+				errorMessage="X: cipher function FAILS on string when shift key is large and positive" 
+				>E\sHkra\sYKO132!!!\sE\sFqop\sGjkS\sEP!\s#-iuJwia\seo\swxuvij\.\.\.$
+		</regexp></line>
+		<line><regexp mark = '1' 
+				successMessage= "OK: cipher function PASS on string when shift key is large and negative" 
+				errorMessage="X: cipher function FAILS on string when shift key is large and negative" 
+				>I\sLove\sCOS132!!!\sI\sJust\sKnoW\sIT!\s#-myName\sis\sabyzmn\.\.\.$
+		</regexp></line>
+		<line><regexp mark = '1' 
+				successMessage= "OK: cipher function PASS on string when shift key is 1" 
+				errorMessage="X: cipher function FAILS on string when shift key is 1" 
+				>J\sMpwf\sDPT132!!!\sJ\sKvtu\sLopX\sJU!\s#-nzObnf\sjt\sbczano\.\.\.$
+		</regexp></line>
+	</case>
+</output>
+</memo>

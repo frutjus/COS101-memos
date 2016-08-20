@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- By Nikki, 04/03/2016 -->
+<!-- COS 132 Prac 4 Task 3, Chips and Salsa -->
+<memo version='0.3'>
+	<title>ChipsAndSalsa</title>
+
+	<config>
+		<random>0</random>
+		
+		<sequence>1</sequence>
+
+		<parts>1</parts>
+    
+		<chances>3</chances>
+	</config>
+
+	<output part='1' fullmarks='30'>
+		<delete-patterns>
+			<pattern>.+\.o$</pattern>
+			<pattern>.+~$</pattern>
+		</delete-patterns>
+
+		<source-patterns>
+			<pattern>.+\.(c|C)(\+\+|pp?|xx)?$</pattern>	
+			<pattern>.+\.ii?$</pattern>
+			<pattern>.+\.cc$</pattern>
+		</source-patterns>
+		
+		<extra-files>
+			<file overwrite='true' jail='true'>makefile</file>
+			<file overwrite='true' jail='true'>ChipsAndSalsa.cpp</file>
+
+
+		</extra-files>
+		
+		
+		<case id = '1'>
+				<line><!--Test if first line is correct-->
+					<regexp mark = '5' successMessage="	PASS"
+					 errorMessage="FAIL: h file incorrect"> 6mildmediumsweethotzestySUPA hot565758596061</regexp>
+				</line>
+				
+
+
+
+		</case>
+
+		
+</output>
+</memo>

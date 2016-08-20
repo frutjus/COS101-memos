@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<memo version='0.1'>
+	<title>Prac2 Task4</title>
+
+	<config>
+		<random>0</random>
+		
+		<sequence>1</sequence>
+
+		<parts>1</parts>
+		
+		<chances>10</chances>
+	</config>
+
+	<output part='1' fullmarks='18'>
+		<executable>incomeTax.out</executable>
+		
+		<delete-patterns>
+			<pattern>.+\.o$</pattern>
+			<pattern>.+~$</pattern>
+		</delete-patterns>
+
+		<source-patterns>
+			<pattern>.+\.(c|C)(\+\+|pp?|xx)?$</pattern>	
+			<pattern>.+\.ii?$</pattern>
+			<pattern>.+\.cc$</pattern>
+		</source-patterns>
+		
+		<extra-files>
+			<file overwrite='true' jail='true'>input0</file>
+			<file overwrite='true' jail='true'>input1</file>
+			<file overwrite='true' jail='true'>makefile</file>
+		</extra-files>
+		
+		<case id='1'>
+			<arguments>
+				<arg file='true' input='true'>input0</arg>
+			</arguments>
+			<line><regexp>-*</regexp></line>
+			<line mark='1' errorMessage = "Hint: The line of dashes must be immediately after the prompts. No newline before the dashes."><regexp>.*Solomon\s+Duncan.*</regexp></line>			
+			<alt>
+				<line><regexp mark='2' errorMessage="Hint: Output the gross income and other results in a sentence and in 2 decimal places.">.*[Gg](ross|ROSS).*[Rr](and|AND)*[sS]* ?12345\.67\D?.*$</regexp></line>
+				<line><regexp mark='2' >.*[Gg](ross|ROSS).*\D12345\.67 ?[Rr](and|AND)*[sS]*</regexp></line>
+				<line><regexp mark='1' successMessage="Hint: Your outputs need to be in a sentence">\D*12345\.67 ?[Rr](and|AND)*[sS]*</regexp></line>
+				<line><regexp mark='1' successMessage="Hint: Your outputs need to be in a sentence">[Rr](and|AND)*[sS]* ?12345\.67\D?.*$</regexp></line>
+				<line><regexp mark='1' successMessage="Hint: Your outputs need to be in two decimal places and in a sentence">[Rr](and|AND)*[sS]* ?12345\.[67]\D?.*$</regexp></line>
+				<line><regexp mark='1' successMessage="Hint: Your outputs need to be in a sentence">12345\.[67] ?[Rr](and|AND)*[sS]*</regexp></line>
+				<line><regexp mark='1' successMessage="Hint: Your outputs need to be in a sentence with the currency displayed">12345\.67\D?.*$</regexp></line>
+				<line><regexp successMessage="Hint: it seems you defined your gross income as integer. Use the appropriate data type.">1234[56]\.*\D$</regexp></line>
+			</alt>
+
+			<alt>
+				<line><regexp mark='2' errorMessage="Hint: Output the taxable income and other results in a sentence and in 2 decimal places">\D9876\.54 ?[Rr](and|AND)*[sS]*</regexp></line>
+				<line><regexp mark='2'>.*[Rr](and|AND)*[sS]* ?9876\.54\D?.*$</regexp></line>
+				<line><regexp mark='1' successMessage="Hint: Your output needs to be rounded two decimal places and in a sentence.">.*[Rr](and|AND)*[sS]* ?9876\.5\D?.*$</regexp></line>
+				<line><regexp mark='1' successMessage="Hint: Your output needs to be rounded to two decimal places and in a sentence.">9876\.5 ?[Rr](and|AND)*[sS]*</regexp></line>
+				<line><regexp mark='1' successMessage="Hint: Your output needs to be rounded up to two decimal places..">9876\.53\D?.*$</regexp></line>
+				<line><regexp mark='1' successMessage="Hint: Your output needs to be in a sentence. Check that you indicate the currency everywhere necessary.">9876\.54\D?.*$</regexp></line>
+				<line><regexp successMessage="Hint: it seems you defined your taxable income variable as integer. Use the appropriate data type.">987[67]\.*\D$</regexp></line>
+			</alt>
+
+			<alt>
+				<line><regexp mark='2' errorMessage="Hint: Output the tax paid and other results in a sentence and in 2 decimal places">
+				.*[Tt](ax|AX).*[Rr](and|AND)*[sS]* ?1777\.78\D?.*$</regexp></line>
+				<line><regexp mark='2'>.*[Tt](ax|AX).*\D1777\.78 ?[Rr](and|AND)*[sS]*</regexp></line>
+				<line><regexp mark='1' successMessage="Hint: Output the tax paid in a sentence">1777\.78 ?[Rr](and|AND)*[sS]*</regexp></line>
+				<line><regexp mark='1' successMessage="Hint: Output the tax paid in a sentence">[Rr](and|AND)*[sS]* ?1777\.78\D?.*$</regexp></line>
+				<line><regexp mark='1' successMessage="Hint: Output the tax paid in a sentence and in 2 decimal places">[Rr](and|AND)*[sS]* ?1777\.[78]\D?.*$</regexp></line>
+				<line><regexp mark='1' successMessage="Hint: Output the tax paid in a sentence and in 2 decimal places">1777\.[78] ?[Rr](and|AND)*[sS]*</regexp></line>
+				<line><regexp mark='1' successMessage="Hint: Output the tax paid in a sentence and indicate the currency">1777\.78\D?.*$</regexp></line>
+				<line><regexp successMessage="Hint: it seems you defined your variable for the tax paid as integer. Use the appropriate data type.">177[78]\.*\D$</regexp></line>
+			</alt>
+
+			<alt>
+				<line><regexp mark='2' errorMessage="Hint: Output the net income and other results in a sentence and in 2 decimal places">.*[Nn](ET|et).*[Rr](and|AND)*[sS]* ?10567\.89\D?.*$</regexp></line>
+				<line><regexp mark='2'>.*[Nn](ET|et).*\D10567\.89 ?[Rr](and|AND)*[sS]*</regexp></line>
+				<line><regexp mark='1' successMessage="Hint: Output the net income in a sentence">10567\.89 ?[Rr](and|AND)*[sS]*</regexp></line>
+				<line><regexp mark='1' successMessage="Hint: Output the net income  in a sentence">[Rr](and|AND)*[sS]* ?10567\.89\D?.*$</regexp></line>
+				<line><regexp mark='1' successMessage="Hint: Output the net income  in a sentence and in 2 decimal places">[Rr](and|AND)*[sS]* ?10567\.[89]\D?.*$</regexp></line>
+				<line><regexp mark='1' successMessage="Hint: Output the net income  in a sentence and in 2 decimal places">10567\.[89] ?[Rr](and|AND)*[sS]*</regexp></line>
+				<line><regexp mark='1' successMessage="Hint: Output the net income in a sentence and indicate the currency">10567\.89\D?.*$</regexp></line>
+				<line><regexp successMessage="Hint: it seems you defined your net income  variable as an integer. Use the appropriate data type.">1056[78]\.*\D$</regexp></line>
+			</alt>
+		</case>
+		<case id='2'>
+			<arguments>
+				<arg file='true' input='true'>input1</arg>
+			</arguments>
+			<line><regexp>-*</regexp></line>
+			<line mark='1'><regexp>Lethabo\s+Mhlanga</regexp></line>			
+			<alt>
+				<line><regexp mark='2' errorMessage="Hint: Output the gross income and other results in a sentence and in 2 decimal places.">.*[Gg](ross|ROSS).*[Rr](and|AND)*[sS]* ?23456\.00\D?.*$</regexp></line>
+				<line><regexp mark='2' >[Gg](ross|ROSS).*\D23456\.00 ?[Rr](and|AND)*[sS]*</regexp></line>
+				<line><regexp mark='1'>23456\.00 ?[Rr](and|AND)*[sS]*</regexp></line>
+				<line><regexp mark='1'>[Rr](and|AND)*[sS]* ?23456\.00\D?.*$</regexp></line>
+				<line><regexp mark='1'>23456\.00\D?.*$</regexp></line>
+			</alt>
+			<alt>
+				<line><regexp mark='2'>\D18764\.80 ?[Rr](and|AND)*[sS]*</regexp></line>
+				<line><regexp mark='2'>[Rr](and|AND)*[sS]* ?18764\.80\D?.*$</regexp></line>
+				<line><regexp mark='1' successMessage="Output the taxable income in a sentence and indicate currency.">18764\.80\D?.*$</regexp></line>
+				<line><regexp mark='1' successMessage="Hint: Money values must have two decimal places.">18764\.8\D?.*$</regexp></line>
+			</alt>
+			<alt>
+				<line><regexp mark='2' errorMessage="Hint: Output the tax paid and other results in a sentence and in 2 decimal places">
+				.*[Tt](ax|AX).*[Rr](and|AND)*[sS]* ?3377\.66\D?.*$</regexp></line>
+				<line><regexp mark='2'>.*[Tt](ax|AX).*\D3377\.66 ?[Rr](and|AND)*[sS]*</regexp></line>
+				<line><regexp mark='1'>3377\.66 ?[Rr](and|AND)*[sS]*</regexp></line>
+				<line><regexp mark='1'>[Rr](and|AND)*[sS]* ?3377\.66\D?.*$</regexp></line>
+				<line><regexp mark='1'>[Rr](and|AND)*[sS]* ?3377\.[67]\D?.*$</regexp></line>
+				<line><regexp mark='1'>3377\.[67] ?[Rr](and|AND)*[sS]*</regexp></line>
+				<line><regexp mark='1'>3377\.66\D?.*$</regexp></line>
+			</alt>
+			<alt>
+				<line><regexp mark='2'>.*[Nn](et|ET).*[Rr](and|AND)*[sS]* ?20078\.34\D?.*$</regexp></line>
+				<line><regexp mark='2'>.*[Nn](et|ET).*20078\.34 ?[Rr](and|AND)*[sS]*</regexp></line>
+				<line><regexp mark='1'>20078\.34 ?[Rr](and|AND)*[sS]*</regexp></line>
+				<line><regexp mark='1'>[Rr](and|AND)*[sS]* ?20078\.34\D?.*$</regexp></line>
+				<line><regexp mark='1'>20078\.34\D?.*$</regexp></line>
+			</alt>
+
+		</case>
+	</output>
+</memo>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<memo version='0.4'>
+	<title>Prac4_nDifference</title>
+	<config>
+		<random>0</random>
+		<sequence>1</sequence>
+		<parts>1</parts>
+		<chances>10</chances> 
+	</config>
+	
+	<output part='1' fullmarks='8'>
+		<executable>arrayDiffs.out</executable>
+				
+		<delete-patterns>
+			<pattern>.+\.o$</pattern>
+			<pattern>.+~$</pattern>
+		</delete-patterns>
+		
+		<source-patterns>
+			<pattern>.+\.cpp$</pattern>
+		</source-patterns>
+		
+		<extra-files>
+			<file overwrite='true' jail='true'>makefile</file>
+			<file overwrite='true' jail='true'>main.cpp</file>
+			<file overwrite='true' jail='true'>testData</file>
+		</extra-files>
+
+		<case id='1'>
+			<arguments>
+				<arg file='true' input='true'>testData</arg>
+			</arguments>
+	
+			<line>
+				<exact mark='2' errorMessage="Hint: The correct number of pairs with a difference n must be returned by the function ">4</exact>
+			</line>
+
+			<line>
+				<exact mark='2' errorMessage="Hint: The correct number of pairs with a difference must be returned. Recall (a,b) != (b,a) ">4</exact>
+			</line>
+			<line>
+				<exact mark='1' errorMessage="Hint: your function must find the n array differences in arrays containing positive and negative integers as well as empty arrays  ">3</exact>
+			</line>
+			<line>
+				<regexp mark='1' errorMessage="Hint:  The sorting array is tested and it must work properly">1\s2\s3\s4\s5\s6\s7</regexp>
+			</line>
+			<line>
+				<regexp mark='1' errorMessage="Hint: make sure your sort function can sort an array containing positive and negative integers ">-10\s-5\s-4\s-1\s0\s2\s3\s5\s10</regexp>
+			</line>
+			<line>
+				<exact mark='1'>0</exact>
+			</line>
+		</case>
+	</output>
+</memo>

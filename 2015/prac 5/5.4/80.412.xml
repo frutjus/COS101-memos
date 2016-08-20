@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<memo version='0.4'>
+	<title>COS132_P5S1_factorial</title>
+	<!-- Kwan Sui Dave Ka -->
+	<config>
+		<random>0</random>
+		<sequence>1</sequence>
+		<parts>1</parts>
+		<chances>10</chances> 
+	</config>
+
+<output part='1' fullmarks='5'> 
+	<executable>factorial.out</executable>
+			
+	<delete-patterns>
+		<pattern>.+\.o$</pattern>
+		<pattern>.+~$</pattern>
+	</delete-patterns>
+	
+	<source-patterns>
+		<pattern>.+\.cpp$</pattern>
+	</source-patterns>
+
+	<extra-files>
+		<file overwrite='true' jail='true'>main.cpp</file>
+		<file overwrite='true' jail='true'>makefile</file>
+		<file overwrite='true' jail='true'>series.h</file>
+	</extra-files>
+
+	<case id='1'>
+		<line>
+			<regexp mark='1' 
+				successMessage="OK: Only numbers returned."
+				errorMessage="X: factorial() should only return numbers" 
+			>\d+</regexp>
+		</line>
+		<line>
+			<regexp
+				successMessage="OK: Only numbers returned."
+				errorMessage="X: factorial() should only return numbers" 
+			>\d+</regexp>
+		</line>
+	</case>
+	
+	<case id='2'>
+		<line>
+			<regexp
+				successMessage="X: Your factorial() is resulting in '0'. Variables initialised to '0' and then multiplied by it will cause this issue."
+			>^0$</regexp>
+		</line>
+		<line>
+			<regexp
+				errorMessage="X: The factorial of '0' and '1' should both result in '1'." 
+			>^1$</regexp>
+		</line>
+	</case>
+	
+	<case id='3'>
+		<line>
+			<regexp
+				successMessage="X: Your loop might be shifted."
+			>^60$</regexp>
+		</line>
+		<line>
+			<regexp
+				errorMessage="X: The factorial of '0' and '1' should both result in '1'." 
+			>^1$</regexp>
+		</line>
+	</case>
+	
+	<case id='4'>
+		<line>
+			<regexp
+				successMessage="Hint: Your loop might be ending too early."
+			>^24$</regexp>
+		</line>
+		<line>
+			<regexp
+				errorMessage="X: The factorial of '0' and '1' should both result in '1'." 
+			>^1$</regexp>
+		</line>
+	</case>
+
+	<case id='5'>
+		<line>
+			<regexp
+				successMessage="X: Your loop may be ending too late."
+			>^720$</regexp>
+		</line>
+		<line>
+			<regexp
+				errorMessage="X: The factorial of '0' and '1' should both result in '1'." 
+			>^1$</regexp>
+		</line>
+	</case>
+	
+	<case id='6'>
+		<line>
+			<regexp
+				successMessage="X: Your loop may be shifted and ending too early."
+			>^12$</regexp>
+		</line>
+		<line>
+			<regexp
+				errorMessage="X: The factorial of '0' and '1' should both result in '1'." 
+			>^1$</regexp>
+		</line>
+	</case>
+	
+	<case id='7'>
+		<line>
+			<regexp
+				successMessage="X: Your loop may be shifted and ending too late."
+			>^360$</regexp>
+		</line>
+		<line>
+			<regexp
+				errorMessage="X: The factorial of '0' and '1' should both result in '1'." 
+			>^1$</regexp>
+		</line>
+	</case>
+	
+	<case id='8'>
+		<line>
+			<regexp mark='3'
+				errorMessage="X: Make sure you are using the correct symbol." 
+			>\D*120\D*</regexp>
+		</line>
+		<line>
+			<regexp mark = '1'
+				errorMessage="X: The factorial of '0' and '1' should both result in '1'." 
+			>^1$</regexp>
+		</line>
+	</case>
+</output>
+</memo>
