@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<memo version='0.3'>
+	<title>prac3task3</title>
+
+	<config>
+		<random>0</random>
+		<sequence>1</sequence>
+		<parts>1</parts>
+		<chances>10</chances>
+	</config>
+
+	<output part='1' fullmarks='13'>
+		<delete-patterns>
+			<pattern>.+\.o(ut)?$</pattern>
+			<pattern>.+~$</pattern>
+		</delete-patterns>
+
+		<source-patterns>
+			<pattern>.+\.(c|C)(\+\+|pp?|xx)?$</pattern>	
+			<pattern>.+\.ii?$</pattern>
+			<pattern>.+\.cc$</pattern>
+		</source-patterns>
+		
+		<extra-files>
+			<file overwrite='true' jail='true'>OneDigit.txt</file>
+			<file overwrite='true' jail='true'>makefile</file>
+		</extra-files>
+		
+		<!--Testing the prompt -->
+		<case id='1'>
+			<arguments>
+				<arg file='true' input='true'>OneDigit.txt</arg>
+			</arguments>
+			<alt>
+				<line>
+					<regexp mark = '2'
+					successMessage="PASS Test 1: Your prompt is correct">Enter a nonzero positive number:\s.*\Wreverse\W</regexp>
+				</line>
+				<line>
+					<regexp mark = '1'
+					successMessage="FAIL Test 1: Your prompt wording seems wrong">Enter\W.*:.*\Wreverse\W</regexp>
+				</line>
+				<line>
+					<regexp mark = '1'
+					errorMessage="FAIL Test 1: Your prompt fails. The user should enter the value next to the prompt">Enter\W.*:.*\Wreverse\W</regexp>
+				</line>
+				<line>
+					<regexp 
+					successMessage="WARNING: Prompt seems wrong. Further assesment may be invalid">.*</regexp>
+				</line>
+			</alt>
+		</case>
+</output>
+</memo>

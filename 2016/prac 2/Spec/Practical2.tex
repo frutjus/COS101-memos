@@ -1,0 +1,275 @@
+\documentclass [a4paper,leqno, 12pt] {article}
+
+\input{../../../LatexCommon/COS132_style.tex}
+%for the header
+\usepackage{multirow}
+\usepackage[margin=2.0cm]{geometry}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{scalefnt}
+\usepackage{amssymb}
+\usepackage{colortbl, color, array}
+%\usepackage{eurofont}
+%\usepackage{unixcode}
+\usepackage{scrextend}
+
+\usepackage{dirtree}
+%\usepackage[strict]{changepage}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{1.5ex minus 0.2ex}
+
+%\def\deadline{ in lab ?}
+\def\uploadsPerTask{10}
+
+\title{Practical 2}
+
+%CUSTOM HEADER
+%TODO: we should put this in its own file some time
+\makeatletter
+\renewcommand{\@maketitle}
+{
+	\sffamily %this makes it choose the current sans-serif!
+	\newpage
+	\scalefont{1.0}
+	\begin{tabular}{p{7cm}p{8cm}}
+	&\multirow{5}{*}{\includegraphics[width=8cm]{../../../LatexCommon/up_logo.jpg}}\\
+	\textbf{\scalefont{0.9}Department of Computer Science}
+
+	\scalefont{1.5}
+	\textbf{COS132 2016} \\
+
+	{\vspace{-2mm} %??? profit
+	\scalefont{1.8}\textbf{\@title}}\\
+	
+	\end{tabular}
+}
+\makeatother
+
+\begin{document}
+\maketitle
+
+\section{Introduction}
+\subsection{Submission}
+The submission deadline for this practical is \textbf{26 February 2016 at 19:00}. Make sure that you have submitted your code to Fitchfork by then and have posted the required message to the discussion board. 
+ \textbf{No late submissions will be accepted}. 
+
+The upload slots for submission will be available from 22 February. Early uploads may appear and vanish before 22 February. Each of these uploads allows only three tries and will close after the first 30 people have uploaded to it. These submissions will be assessed manually. If you have participated in the early uploads, the best of the early mark and the mark obtained in the actual upload will count.
+
+ \subsection{Mark Distribution}
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|l|r|}
+		\hline
+		\textbf{Activity} & \textbf{Mark} \\
+		\hline
+		Introductory post on the discussion board & 5 \\
+		Task 1: Simple        & 6  \\
+		Task 2: Access granted &  10\\
+		Task 3: Distance     & 10  \\
+		Task 4: Currency converter    & 12 \\ 
+		Task 5: Fraction program         & 15 \\ 
+		Task 6: Academic status & 17\\
+		\hline
+		\textbf{Total}    & \textbf{75} \\
+		\hline
+	\end{tabular}
+\end{table}
+
+\subsection{A Serious Warning}
+It is in your own interest that you, at all times, act responsible and ethically. As with any work done for the purpose of your university degree, remember that the University of Pretoria will not tolerate plagiarism. Do not copy a friend's assignment or allow a friend to copy yours. Doing so constitutes plagiarism, and apart from not gaining the experience intended, you may face disciplinary action as a result. For more information read Chapter 3 of \textit{Tricks of the trade Volume 1} as well as the University of Pretoria's plagiarism policy on \url{http://www.library.up.ac.za/plagiarism/index.htm}
+
+\section{The Discussion Board [5]}
+
+The discussion board on our ClickUP module is there to help students communicate with each another and to ask questions about practicals, Linux and other course-related work. You are not in any way allowed to share your practical work on the discussion board. You are advised to attentively read Chapter 1 of \textit{Tricks of the Trade Volume 1} before starting to participate on the discussion board. Make sure you understand the gist of Netiquette.
+
+\begin{center}
+\begin{tabular}{|p{11cm}|}
+\hline
+\\
+\textbf{A Side Note}
+\\
+~\\
+We have noticed that students seem \textit{\textbf{not} to grasp} that the discussion board is mainly to discuss the course material and not for solving administrative issues. Most administrative issues are already answered in the study guide and many are more of a personal nature and should be addressed to cos132queries@cs.up.ac.za \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Introduce yourself on the discussion board}
+Login on ClickUP and go to the discussion boards. \textbf{Locate}\footnote{Locate means to find --- it is there, you have to GO to it} the thread named Introduction started by Vreda Pieterse in the Administration forum. Post a message introducing yourself in one or two sentences in this thread. You can also get bonus marks if you update your picture.
+
+Unlike other relevant posts to the discussion board, this introductory post does not contribute to your general discussion board participation mark, but only to the mark for this practical assignment.
+
+\section{Download and extract}
+
+The instructions how to perform these tasks are explained in Chapter 5 of \textit{Tricks of the trade Volume 1} 
+\begin{enumerate}
+\item If you do not already have a sub-directory called \texttt{COS132}, create such directory.
+\item Create a subdirectory called \texttt{Prac2} in the \texttt{COS132} directory.
+\item Download \texttt{Practical2.tar.gz} from the CS website and save it in the \texttt{COS132/Prac2} directory.
+\item Extract the content of the \texttt{Practical2.tar.gz} archive.
+\newpage
+\item After extracting this archive your \texttt{COS132/Prac2} directory should contain the files and directories shown in the following hierarchical structure. 
+\end{enumerate}
+\begin{minipage}[t]{0.1\textwidth}
+~~
+\end{minipage}
+\begin{minipage}[t]{0.8\textwidth}
+\dirtree{%
+	.1 COS132.
+	.2 Prac2.
+	.3 Practical2.tar.gz.
+	.3 Task2.
+	.4 makefile.
+	.3 Task3.
+	.4 distance.cpp.
+	.3 Task5.
+	.4 fractions.cpp.
+	.4 makefile.
+}
+\end{minipage}
+
+\begin{enumerate}
+\setcounter{enumi}{5}
+\item Create subdirectories for tasks 1, 4 and 6.
+\end{enumerate}
+
+\section{Programming tasks}
+
+The instructions how to create, compile and run programs is explained in Chapter 6 of \textit{Tricks of the Trade Volume 1}. For each task you have to apply the programming process explained in the introduction of this chapter. You should know how to compile a single C++ file (page 64) and how to write the makefile entry to compile and link a single file (page 71). 
+
+You will notice that each of our sample makefiles contains a custom command called \texttt{run}. This is a requirement for fitchfork to be able to execute the program you have written. Custom commands are explained on pages 76-78.
+
+Fitchfork marks by comparing the output of your program with specified expected output. For this reason you should pay close attention to the instructions for the output of your program. Also remember that names of files are case sensitive.
+
+\section{Programming task 1: Simple [6]}
+Write a program and save it in a file called \texttt{simple.cpp}. The program must produce the following output on four separate lines where \verb|########| represent the eight digits in your student number. The lines of dashes should be of equal length and should contain at least 10 dashes each.
+\begin{lstlisting}
+------------------------------------------------------------------------------
+This is COS132.
+My student number is u########.
+------------------------------------------------------------------------------
+\end{lstlisting}
+
+Create a tarball containing the file called \texttt{simple.cpp} and upload it using the active fitchfork assignment called \textbf{Prac2 - Simple}.
+
+\section{Programming task 2: Access granted [10]}
+
+You are given a \texttt{makefile} that can be used to compile and run a program saved in a file called \texttt{granted.cpp}.
+
+Write a program that complies with the following specification:
+\begin{enumerate}
+\item Greet the user with the salutation \textbf{Goodday!!!}
+\item Prompt the user to provide the following: 
+\begin{itemize}
+\item his/her name (a string)
+\item his/her age (an integer) 
+\end{itemize}
+\item Respond to the user's input by granting him/her access. 
+\item The access message should contain the name and age that was entered.
+\end{enumerate}
+
+The following is a sample test run of the program (user input is shown in bold): 
+
+\begin{lstlisting}
+Goodday!!!
+What is your name? |\textbf{Babajide}|
+What is your age? |\textbf{25}|
+Access is granted to Babajide (aged 25).
+\end{lstlisting}
+
+Test the program by typing the following command:
+\begin{center}
+ \texttt{make run} 
+\end{center}
+
+Create a tarball containing the file called \texttt{granted.cpp} and the given makefile. 
+
+Upload the tarball using the active fitchfork assignment called \textbf{Prac2 - Access granted}.
+
+\section{Programming task 3: Distance [10]}
+
+ A specific underwater drone moves at a constant speed of 120 km/h. You are given a skeleton of a program called \texttt{distance.cpp}. The program should calculate the distance this drone has traveled if the time it traveled is known. Complete the program.
+
+The following is a sample test run of the program (user input is shown in bold): 
+\begin{lstlisting}
+Enter the hours traveled: |\textbf{2}|
+The drone traveled 240 km in 2 hours.
+\end{lstlisting}
+
+Create a \texttt{makefile} that can be used to compile and run this program.
+
+Run the program several times using different input values to verify that it works correctly. When satisfied, upload a tarball that contains the completed program and your makefile to the appropriate upload slot on the cs website.
+
+\section{Programming task 4: Currency converter [12]}
+
+When South Africans travel to the US or Europe we need to know the value of our money in the foreign countries. The current exchange rates are as follows:
+\begin{itemize}
+\item each Rand is worth 0.05917 Dollars 
+\item each Rand is worth 0.05681 Euros 
+\end{itemize}
+  
+Write a program that uses these exchange rates to convert any given amount in Rand to Dollars and to Euros accurate to two decimals. The following is a sample test run of the  program (user input is shown in bold):   
+\begin{lstlisting}
+Enter Rand amount: |\textbf{1000}|
+1000 Rands(s) = 59.17 Dollar(s)
+1000 Rands(s) = 56.81 Euro(s)
+\end{lstlisting}
+
+Run the program several times using different input values to verify that it works correctly. When satisfied, create a tarball that contains your program and a makefile that can be used to compile it. The makefile should also contain a custom run command. Upload your tarball to the appropriate upload slot on the cs website.
+
+\section{Programming task 5: Fraction program [15]}
+
+You are given the the code of a program called \texttt{fraction.cpp} and a \texttt{makefile}. This program is written to calculate the sum of two fractions entered by the user. The user has to enter the numerator and denominator of the fractions.
+The following is a sample test run of the  program (user input is shown in bold):   
+\begin{lstlisting}
+This is a fraction calculator
+******************************
+FIRST FRACTION
+  Enter the numerator: |\textbf{1}|  
+  Enter the denominator: |\textbf{2}|
+SECOND FRACTION 
+  Enter the numerator: |\textbf{1}|
+  Enter the denominator: |\textbf{2}|
+1/2 + 1/2 = 1.00
+\end{lstlisting}
+
+The given code contains seven syntax errors, two logical errors and a two layout errors you have to fix. The layout errors are about complying to coding standards regarding user orientation as specified on page 21 of \textit{Tricks of the trade Volume 1}. 
+
+Create a tarball containing the corrected file called \texttt{fraction.cpp} and upload it using the active fitchfork assignment called \textbf{Prac2 - Fraction program}.
+
+\newpage
+\section{Programming task 6: Academic status [17]}
+
+Write a program that can be used to determine the academic status of a COS 132 student when his/her final mark for the module is known. The program should prompt the user for his/her final mark and then display the academic status as defined in the following table:
+\begin{center}
+\begin{tabular}{c|c}
+\textbf{Mark}&\textbf{Status} \\
+\hline
+75 and above & Pass with distinction \\
+50 to 74 & Pass \\
+40 to 49 & Admitted to re-exam \\
+Below 40 & Fail \\ 
+\end{tabular}
+\end{center}
+ 
+When the mark entered as a real value the fraction should be ignored.
+
+The following are sample test runs of the  program (user input is shown in bold):   
+\begin{lstlisting}
+Enter your mark: |\textbf{88}|
+Congratulations! Having 88 you pass with distinction.
+\end{lstlisting}
+
+\begin{lstlisting}
+Enter your mark: |\textbf{67.8}|
+Well done. Having 67 you pass.
+\end{lstlisting}
+
+Use your own words in the first sentence of each displayed result.
+
+Run the program several times using different input values to verify that it works correctly. Be sure to test the program with border values such as 39, 40 and 41.
+
+When satisfied, create a tarball that contains your program and a makefile that can be used to compile it. The makefile should also contain a custom run command. Upload your tarball to the appropriate upload slot on the cs website.
+
+\end{document}

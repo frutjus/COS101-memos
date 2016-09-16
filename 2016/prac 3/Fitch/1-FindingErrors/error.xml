@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<memo version='0.3'>
+	<title>prac3task1</title>
+
+	<config>
+		<random>0</random>		
+		<sequence>1</sequence>
+		<parts>1</parts>
+		<chances>10</chances>
+	</config>
+
+	<output part='1' fullmarks='18'>
+		<delete-patterns>
+			<pattern>.+\.o$</pattern>
+			<pattern>.+~$</pattern>
+		</delete-patterns>
+
+		<source-patterns>
+			<pattern>.+\.(c|C)(\+\+|pp?|xx)?$</pattern>	
+			<pattern>.+\.ii?$</pattern>
+			<pattern>.+\.cc$</pattern>
+		</source-patterns>
+		
+		<extra-files>
+			<file overwrite='true' jail='true'>makefile</file>
+			<file overwrite='true' jail='true'>integers.txt</file>
+			<file overwrite='true' jail='true'>integers2.txt</file>
+			<file overwrite='true' jail='true'>integers3.txt</file>
+		</extra-files>
+		
+		<!--Testing that program compiles-->
+		<case id='1'>
+			<line>
+				<regexp mark = '5'
+				errorMessage="FAIL Test 1: Your program did not compile" 
+				successMessage="PASS Test 1: Your program compiles">Enter the numerator</regexp>
+			</line>
+		</case>
+
+		<!--Test correct calculation/formatting-->
+		<case id='2'>
+			<arguments>
+				<arg file='true' input='true'>integers.txt</arg>
+			</arguments>
+			<line>
+				<alt>
+					<regexp mark = '2'
+					errorMessage="FAIL Test 2: Calculation incorrect for real numbers"
+					successMessage="PASS Test 2">.*The quotient of 25 divided by 0.1 is 250 </regexp>
+				</alt>
+			</line>
+		</case>
+
+		<case id='3'>
+			<arguments>
+				<arg file='true' input='true'>integers2.txt</arg>
+			</arguments>
+			<line>
+				<alt>
+					<regexp mark = '1'
+					successMessage="PASS Test 3"
+					errorMessage="FAIL Test 3: Logical error when the denominator is zero">Division by zero is not possible</regexp>
+				</alt>
+			</line>
+		</case>
+
+		<case id='4'>
+			<arguments>
+				<arg file='true' input='true'>integers3.txt</arg>
+			</arguments>
+			<line>
+				<alt>
+					<regexp mark = '5'
+					errorMessage="FAIL Test 4: Calculation incorrect for negative numbers"
+					successMessage="PASS Test 4">.*The quotient of 25 divided by -5 is -5 </regexp>
+				</alt>
+			</line>
+		</case>
+		
+		<case id='5'>
+			<arguments>
+				<arg file='true' input='true'>integers3.txt</arg>
+			</arguments>
+			<line>
+				<alt>
+					<regexp mark = '5'
+					errorMessage="FAIL Test 5: HCI layout error"
+					successMessage="PASS Test 5">numerator:\sEnter</regexp>
+				</alt>
+			</line>
+		</case>
+
+</output>
+</memo>

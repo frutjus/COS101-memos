@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<memo version='0.3'>
+	<title>prac2-Fractions</title>
+
+	<config>
+		<random>0</random>
+		<sequence>1</sequence>
+		<parts>1</parts>
+		<chances>10</chances>
+	</config>
+
+	<output part='1' fullmarks='10'>
+		
+		<delete-patterns>
+			<pattern>.+\.o$</pattern>
+			<pattern>.+~$</pattern>
+		</delete-patterns>
+
+		<source-patterns>
+			<pattern>.+\.(c|C)(\+\+|pp?|xx)?$</pattern>	
+			<pattern>.+\.ii?$</pattern>
+			<pattern>.+\.cc$</pattern>
+		</source-patterns>
+		
+		<extra-files>
+			<file overwrite='true' jail='true'>makefile</file>
+			<file overwrite='true' jail='true'>integers.txt</file>
+		</extra-files>
+		
+		<!--Testing that program compiles-->
+		<case id='1'>
+			<arguments>
+				<arg file='true' input='true'>integers.txt</arg>
+			</arguments>
+			<line>
+				<regexp mark = '2'
+				errorMessage="FAIL Test 1" 
+				successMessage="PASS Test 1">This is a fraction calculator\.?$</regexp>
+			</line>
+		</case>
+		
+		<!--Test for endl after prompt -->
+		<case id='2'>
+			<arguments>
+				<arg file='true' input='true'>integers.txt</arg>
+			</arguments>
+			<line>
+			       <regexp>.*</regexp>
+			</line>
+			<line>
+			       <regexp>.*</regexp>
+			</line>
+			<line>
+				<regexp>.*</regexp>
+			</line>
+			<line>
+				<regexp
+					successMessage="FAIL Test 2: The user has to enter the value next to the prompt and NOT on the line under the prompt" 
+					>numerator:\s*$</regexp>
+			</line>
+			<line>
+				<regexp mark = '3'
+					successMessage="PASS Test 2" 
+					>numerator</regexp>
+			</line>
+		</case>
+
+		<!--Test for endl after prompt -->
+		<case id='3'>
+			<arguments>
+				<arg file='true' input='true'>integers.txt</arg>
+			</arguments>
+			<line>
+			       <regexp>.*</regexp>
+			</line>
+			<line>
+			       <regexp>.*</regexp>
+			</line>
+			<line>
+				<regexp>.*</regexp>
+			</line>
+			<line>
+				<regexp>.*</regexp>
+			</line>
+			<alt>
+			<line>
+				<regexp mark = '3'
+					successMessage="FAIL Test 3 - You may be using the wrong data type." 
+					>5\/1 \+ 8\/5 = 0$</regexp>
+			</line>
+			<line>
+				<regexp mark = '1'
+					successMessage="FAIL Test 3 - The final result is not on the line where it was supposed to be." 
+					>(SECOND FRACTION|denominator:$)</regexp>
+			</line>
+			<line>
+				<regexp mark = '4'
+					successMessage="FAIL Test 3 - The calculation seem to be wrong." 
+					>5\/1 \+ 8\/5 = 0\.11</regexp>
+			</line>
+			<line>
+				<regexp mark = '6'
+					successMessage="FAIL Test 3 - The format of the integers in the output is wrong." 
+					>5\.00\/1\.00 \+ 8\.00\/5\.00 = 6\.60</regexp>
+			</line>
+			<line>
+				<regexp mark = '10'
+					successMessage="PASS Test 3 " 
+					errorMessage="FAIL Test 3 - Your final result does not comply with the specifications."
+					>5\/1 \+ 8\/5 = 6\.60</regexp>
+			</line>
+			</alt>
+		</case>
+</output>
+</memo>

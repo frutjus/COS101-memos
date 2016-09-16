@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<memo version='0.3'>
+<title>Countries</title>
+
+<config>
+	<random>0</random>
+	<sequence>1</sequence>
+	<parts>1</parts>
+	<chances>10</chances>
+</config>
+
+<output part='1' fullmarks='16'>
+	<delete-patterns>
+		<pattern>.+\.o(ut)?$</pattern>
+		<pattern>.+~$</pattern>
+	</delete-patterns>
+
+	<source-patterns>
+		<pattern>.+\.(c|C)(\+\+|pp?|xx)?$</pattern>	
+		<pattern>.+\.ii?$</pattern>
+		<pattern>.+\.cc$</pattern>
+	</source-patterns>
+		
+	<extra-files>
+		<file overwrite='true' jail='true'>makefile</file>
+		<file overwrite='true' jail='true'>paintTools.h</file>
+		<file overwrite='true' jail='true'>paintTools.cpp</file>
+		<file overwrite='true' jail='true'>threeRooms.txt</file>
+		<file overwrite='true' jail='true'>oneRoom.txt</file>
+	</extra-files>
+		
+	<case id = '1'>
+		<!-- Test that the vertical alignment is correct with three rooms -->
+		<arguments>
+			<arg file='true' input='true'>threeRooms.txt</arg>				
+		</arguments>
+		<alt>
+			<line>
+				<regexp mark = '1'
+				successMessage="PASS Test 1"
+				errorMessage="FAIL Test 1: Welcome message not recognised">paint.*calc</regexp>
+			</line>
+			<line>
+				<regexp
+				errorMessage="WARNING - A missing the welcome line invalidates the remainder of the assessment"
+				>paint.*calc</regexp>
+			</line>
+		</alt>
+		<line><regexp>.*</regexp></line>
+		<line><regexp>.*</regexp></line>
+		<line><regexp>.*</regexp></line>
+		<line><regexp>.*</regexp></line>
+		<line><regexp>.*</regexp></line>
+		<line><regexp>.*</regexp></line>
+		<alt>
+			<line>
+				<regexp mark = '1'
+				successMessage="PASS Test 2"
+				errorMessage="FAIL Test 2: Input prompts for a room not recognised">^Room\s3\b</regexp>
+			</line>
+			<line>
+				<regexp 
+				errorMessage="WARNING - If prompts are not on the lines where expected it invalidates the remainder of the assessment">^Room\s3\b</regexp>
+			</line>
+		</alt>
+		<alt>
+			<line>
+				<regexp mark = '1'
+				successMessage="PASS Test 3"
+				errorMessage="FAIL Test 3: Line of stars below input not recognised">\*{10}</regexp>
+			</line>
+			<line>
+				<regexp 
+				errorMessage="WARNING - If the marker line at the beginning of the output is not where it is expected it invalidates the remainder of the assessment"
+				>\*{10}</regexp>
+			</line>
+		</alt>
+	</case>
+
+	<case id = '2'>
+		<!-- Test correct calculation of area when 3 rooms are given -->
+		<arguments>
+			<arg file='true' input='true'>threeRooms.txt</arg>				
+		</arguments>
+		<line><regexp>.*</regexp></line>
+		<line><regexp>.*</regexp></line>
+		<line><regexp>.*</regexp></line>
+		<line><regexp>.*</regexp></line>
+		<line><regexp>.*</regexp></line>
+		<line><regexp>.*</regexp></line>
+		<line><regexp>.*</regexp></line>
+		<line><regexp>.*</regexp></line>
+		<line><regexp>.*</regexp></line>
+		<alt>
+			<line>
+				<regexp mark = '3'
+				successMessage= "PASS Test 4"
+				>\D64\.20?\D</regexp>
+			</line>
+			<line>
+				<regexp mark = '3'
+				successMessage= "PASS Test 4"
+				>\D64\.20?$</regexp>
+			</line>
+			<line>
+				<regexp mark = '1'
+				successMessage= "FAIL Test 4: You did not use the given functions when calculating room areas"
+				>\D115\.80?\D</regexp>
+			</line>
+			<line>
+				<regexp mark = '2'
+				successMessage= "FAIL Test 4: You did not use the given constants when calculating room areas"
+				>\D66\.03</regexp>
+			</line>
+			<line>
+				<regexp mark = '1'
+				successMessage= "FAIL Test 4: You did not use the given constants and functions when calculating room areas"
+				errorMessage = "FAIL Test 4: The area calculated is wrong"
+				>\D113\.97</regexp>
+			</line>
+		</alt>
+	</case>
+	
+	<case id = '3'>
+		<!-- Test correct output when 1 rooms is given -->
+		<arguments>
+			<arg file='true' input='true'>oneRoom.txt</arg>				
+		</arguments>
+		<line><regexp>.*</regexp></line>
+		<line><regexp>.*</regexp></line>
+		<line><regexp>.*</regexp></line>
+		<line><regexp>.*</regexp></line>
+		<line><regexp>.*</regexp></line>
+		<line><regexp>.*</regexp></line>
+		<!-- Tins -->
+		<alt>
+			<line>
+				<regexp mark = '2'
+				successMessage= "PASS Test 5"
+				>\D5\D</regexp>
+			</line>
+			<line>
+				<regexp mark = '2'
+				successMessage= "PASS Test 5"
+				>\D5$</regexp>
+			</line>
+			<line>
+				<regexp mark = '1'
+				errorMessage = "FAIL Test 5: Calculation of number of tins is wrong"
+				successMessage= "FAIL Test 5: You did not use the given function/constant when calculating the number of tins required"
+				>\D2\D</regexp>
+			</line>
+		</alt>
+		<!-- hours -->
+		<alt>
+			<line>
+				<regexp mark = '2'
+				successMessage= "PASS Test 6"
+				>\D8(\.00)?\D</regexp>
+			</line>
+			<line>
+				<regexp mark = '2'
+				successMessage= "PASS Test 6"
+				>\D8(\.00)?$</regexp>
+			</line>
+			<line>
+				<regexp mark = '1'
+				successMessage= "FAIL Test 6: You did not use the given function when calculating the number of hours needed"
+				>\D15\.78</regexp>
+			</line>
+			<line>
+				<regexp mark = '1'
+				successMessage= "FAIL Test 6: You did not use the given constant/function when calculating the number of hours needed"
+				errorMessage = "FAIL Test 6: Calculation of labour hours is wrong"
+				>\D9\.96s</regexp>
+			</line>
+		</alt>
+		<!-- labour charge -->
+		<alt>
+			<line>
+				<regexp mark = '3'
+				successMessage= "PASS Test 7"
+				>R\s*71\.04\D</regexp>
+			</line>
+			<line>
+				<regexp mark = '3'
+				successMessage= "PASS Test 7"
+				>R\s*71\.04$</regexp>
+			</line>
+			<line>
+				<regexp mark='1'
+				successMessage= "FAIL Test 7: You did not use the given constants when calculating hours and labour charge"
+				>R\s*505\.60$</regexp>
+			</line>
+			<line>
+				<regexp mark='1'
+				successMessage= "FAIL Test 7: You did not use the given functions and constants when calculating hours and labour charge"
+				>R\s*629\.33$</regexp>
+			</line>
+			<line>
+				<regexp
+				successMessage= "FAIL Test 7: You did not use the given functions when calculating hours and labour charge"
+				errorMessage = "FAIL Test 7: Calculation of labour charge is wrong"
+				>\D140\.15$</regexp>
+			</line>
+		</alt>
+		<!-- Total cost -->
+		<alt>
+			<line>
+				<regexp mark = '3'
+				successMessage= "PASS Test 8"
+				>R\s*128\.54$</regexp>
+			</line>
+			<line>
+				<regexp mark = '2'
+				successMessage= "PASS Test 8"
+				errorMessage = "FAIL Test 8: Calculation of total cost is wrong"
+				>R\s*128\.54\D</regexp>
+			</line>
+		</alt>		
+	</case>
+	
+</output>
+</memo>

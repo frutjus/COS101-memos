@@ -1,0 +1,16 @@
+Argentina	2766890
+Canada	9984670
+USA		9826630
+Brazil	8511965
+Australia	7686850
+Russia	17075200
+India	3287590
+Mexico	1972550
+Kazakhstan	2717300
+Algeria	2381740
+Congo	2345410
+Arabia	2149690
+Greenland	2166086
+Indonesia	1919440
+Sudan	1844729	
+China	9596960

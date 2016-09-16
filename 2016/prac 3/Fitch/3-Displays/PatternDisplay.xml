@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<memo version='0.3'>
+	<title>PatternDisplay</title>
+
+	<config>
+		<random>0</random>		
+		<sequence>1</sequence>
+		<parts>1</parts>
+		<chances>10</chances>
+	</config>
+
+	<output part='1' fullmarks='20'>
+		<delete-patterns>
+			<pattern>.+\.o(ut)?$</pattern>
+			<pattern>.+~$</pattern>
+		</delete-patterns>
+
+		<source-patterns>
+			<pattern>.+\.(c|C)(\+\+|pp?|xx)?$</pattern>	
+			<pattern>.+\.ii?$</pattern>
+			<pattern>.+\.cc$</pattern>
+		</source-patterns>
+		
+		<extra-files>
+			<file overwrite='true' jail='true'>case1.txt</file>
+			<file overwrite='true' jail='true'>case2.txt</file>
+			<file overwrite='true' jail='true'>case3.txt</file>
+		</extra-files>
+		
+		<!-- Test with 4 iterations -->
+		<case id = '1'>
+			<arguments>
+				<arg file='true' input='true'>case1.txt</arg>				
+			</arguments>
+			<!-- Test that the input line is correct -->
+			<alt>
+				<line>
+					<regexp mark = '1'
+					 successMessage="PASS Test 1"
+					 errorMessage="FAIL Test 1: Input prompt and/or line 2 incorrect.">^\s*[Ee]nter\s+the\s+size:\s*-{10}</regexp>
+				</line>
+				<line>
+					<regexp
+					 errorMessage="NOTE THAT THIS MAY CAUSE THE REST OF THE ASSESMENT TO BE INVALID">-{10}</regexp>
+				</line>
+			</alt>
+			<line>
+				<regexp
+				 errorMessage="FAIL Test 2: Line 3 incorrect">^\s*Pattern\s+A\s*$</regexp>
+			</line>
+			<line><regexp>.*</regexp></line>
+			<line>
+				<regexp mark = '2'
+				 successMessage="PASS Test 2"
+				 errorMessage="FAIL Test 2: Output of Pattern A incorrect. Check looping">^\+$</regexp>
+			</line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line>
+				<regexp mark = '2'
+				 successMessage="PASS Test 3"
+				 errorMessage="FAIL Test 3: Output of Pattern A incorrect. Check looping">^\+{4}$</regexp>
+			</line>
+			<line><regexp>.*</regexp></line>
+			<line>
+				<regexp mark = '1'
+				 successMessage="PASS Test 4"
+				 errorMessage="FAIL Test 4: Output of Pattern B incorrect.">^\s*Pattern\s+B\s*$</regexp>
+			</line>
+			<line><regexp>.*</regexp></line>
+			<line>
+				<regexp mark = '3'
+				 successMessage="PASS Test 5"
+				 errorMessage="FAIL Test 5: Output of Pattern B incorrect. Check looping">^\+{4}$</regexp>
+			</line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line>
+				<regexp mark = '3'
+				 successMessage="PASS Test 6"
+				 errorMessage="FAIL Test 6: Output of Pattern B incorrect. Check looping">^\+$</regexp>
+			</line>		
+		</case>
+
+		<!-- Test with 0 iterations -->
+		<case id = '2'>
+			<arguments>
+				<arg file='true' input='true'>case2.txt</arg>				
+			</arguments>
+			<line><regexp>.*</regexp></line>
+				<!-- Input and first line of dashes -->
+			<line><regexp>.*</regexp></line>
+				<!-- Pattern A -->
+			<line><regexp>.*</regexp></line>
+				<!-- Line of dashes -->
+			<line>
+				<regexp mark = '3'
+				 successMessage="PASS Test 7"
+				 errorMessage="FAIL Test 7: Pattern A looping incorrect. Check edge cases">^\-+$</regexp>
+			</line>
+			<line>
+				<regexp mark = '1'
+				 successMessage="PASS Test 8"
+				 errorMessage="FAIL Test 8: Pattern B output. Check edge cases">^\s*Pattern\s+B\s*$</regexp>
+			</line>
+			<line><regexp>.*</regexp></line>
+				<!-- Line of dashes -->
+			<line>
+				<regexp mark = '2'
+				 successMessage="PASS Test 9"
+				 errorMessage="FAIL Test 9: Pattern B looping incorrect. Check edge cases">^\-+$</regexp>
+			</line>
+		</case>
+
+		<!-- Test with 20 iterations -->
+		<case id = '3'>
+			<arguments>
+				<arg file='true' input='true'>case3.txt</arg>				
+			</arguments>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line><regexp>.*</regexp></line>
+			<line>
+				<regexp mark = '2'
+				 successMessage="PASS Test 10"
+				 errorMessage="FAIL Test 10: Pattern B looping incorrect. Check edge cases">^\+{20}$</regexp>
+			</line>
+		</case>
+	</output>
+</memo>

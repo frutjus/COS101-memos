@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<memo version='0.3'>
+	<title>Palindrome2016</title>
+
+	<config>
+		<random>0</random>
+		<sequence>1</sequence>
+		<parts>1</parts>
+		<chances>10</chances>
+	</config>
+
+	<output part='1' fullmarks='25'>
+		<delete-patterns>
+			<pattern>.+\.o(ut)?$</pattern>
+			<pattern>.+~$</pattern>
+		</delete-patterns>
+
+		<source-patterns>
+			<pattern>.+\.(c|C)(\+\+|pp?|xx)?$</pattern>	
+			<pattern>.+\.ii?$</pattern>
+			<pattern>.+\.cc$</pattern>
+		</source-patterns>
+		
+		<extra-files>
+			<file overwrite='true' jail='true'>LongEvenNo.txt</file>
+			<file overwrite='true' jail='true'>LongEvenYes.txt</file>
+			<file overwrite='true' jail='true'>LongOddNo.txt</file>
+			<file overwrite='true' jail='true'>LongOddYes.txt</file>
+			<file overwrite='true' jail='true'>makefile</file>
+			<file overwrite='true' jail='true'>Negative.txt</file>
+			<file overwrite='true' jail='true'>OneDigit.txt</file>
+			<file overwrite='true' jail='true'>TwoDigitNo.txt</file>
+			<file overwrite='true' jail='true'>TwoDigitYes.txt</file>
+			<file overwrite='true' jail='true'>Zero.txt</file>
+		</extra-files>
+		
+		<!--Testing the prompt -->
+		<!--Testing the prompt -->
+		<case id='1'>
+			<arguments>
+				<arg file='true' input='true'>OneDigit.txt</arg>
+			</arguments>
+			<alt>
+				<line>
+					<regexp mark = '2'
+					successMessage="PASS Test 1: Your prompt is correct">Enter a nonzero positive number:\s.*\Wreverse\W</regexp>
+				</line>
+				<line>
+					<regexp mark = '1'
+					successMessage="FAIL Test 1: Your prompt wording seems wrong">Enter\W.*:.*\Wreverse\W</regexp>
+				</line>
+				<line>
+					<regexp mark = '1'
+					errorMessage="FAIL Test 1: Your prompt fails. The user should enter the value next to the prompt">Enter\W.*:.*\Wreverse\W</regexp>
+				</line>
+				<line>
+					<regexp 
+					successMessage="WARNING: Prompt seems wrong. Further assesment may be invalid">.*</regexp>
+				</line>
+			</alt>
+		</case>
+		
+		<!-- Program behaviour when input value is 0 -->
+		<case id='2'>
+			<arguments>
+				<arg file='true' input='true'>Zero.txt</arg>
+			</arguments>
+			<line>
+					<regexp mark = '2'
+					successMessage = "PASS TEST 2"
+					errorMessage="FAIL TEST 2: Program behaves incorrectly when zero value is entered">^((?!reverse).)*$</regexp>
+			</line>
+		</case>
+
+		<!-- Error message when input value is 0 -->
+		<case id='3'>
+			<arguments>
+				<arg file='true' input='true'>Zero.txt</arg>
+			</arguments>
+			<alt>
+				<line>
+					<regexp mark = '3'
+					successMessage="PASS Test 3">(\Wzero\W|\WZero\W|\WZERO\W|\D0\D)</regexp>
+				</line>
+				<line>
+					<regexp mark = '1'
+					errorMessage = "FAIL TEST 3: Program behaves incorrectly when zero value is entered"
+					successMessage="FAIL Test 3: Error message when entering a zero can be improved">(zero\W|ZERO\W)</regexp>
+				</line>
+			</alt>
+		</case>
+
+		<!-- Error message when input value is negative -->
+		<case id='4'>
+			<arguments>
+				<arg file='true' input='true'>Negative.txt</arg>
+			</arguments>
+			<alt>
+				<line>
+					<regexp mark = '2'
+					successMessage="PASS Test 4">\D-77\D</regexp>
+				</line>
+				<line>
+					<regexp mark = '2'
+					successMessage="PASS Test 4">\D-77$</regexp>
+				</line>
+				<line>
+					<regexp mark = '1'
+					errorMessage = "FAIL TEST 4: Program behaves incorrectly when a negative value is entered"
+					successMessage="FAIL Test 4: Error message when entering a negative value can be improved">(negative|Negative|NEGATIVE)</regexp>
+				</line>
+			</alt>
+		</case>
+
+		<!-- Input is one digit -->
+		<case id='5'>
+			<arguments>
+				<arg file='true' input='true'>OneDigit.txt</arg>
+			</arguments>
+			<line>
+				<regexp mark = '2'
+				successMessage="PASS Test 5"
+				errorMessage="FAIL Test 5: Line to display the reverse of the input seems faulty">reverse\D*7\D*7$</regexp>
+			</line>
+			<line>
+				<regexp mark = '2'
+				successMessage="PASS Test 6"
+				errorMessage="FAIL Test 6: Message when input is a palindrome seems faulty">^(Yes|YES|yes)</regexp>
+			</line>
+		</case>
+
+		<!-- Input is even number of digits and a palindrome -->
+		<case id='7'>
+			<arguments>
+				<arg file='true' input='true'>LongEvenYes.txt</arg>
+			</arguments>
+			<line>
+					<regexp mark = '1'
+					successMessage="PASS Test 7"
+					errorMessage="FAIL Test 7: Line to display the reverse of the input seems faulty">reverse\D*123321\D*123321$</regexp>
+			</line>
+			<line>
+					<regexp mark = '1'
+					successMessage="PASS Test 8"
+					errorMessage="FAIL Test 8: Message when input is a palindrome seems faulty">^(Yes|YES|yes)</regexp>
+			</line>
+		</case>
+
+		<!-- Input is two digit palindrome -->
+		<case id='9'>
+			<arguments>
+				<arg file='true' input='true'>TwoDigitYes.txt</arg>
+			</arguments>
+			<line>
+					<regexp mark = '1'
+					successMessage="PASS Test 9"
+					errorMessage="FAIL Test 9: Line to display the reverse of the input seems faulty">reverse\D*33\D*33$</regexp>
+			</line>
+			<line>
+					<regexp mark = '1'
+					successMessage="PASS Test 10"
+					errorMessage="FAIL Test 10: Message when input is a palindrome seems faulty">(Yes|YES|yes)</regexp>
+			</line>
+		</case>
+
+		<!-- Input is two digit palindrome -->
+		<case id='11'>
+			<arguments>
+				<arg file='true' input='true'>LongOddYes.txt</arg>
+			</arguments>
+			<line>
+					<regexp mark = '1'
+					successMessage="PASS Test 11"
+					errorMessage="FAIL Test 11: Line to display the reverse of the input seems faulty">reverse\D*14541\D*14541$</regexp>
+			</line>
+			<line>
+					<regexp mark = '1'
+					successMessage="PASS Test 12"
+					errorMessage="FAIL Test 12: Message when input is a palindrome seems faulty">(Yes|YES|yes)</regexp>
+			</line>
+		</case>
+		
+		<case id='13'>
+			<arguments>
+				<arg file='true' input='true'>LongEvenNo.txt</arg>
+			</arguments>
+			<line>
+				<regexp mark = '1'
+				successMessage="PASS Test 13"
+				errorMessage="FAIL Test 13: Line to display the reverse of the input seems fauly">reverse\D*123456\D*654321$</regexp>
+			</line>
+			<line>
+				<regexp mark = '1'
+				successMessage="PASS Test 14"
+				errorMessage="FAIL Test 14: Message when input is NOT a palindrome seems faulty">(No|NO|no)</regexp>
+			</line>
+		</case>
+
+		<case id='15'>
+			<arguments>
+				<arg file='true' input='true'>LongOddNo.txt</arg>
+			</arguments>
+			<line>
+				<regexp mark = '1'
+				successMessage="PASS Test 15"
+				errorMessage="FAIL Test 15: Line to display the reverse of the input seems fauly">reverse\D*12345\D*54321$</regexp>
+			</line>
+			<line>
+				<regexp mark = '1'
+				successMessage="PASS Test 16"
+				errorMessage="FAIL Test 16: Message when input is NOT a palindrome seems faulty">(No|NO|no)</regexp>
+			</line>
+		</case>
+
+		<case id='17'>
+			<arguments>
+				<arg file='true' input='true'>TwoDigitNo.txt</arg>
+			</arguments>
+			<line>
+				<regexp mark = '1'
+				successMessage="PASS Test 17"
+				errorMessage="FAIL Test 17: Line to display the reverse of the input seems fauly">reverse\D*89\D*98$</regexp>
+			</line>
+			<line>
+				<regexp mark = '1'
+				successMessage="PASS Test 18"
+				errorMessage="FAIL Test 18: Message when input is NOT a palindrome seems faulty">^(No|NO|no)</regexp>
+			</line>
+		</case>
+</output>
+</memo>

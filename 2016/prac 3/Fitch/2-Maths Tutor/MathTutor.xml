@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- By Nikki and Jason, 04/03/2016 -->
+<!-- COS 132 Prac 3 Task 2, Math Tutor -->
+<memo version='0.3'>
+	<title>MathsTutor</title>
+
+	<config>
+		<random>0</random>
+		<sequence>1</sequence>
+		<parts>1</parts>
+		<chances>10</chances>
+	</config>
+
+	<output part='1' fullmarks='12'>
+		<delete-patterns>
+			<pattern>.+\.o$</pattern>
+			<pattern>.+~$</pattern>
+		</delete-patterns>
+
+		<source-patterns>
+			<pattern>.+\.(c|C)(\+\+|pp?|xx)?$</pattern>	
+			<pattern>.+\.ii?$</pattern>
+			<pattern>.+\.cc$</pattern>
+		</source-patterns>
+		
+		<extra-files>
+			<file overwrite='true' jail='true'>makefile</file>
+			<file overwrite='true' jail='true'>firstCase.txt</file>
+			<file overwrite='true' jail='true'>secondCase.txt</file>
+			<file overwrite='true' jail='true'>fourthCase.txt</file>
+			<file overwrite='true' jail='true'>fifthCase.txt</file>
+		</extra-files>
+		
+		<case id = '1'>
+			<arguments>
+				<arg file='true' input='true'>firstCase.txt</arg>				
+			</arguments>
+			<!-- Test that the input lines and prompts are correct -->
+			<alt>
+				<line>
+					<regexp
+					 successMessage="PASS Test 1: Prompts correct."
+					 errorMessage="FAIL Test 1: Prompts incorrect or in wrong format.">\s+seed\s?.*:\s.*:</regexp>
+				</line>
+				<line>
+					<regexp
+					 errorMessage="NOTE THAT WHEN YOUR PROMPTS ARE WRONG, THE REST OF THE ASSESMENT IS INVALID"
+					 >\s+seed\s?.*:\s.*:</regexp>
+				</line>			
+		        </alt>
+		</case>
+
+		<case id = '2'>
+			<!-- Check random number generation - Big message when wrong-->
+			<arguments>
+				<arg file='true' input='true'>secondCase.txt</arg>
+			</arguments>
+		<line>
+			<regexp mark = '1'
+				successMessage="PASS Test 2"
+				errorMessage="RANDOM NUMBER GENERATION FAULTY. THE REST OF THE ASSESMENT IS INVALID"			
+				>95\s\+\s68\s</regexp>
+			</line>
+		</case>
+
+		<case id = '3'>
+			<!-- Check what is wrong with random number generation -->
+			<arguments>
+				<arg file='true' input='true'>secondCase.txt</arg>
+			</arguments>
+			<alt>
+				<line>
+					<regexp mark = '1'		
+					>95\s\+\s68\s</regexp>
+				</line>
+				<line>
+					<regexp 
+					errorMessage="FAIL Test 2: Random number generation is not accoring to the specification"
+					successMessage="FAIL Test 2: Random numbers not all in the range 10 to 99">95\s\+\s8\s</regexp>
+				</line>
+			</alt>
+		</case>
+
+		<case id = '4'>
+			<!-- Check looping when the number of questions is 0 -->
+			<arguments>
+				<arg file='true' input='true'>firstCase.txt</arg>				
+			</arguments>
+			<line>
+				<regexp mark = '1'
+				successMessage="PASS Test 3"
+				errorMessage="FAIL Test 3: Looping incorrect. Check edge cases.">-{8}</regexp>
+			</line>
+		</case>
+		
+		<case id = '5'>
+			<arguments>
+				<arg file='true' input='true'>secondCase.txt</arg>				
+			</arguments>
+			<!-- Test that if the 'Answer is correct' message is correct-->
+			<line>
+				<regexp mark = '1'
+				 successMessage="PASS Test 4 "
+				 errorMessage="FAIL Test 3: The message for a correct answer is wrong">(Yes|YES|yes)</regexp>
+			</line>
+			<!-- Test looping with 1 question -->
+			<line>
+				<regexp mark = '1'
+				successMessage="PASS Test 5"
+				errorMessage="FAIL Test 2: Looping incorrect. Check edge cases.">-{8}</regexp>
+			</line>
+		</case>
+		
+		<case id = '6'>
+			<arguments>
+				<arg file='true' input='true'>secondCase.txt</arg>				
+			</arguments>
+			<line>
+				<regexp>.*</regexp>	
+			</line>
+			<line>
+				<regexp>.*</regexp>	
+			</line>
+			<!-- Test the score (1/1)-->
+			<line>
+				<regexp mark = '1'
+				 successMessage="PASS Test 6 "
+				 errorMessage="FAIL Test 6: Final score incorrect or mistake in output.">You\s*scored\s*1\s*\/\s*1$</regexp>
+			</line>
+		</case>
+		
+        
+		<case id = '7'>
+			<arguments>
+				<arg file='true' input='true'>fourthCase.txt</arg>
+			</arguments>
+			<line><regexp>.*</regexp></line>
+			<!-- Test the question numbers-->
+			<line>
+				<regexp mark = '2'
+				successMessage="PASS Test 7"
+				errorMessage="FAIL Test 7: The question numbers are wrong">^2\.?\s+</regexp>
+			</line>
+		</case>
+        
+		<case id = '8'>
+			<arguments>
+				<arg file='true' input='true'>fourthCase.txt</arg>				
+			</arguments>
+			<line>
+				<regexp>.*</regexp>	
+			</line>
+			<line>
+				<regexp>.*</regexp>	
+			</line>
+			<!-- Test the 'Incorrect answer' message-->
+			<line>
+				<regexp mark = '1'
+				 successMessage="PASS Test 8"
+				 errorMessage="FAIL Test 8: The message for a wrong answer is wrong">(No|NO|no)</regexp>
+			</line>
+			<line>
+			</line>
+			<!-- Test the score (2/3) -->
+			<line>
+				<regexp mark = '2'
+				 successMessage="PASS Test 9"
+				 errorMessage="FAIL Test 9: Scoring seems incorrect">2\s*\/\s*3</regexp>
+			</line>
+		</case>
+		
+		<case id = '9'>
+			<arguments>
+				<arg file='true' input='true'>fifthCase.txt</arg>				
+			</arguments>
+			<line>
+				<regexp>.*</regexp>	
+			</line>
+			<line>
+				<regexp>.*</regexp>
+			</line>
+			<line>
+				<regexp>.*</regexp>	
+			</line>
+			<line>
+				<regexp>.*</regexp>	
+			</line>
+			<line>
+				<regexp>.*</regexp>	
+			</line>
+			<!-- Test looping with a larger number (5) -->
+			<line>
+				<regexp mark = '1'
+				 successMessage="PASS Test 10"
+				 errorMessage="FAIL Test 10: Looping incorrect - may be off by one">-{8}</regexp>
+			</line>
+		</case>
+</output>
+</memo>

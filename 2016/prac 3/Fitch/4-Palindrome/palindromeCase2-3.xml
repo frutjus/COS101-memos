@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<memo version='0.3'>
+	<title>prac3task3</title>
+
+	<config>
+		<random>0</random>
+		<sequence>1</sequence>
+		<parts>1</parts>
+		<chances>10</chances>
+	</config>
+
+	<output part='1' fullmarks='13'>
+		<delete-patterns>
+			<pattern>.+\.o(ut)?$</pattern>
+			<pattern>.+~$</pattern>
+		</delete-patterns>
+
+		<source-patterns>
+			<pattern>.+\.(c|C)(\+\+|pp?|xx)?$</pattern>	
+			<pattern>.+\.ii?$</pattern>
+			<pattern>.+\.cc$</pattern>
+		</source-patterns>
+		
+		<extra-files>
+			<file overwrite='true' jail='true'>makefile</file>
+			<file overwrite='true' jail='true'>Zero.txt</file>
+		</extra-files>
+		
+		<!-- Program behaviour when input value is 0 -->
+		<case id='2'>
+			<arguments>
+				<arg file='true' input='true'>Zero.txt</arg>
+			</arguments>
+			<line>
+					<regexp mark = '2'
+					successMessage = "PASS TEST 2"
+					errorMessage="FAIL TEST 2: Program behaves incorrectly when zero value is entered">^((?!reverse).)*$</regexp>
+			</line>
+		</case>
+
+		<!-- Error message when input value is 0 -->
+		<case id='3'>
+			<arguments>
+				<arg file='true' input='true'>Zero.txt</arg>
+			</arguments>
+			<alt>
+				<line>
+					<regexp mark = '2'
+					successMessage="PASS Test 3">(\Wzero\W|\WZero\W|\WZERO\W)</regexp>
+				</line>
+				<line>
+					<regexp mark = '1'
+					errorMessage = "FAIL TEST 3: Program behaves incorrectly when zero value is entered"
+					successMessage="FAIL Test 3: Error message when entering a zero can be improved">(zero\W|ZERO\W)</regexp>
+				</line>
+			</alt>
+		</case>
+</output>
+</memo>

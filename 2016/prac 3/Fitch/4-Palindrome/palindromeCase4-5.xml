@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<memo version='0.3'>
+	<title>prac3task3</title>
+
+	<config>
+		<random>0</random>
+		<sequence>1</sequence>
+		<parts>1</parts>
+		<chances>10</chances>
+	</config>
+
+	<output part='1' fullmarks='13'>
+		<delete-patterns>
+			<pattern>.+\.o(ut)?$</pattern>
+			<pattern>.+~$</pattern>
+		</delete-patterns>
+
+		<source-patterns>
+			<pattern>.+\.(c|C)(\+\+|pp?|xx)?$</pattern>	
+			<pattern>.+\.ii?$</pattern>
+			<pattern>.+\.cc$</pattern>
+		</source-patterns>
+		
+		<extra-files>
+			<file overwrite='true' jail='true'>makefile</file>
+			<file overwrite='true' jail='true'>Negative.txt</file>
+			<file overwrite='true' jail='true'>OneDigit.txt</file>
+		</extra-files>
+		
+		<!-- Error message when input value is negative -->
+		<case id='4'>
+			<arguments>
+				<arg file='true' input='true'>Negative.txt</arg>
+			</arguments>
+			<alt>
+				<line>
+					<regexp mark = '2'
+					successMessage="PASS Test 4">\D-77\D</regexp>
+				</line>
+				<line>
+					<regexp mark = '2'
+					successMessage="PASS Test 4">\D-77$</regexp>
+				</line>
+				<line>
+					<regexp mark = '1'
+					errorMessage = "FAIL TEST 4: Program behaves incorrectly when a negative value is entered"
+					successMessage="FAIL Test 4: Error message when entering a negative value can be improved">(negative|Negative|NEGATIVE)</regexp>
+				</line>
+			</alt>
+		</case>
+
+		<!-- Input is one digit -->
+		<case id='5'>
+			<arguments>
+				<arg file='true' input='true'>OneDigit.txt</arg>
+			</arguments>
+			<line>
+				<regexp mark = '2'
+				successMessage="PASS Test 5"
+				errorMessage="FAIL Test 5: Line to display the reverse of the input seems faulty">reverse\D*7\D*7$</regexp>
+			</line>
+			<line>
+				<regexp mark = '2'
+				successMessage="PASS Test 6"
+				errorMessage="FAIL Test 6: Message when input is a palindrome seems faulty">^(Yes|YES|yes)</regexp>
+			</line>
+		</case>
+</output>
+</memo>

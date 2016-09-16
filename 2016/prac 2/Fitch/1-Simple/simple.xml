@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<memo version='0.4'>
+	<title>cos132Prac2Simple</title>
+	<config>
+		<random>0</random>
+		<sequence>1</sequence>
+		<parts>1</parts>
+		<chances>10</chances> 
+	</config>
+	
+	<output part='1' fullmarks='6'>
+				
+		<delete-patterns>
+			<pattern>.+\.o$</pattern>
+			<pattern>.+~$</pattern>
+		</delete-patterns>
+		
+		<source-patterns>
+			<pattern>.+\.cpp$</pattern>
+		</source-patterns>
+		
+		<extra-files>
+			<file overwrite='true' jail='true'>makefile</file>
+		</extra-files>
+		
+		<!-- first line of dashes-->
+		<case id='1'>
+		<line>
+			<regexp mark='1'
+			errorMessage="FAIL Test 1: Your first line of output should be a line of at least 10 dashes"
+			successMessage="PASS test 1">^-{10}</regexp>
+		</line>
+		</case>
+		
+		<case id='2'>
+		<line><regexp>.*</regexp></line>
+		<line>
+			<regexp mark='1'
+			errorMessage="FAIL Test 2: Your second line of output does not comply with the specification"
+			successMessage="PASS test 2">^[tT]his\s+[iI]s\s((cos)|(COS)|(Cos))\s?[123]{3}\.?</regexp>
+		</line>
+		<line>
+			<regexp mark='1'
+			errorMessage="FAIL Test 3: Your third line of output does not comply with the specification" 
+			successMessage="PASS test 3">^[mM]y\s+[sS]tudent.*</regexp>
+		</line>
+		</case>
+		
+		<case id='3'>
+		<line><regexp>.*</regexp></line>
+		<line><regexp>.*</regexp></line>
+		<line>
+			<regexp mark='2' 
+			errorMessage=" Fail test 4:Your student number does not comply with the specification"
+			successMessage="PASS test 4">u\d{8}</regexp>
+		</line>
+		<line>
+			<regexp mark='1'
+			errorMessage="FAIL Test 5: Your last line of output should be a line of dashes the same length as the first line"
+			successMessage="PASS test 5">^-{10}</regexp>
+		</line>
+		</case>
+</output>
+</memo>

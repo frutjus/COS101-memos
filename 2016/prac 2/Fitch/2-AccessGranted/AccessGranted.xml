@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<memo version='0.3'>
+	<title>prac2task1</title>
+
+	<config>
+		<random>0</random>
+		<sequence>1</sequence>
+		<parts>1</parts>
+		<chances>10</chances>
+	</config>
+
+	<output part='1' fullmarks='10'>
+		
+		<delete-patterns>
+			<pattern>.+\.o$</pattern>
+			<pattern>.+~$</pattern>
+		</delete-patterns>
+
+		<source-patterns>
+			<pattern>.+\.(c|C)(\+\+|pp?|xx)?$</pattern>	
+			<pattern>.+\.ii?$</pattern>
+			<pattern>.+\.cc$</pattern>
+		</source-patterns>
+		
+		<extra-files>
+			<file overwrite='true' jail='true'>makefile</file>
+			<file overwrite='true' jail='true'>name.txt</file>
+		</extra-files>
+		
+		<case id='1'>
+			<arguments>
+				<arg file='true' input='true'>name.txt</arg>
+			</arguments>
+			<line><regexp mark = '2'
+			errorMessage="FAIL Test 1: Greeting is faulty " 
+			successMessage="PASS Test 1 ">Good\s?day\!{2,4}</regexp></line>
+		</case>
+		
+		<case id='2'>
+			<arguments>
+				<arg file='true' input='true'>name.txt</arg>
+			</arguments>
+			<line><regexp>.*</regexp></line>
+			<line><regexp mark='1'
+				errorMessage="FAIL Test 2: First prompt is faulty " 
+				successMessage="PASS Test 2"
+			>.*[Ww]hat\s+.*\s+name\?[^$]</regexp></line>
+		</case>
+		
+		<case id='3'>
+			<arguments>
+				<arg file='true' input='true'>name.txt</arg>
+			</arguments>
+			<line><regexp>.*</regexp></line>
+			<alt>
+				<line><regexp mark='2'	 
+					successMessage="PASS Test 3"
+				>.*[Ww]hat\s+.*\s+age\?[^$]</regexp></line>
+
+				<line><regexp mark='1'
+					errorMessage="FAIL Test 3: Second prompt faulty " 
+					successMessage="FAIL Test 3: Second prompt faulty - perhaps your program awaits input in the next line instead of on the same line as the prompt"
+				>.*[Ww]hat\s+.*\s+name\?</regexp></line>
+			</alt>
+		</case>
+		
+		<case id='4'>
+			<arguments>
+				<arg file='true' input='true'>name.txt</arg>
+			</arguments>
+			<line><regexp>.*</regexp></line>
+			<alt>
+				<line>
+					<regexp mark ='3' 
+					successMessage="PASS Test 4" 
+					>\sJohn[(\s]</regexp>
+				</line>
+				<line>
+					<regexp mark ='2' 
+					successMessage="FAIL Test 4: Entered name not recognised in the output - try better spacing in your output"
+					>John</regexp>
+				</line>
+				<line>
+					<regexp mark ='1' 
+					successMessage="FAIL Test 4: The data type of the variable holding the name may be wrong"
+					errorMessage="FAIL Test 4: You are not using the entered name when granting access">to ?J ?\(</regexp>
+				</line>
+			</alt>
+		</case>
+		
+		<case id='5'>
+			<arguments>
+				<arg file='true' input='true'>name.txt</arg>
+			</arguments>
+			<line><regexp>.*</regexp></line>
+			<alt>
+				<line>
+					<regexp mark ='2' 
+					successMessage="PASS Test 5" 
+					>12345</regexp>
+				</line>
+				<line>
+					<regexp mark ='1' 
+					successMessage="FAIL Test 5: The age that was entered became 0" 
+					errorMessage="FAIL Test 5: You are not using the entered age when granting access">0</regexp>
+				</line>
+			</alt>
+		</case>
+</output>
+</memo>

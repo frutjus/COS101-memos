@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<memo version='0.1'>
+	<title>Prac2_CurrencyConverter</title>
+	<config>
+		<random>0</random>
+		<sequence>1</sequence>
+		<parts>1</parts>
+		<chances>10</chances> 
+	</config>
+	
+	<output part='1' fullmarks='10'>			
+		<delete-patterns>
+			<pattern>.+\.o$</pattern>
+			<pattern>.+~$</pattern>
+		</delete-patterns>
+		
+		<source-patterns>
+			<pattern>.+\.cpp$</pattern>
+		</source-patterns>
+		
+		<extra-files>
+			<file overwrite='true' jail='true'>input_R1.txt</file>
+			<file overwrite='true' jail='true'>input_R10.txt</file>
+			<file overwrite='true' jail='true'>input_R13_88.txt</file>
+		</extra-files>
+		
+		<!--input and prompt-->
+		<case id='1'>
+			<arguments>
+				<arg file='true' input='true'>input_R1.txt</arg>
+			</arguments>
+			<alt>
+			<line>
+				<regexp successMessage="The user has to enter the value next to the prompt and NOT on the line under the prompt.">[Aa]mount.*:\s*$</regexp>
+			</line>
+			<line>
+				<regexp errorMessage="Hint: When you prompt an user for input, use colon and a space at the end of the prompt">.*:\s</regexp>
+			</line>
+			</alt>
+		</case>
+		
+		<case id='3'>
+			<arguments>
+				<arg file='true' input='true'>input_R1.txt</arg>
+			</arguments>
+			<alt>
+				<line>
+					<regexp mark='2' successMessage="PASS Test 1:">.*[Dd]ollar.*</regexp>
+				</line>
+				<line>
+					<regexp mark='1' successMessage="FAIL Test 1: Stated currency with incorrect spelling.">.*[Dd]oller.*</regexp>
+				</line>
+				<line>
+					<regexp mark='1' successMessage="FAIL Test 1: Stated currency with incorrect spelling.">.*[Dd]olar.*</regexp>
+				</line>
+				<line>
+					<regexp mark='1' successMessage="FAIL Test 1: Stated currency with incorrect spelling.">.*[Dd]oler.*</regexp>
+				</line>
+				<line>
+					<regexp mark='1' successMessage="FAIL Test 1: Stated currency on output is correct symbol but should be written out.">.*\$.*</regexp>
+				</line>
+				<line>
+					<regexp errorMessage="FAIL Test 1: Stated currency not recognised. Should be Dollar">.*[Dd]ollar.*</regexp>
+				</line>
+			</alt>	
+		</case>
+		
+		<case id='4'>
+			<arguments>
+				<arg file='true' input='true'>input_R1.txt</arg>
+			</arguments>
+			<line>
+				<regexp>.*</regexp>
+			</line>
+			<alt>
+				<line>
+					<regexp mark = '1' successMessage="FAIL Test 2: The user has to enter the value next to the prompt and NOT on the line under the prompt." >[Dd]ol?l[ea]r</regexp>
+				</line>
+				<line>
+					<regexp mark='2' successMessage="PASS Test 2: ">.*[Ee]uro.*</regexp>
+				</line>
+				<line>
+					<regexp mark='1' successMessage="FAIL Test 2: Stated currency with incorrect spelling.">.*[Ee]ro.*</regexp>
+				</line>
+				<line>
+					<regexp errorMessage="FAIL Test 4: Stated currency not recognised. Should be Euro">.*[Ee]uro.*</regexp>
+				</line>
+			</alt>
+		</case>
+		
+		<case id='5'>
+			<arguments>
+				<arg file='true' input='true'>input_R10.txt</arg>
+			</arguments>
+			<alt>
+			<line>
+				<regexp mark='2' successMessage="PASS Test 3">^\D*10(.00)?\s+</regexp>
+			</line>
+			<line>
+				<regexp mark='1' successMessage="FAIL Test 3: The output line should have a space after a value and the text after it" errorMessage="FAIL Test 3: You should include the value that was entered in the output">^\D*10(.00)?\D</regexp>
+			</line>
+			</alt>
+		</case>
+		
+		<case id='6'>
+			<arguments>
+				<arg file='true' input='true'>input_R1.txt</arg>
+			</arguments>
+			<line>
+				<regexp>.*</regexp>
+			</line>
+			<alt>
+			<line>
+				<regexp mark='2' successMessage="PASS Test 4">\D0\.06\D</regexp>
+			</line>
+			<line>
+				<regexp mark='1' successMessage="FAIL Test 4: Euro value should be shown with two decimals" errorMessage="FAIL Test 4: Euro calculation may be wrong.">\D0\.05681</regexp>
+			</line>
+			</alt>
+		</case>
+		
+		<case id='7'>
+			<arguments>
+				<arg file='true' input='true'>input_R10.txt</arg>
+			</arguments>
+			<alt>
+			<line>
+				<regexp mark='2' successMessage="PASS Test 5">\D0\.59\D</regexp>
+			</line>
+			<line>
+				<regexp mark='1' successMessage="FAIL Test 5: Dollar value should be shown with two decimals" errorMessage="FAIL Test 5: Dollar calculation may be wrong.">\D0\.5917</regexp>
+			</line>
+			</alt>
+		</case>
+		
+		<case id='8'>
+			<arguments>
+				<arg file='true' input='true'>input_R13_88.txt</arg>
+			</arguments>
+			<alt>
+			<line>
+				<regexp mark='2' successMessage="PASS Test 6">\D0\.82\D</regexp>
+			</line>
+			<line>
+				<regexp successMessage="FAIL Test 6: Program cannot deal with cents in the input" errorMessage="FAIL Test 5: Dollar calculation may be wrong.">\D0\.77</regexp>
+			</line>
+			</alt>
+		</case>
+</output>
+</memo>

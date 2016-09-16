@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<memo version='0.3'>
+	<title>Prac2  Academic status</title>
+
+	<config>
+		<random>0</random>
+		<sequence>1</sequence>
+		<parts>1</parts>
+		<chances>10</chances>
+	</config>
+
+	<output part='1' fullmarks='17'>
+		<delete-patterns>
+			<pattern>.+\.o$</pattern>
+			<pattern>.+~$</pattern>
+		</delete-patterns>
+
+		<source-patterns>
+			<pattern>.+\.(c|C)(\+\+|pp?|xx)?$</pattern>	
+			<pattern>.+\.ii?$</pattern>
+			<pattern>.+\.cc$</pattern>
+		</source-patterns>
+		
+		<extra-files>
+			<file overwrite='true' jail='true'>49.txt</file>
+			<file overwrite='true' jail='true'>49PointEight.txt</file>
+			<file overwrite='true' jail='true'>50.txt</file>
+			<file overwrite='true' jail='true'>51.txt</file>
+			<file overwrite='true' jail='true'>85.txt</file>
+			<file overwrite='true' jail='true'>negative.txt</file>
+			<file overwrite='true' jail='true'>tooBig.txt</file>
+			<file overwrite='true' jail='true'>zero.txt</file>
+		</extra-files>
+		
+		<!-- Test for newline at the end of the prompt -->
+		<case id='1'>
+			<arguments><arg file='true' input='true'>51.txt</arg></arguments>
+			<alt>
+			<line><regexp 
+			successMessage="Prompt is OK"
+			errorMessage="Your prompt is wrong; The user has to enter the value next to the prompt and NOT on the line under the prompt"
+			>(.*:[^$][^$])</regexp></line>
+			<line><regexp 
+			errorMessage=" NB NB NB - NOTE: THIS ERROR MAY CAUSE FURTHER EVALUATION TO BE FAULTY"
+			>(.*:[^$][^$])</regexp></line>
+			</alt>
+		</case>
+
+		<!-- Output should echo the input -->
+		<case id='2'>
+			<arguments><arg file='true' input='true'>51.txt</arg></arguments>
+			<alt>
+				<line><regexp mark='2'
+					successMessage="PASS Test 1"
+				>\s51[%,\.;:\s]</regexp></line>
+				<line><regexp mark='1'
+					errorMessage="FAIL Test 1: The output should contain the input value." 
+					successMessage="FAIL Test 1: The output should have blank space around values."
+				>51</regexp></line>
+			</alt>
+		</case>
+
+		<!--Student fails -->
+		<case id='3'>
+			<arguments><arg file='true' input='true'>zero.txt</arg></arguments>
+			<line><regexp mark='2'
+				successMessage="PASS Test 2" 
+				errorMessage="FAIL Test 2: Incorrect reporting if student fails."
+			>([Ff]ail|FAIL)</regexp></line>
+		</case>
+		
+		<!--Student is admitted to re-exam -->
+		<case id='4'>
+			<arguments><arg file='true' input='true'>49.txt</arg></arguments>
+			<line><regexp mark='2'
+				successMessage="PASS Test 3" 
+				errorMessage="FAIL Test 3: Incorrect reporting if student is admitted to the re-exam"
+			>([Rr]e-exam|[Ss]uppl|[Rr]e-?write)</regexp></line>
+		</case>
+		
+		<!--Student passes -->
+		<case id='5'>
+			<arguments><arg file='true' input='true'>51.txt</arg></arguments>
+			<line><regexp mark='2'
+				successMessage="PASS Test 4" 
+				errorMessage="FAIL Test 4: Incorrect reporting if student passes."
+			>([Pp]ass|PASS)</regexp></line>
+		</case>
+		
+		<!-- Student gets a distiction -->
+		<case id='6'>
+			<arguments><arg file='true' input='true'>85.txt</arg></arguments>
+			<line><regexp mark='1'
+				successMessage="PASS Test 5" 
+				errorMessage="FAIL Test 5: Incorrect reporting if student passes with distiction."
+			>([Dd]isti|DISTI)</regexp></line>
+		</case>
+
+		<!--Border case -->
+		<case id='7'>
+			<arguments><arg file='true' input='true'>50.txt</arg></arguments>
+			<line><regexp mark='2'
+				successMessage="PASS Test 6" 
+				errorMessage="FAIL Test 6: Incorrect reporting for a border case."
+			>([Pp]ass|PASS)</regexp></line>
+		</case>
+
+		<!-- Echo input in error message -->
+		<case id='8'>
+			<arguments><arg file='true' input='true'>negative.txt</arg></arguments>
+			<alt>
+				<line><regexp mark='1'
+					successMessage="PASS Test 7"
+					errorMessage="FAIL Test 7: Your error message should include the value that failed."
+				>\D-4[$\D]</regexp></line>
+			</alt>
+		</case>
+		
+		<!-- Negative input wording -->
+		<case id='9'>
+			<arguments><arg file='true' input='true'>negative.txt</arg></arguments>
+			<alt>
+				<line><regexp mark = '2'
+					successMessage="PASS Test 8" 
+				>(less|range|[Nn]egative|([Ii]n|[Nn]ot.*)valid|([Ii]n|[Nn]ot.*)correct|between 0 and 100)</regexp></line>
+				<line><regexp
+					successMessage="FAIL Test 8: You have no error checking for negative input."
+					errorMessage="FAIL Test 8: Incorrect reporting when input is negative."
+				>([Ff]ail|FAIL)</regexp></line>
+			</alt>
+		</case>
+
+		<!-- Too large input -->
+		<case id='10'>
+			<arguments><arg file='true' input='true'>tooBig.txt</arg></arguments>
+			<alt>
+				<line><regexp mark = '1'
+					successMessage="PASS Test 9" 
+				>(big|large|high|more|exceed|range|([Ii]n|[Nn]ot.*)valid|([Ii]n|[Nn]ot.*)correct|between 0 and 100)</regexp></line>
+				<line><regexp
+					successMessage="FAIL Test 9: You have no error cheking for input more than 100."
+					errorMessage="FAIL Test 9: Incorrect reporting when input is more than 100."
+				>([Dd]isti|DISTI)</regexp></line>
+			</alt>
+		</case>
+		
+		<!-- Real input truncated -->
+		<case id='11'>
+			<arguments><arg file='true' input='true'>49PointEight.txt</arg></arguments>
+			<alt>
+				<line><regexp
+					successMessage="FAIL Test 10: Input value was rounded instead of truncated." 
+				>([Pp]ass|PASS|\D50\D)</regexp></line>
+				<line><regexp
+					successMessage="FAIL Test 10: Input value should be truncated." 
+				>\D49.8\D</regexp></line>
+				<line><regexp mark = '2'
+					errorMessage="Fail Test 10: Program behave incorrectly when input is not an integer."
+					successMessage="PASS Test 10" 
+				>\s49[%\.,;:\s]</regexp></line>
+			</alt>
+		</case>
+</output>
+</memo>

@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<memo version='0.3'>
+<title>Countries</title>
+
+<config>
+	<random>0</random>
+	<sequence>1</sequence>
+	<parts>1</parts>
+	<chances>10</chances>
+</config>
+
+<output part='1' fullmarks='25'>
+	<delete-patterns>
+		<pattern>.+\.o(ut)?$</pattern>
+		<pattern>.+~$</pattern>
+	</delete-patterns>
+
+	<source-patterns>
+		<pattern>.+\.(c|C)(\+\+|pp?|xx)?$</pattern>	
+		<pattern>.+\.ii?$</pattern>
+		<pattern>.+\.cc$</pattern>
+	</source-patterns>
+		
+	<extra-files>
+		<file overwrite='true' jail='true'>bigMiddle.txt</file>
+		<file overwrite='true' jail='true'>blank.txt</file>
+		<file overwrite='true' jail='true'>first.txt</file>
+		<file overwrite='true' jail='true'>inBigMiddle.txt</file>
+		<file overwrite='true' jail='true'>inEmpty.txt</file>
+		<file overwrite='true' jail='true'>inFirst.txt</file>
+		<file overwrite='true' jail='true'>inLast.txt</file>
+		<file overwrite='true' jail='true'>inMiddle.txt</file>
+		<file overwrite='true' jail='true'>inNoFile.txt</file>
+		<file overwrite='true' jail='true'>inOne.txt</file>
+		<file overwrite='true' jail='true'>last.txt</file>
+		<file overwrite='true' jail='true'>middle.txt</file>
+		<file overwrite='true' jail='true'>only.txt</file>
+	</extra-files>
+	
+	<required-files>
+		<file>countriesSmall.txt</file>
+		<file>countriesLarge.txt</file>
+		<file>makefile</file>
+	</required-files>
+		
+	<case id = '1'>
+		<!-- Test that the input lines and prompts are correct -->
+		<arguments>
+			<arg file='true' input='true'>inOne.txt</arg>				
+		</arguments>
+		<alt>
+			<line>
+				<regexp
+				 successMessage = "PASS Test 1: Prompts correct."
+				 errorMessage = "FAIL Test 1: Prompt and/or line of dashes after the prompt incorrect."
+				 >\s+file\s?.*:\s+-{10}</regexp>
+			</line>
+			<line>
+				<regexp
+				 errorMessage = "NOTE THAT WHEN YOUR PROMPTS ARE WRONG, THE REST OF THE ASSESMENT MAY BE INVALID"
+				 >\s+file\s?.*:\s+-{10}</regexp>
+			</line>			
+		</alt>
+	</case>
+
+	<case id = '2'>
+		<!-- Test that a line of dashes is at the end  -->
+		<arguments>
+			<arg file='true' input='true'>inLast.txt</arg>				
+		</arguments>
+		<line><regexp> .*</regexp></line>
+		<line><regexp> .*</regexp></line>
+		<line><regexp> .*</regexp></line>
+		<line><regexp> .*</regexp></line>
+		<alt>
+			<line>
+				<regexp
+				 successMessage="PASS Test 2"
+				 errorMessage="FAIL Test 2: Line of dashes at the end incorrect or missing or on the wrong line"
+				 >-{10}</regexp>
+			</line>
+			<line>
+				<regexp
+				 errorMessage="NOTE THAT IF THIS LINE IS NOT CORRECT, ASSESMANT OF YOUR FINAL OUTPUT MAY BE INAVLID"
+				 >-{10}</regexp>
+			</line>
+		</alt>
+	</case>
+
+	<case id = '3'>
+		<!-- Check looping when the file is empty -->
+		<arguments>
+			<arg file='true' input='true'>inEmpty.txt</arg>				
+		</arguments>
+		<line><regexp> .*</regexp></line>
+		<line>
+			<regexp 
+			successMessage="FAIL Test 3 : Loop is off by one when file is empty"
+			errorMessage="PASS Test 3"
+			>^(\s+)?1\s</regexp>		
+		</line>
+	</case>
+	
+	<case id = '4'>
+		<!-- Check if numbering is according to spec -->
+		<arguments>
+			<arg file='true' input='true'>inMiddle.txt</arg>				
+		</arguments>
+		<line><regexp> .*</regexp></line>
+		<line><regexp> .*</regexp></line>
+		<line>
+			<regexp mark = '2'
+			successMessage="PASS Test 4"
+			errorMessage="FAIL Test 4: Numbering of countries incorrect"
+			>^2\s{2}</regexp>
+		</line>
+	</case>
+
+	<case id = '5'>
+		<!-- Check if output of countries and their sizes is according to spec -->
+		<arguments>
+			<arg file='true' input='true'>inMiddle.txt</arg>				
+		</arguments>
+		<line><regexp> .*</regexp></line>
+		<line><regexp> .*</regexp></line>
+		<line>
+			<regexp mark = '3'
+			successMessage="PASS Test 5"
+			errorMessage="FAIL Test 5: Names and sizes of countries in the list are not according to specification (check spacing)"
+			>MiddleCountry {26}1</regexp>
+		</line>
+	</case>
+
+	<case id = '6'>
+		<!-- Correct country identified if smallest is in the middle -->
+		<arguments>
+			<arg file='true' input='true'>inMiddle.txt</arg>				
+		</arguments>
+		<line><regexp> .*</regexp></line>
+		<line><regexp> .*</regexp></line>
+		<line><regexp> .*</regexp></line>
+		<line><regexp> .*</regexp></line>
+		<line><regexp> .*</regexp></line>
+		<alt>
+			<line>
+				<regexp mark = '3'
+				 successMessage="PASS Test 6 ">\bMiddleCountry\b</regexp>
+			</line>
+			<line>
+				<regexp mark = '1'
+				 successMessage="FAIL Test 6: Smallest country name could not be isolated (check word boundries in output)"
+				 errorMessage="FAIL Test 6: Wrong country identified as the smallest on the list">MiddleCountry</regexp>
+			</line>
+		</alt>
+	</case>
+
+	<case id = '7'>
+		<!-- Correct country identified if smallest is in the first item on the list -->
+		<arguments>
+			<arg file='true' input='true'>inFirst.txt</arg>				
+		</arguments>
+		<line><regexp> .*</regexp></line>
+		<line><regexp> .*</regexp></line>
+		<line><regexp> .*</regexp></line>
+		<line>
+			<regexp mark = '2'
+				 successMessage="PASS Test 7"
+				 errorMessage="FAIL Test 7: Real value not rounded correctly"
+			>LastCountry\s+3$</regexp>
+		</line>
+		<line><regexp> .*</regexp></line>
+		<line>
+			<regexp mark = '2'
+			 successMessage="PASS Test 8"
+			 errorMessage="FAIL Test 8: Wrong country identified as the smallest on the list"
+			 >FirstCountry</regexp>
+		</line>
+	</case>
+		
+	<case id = '9'>
+		<!-- Correct country identified if smallest is in the last item on the list -->
+		<arguments>
+			<arg file='true' input='true'>inLast.txt</arg>				
+		</arguments>
+		<line><regexp> .*</regexp></line>
+		<line><regexp> .*</regexp></line>
+		<line><regexp> .*</regexp></line>
+		<line><regexp> .*</regexp></line>
+		<line><regexp> .*</regexp></line>
+		<line>
+			<regexp mark = '2'
+			 successMessage="PASS Test 9"
+			 errorMessage="FAIL Test 9: Wrong country identified as the smallest on the list">LastCountry</regexp>
+		</line>
+	</case>
+
+	<case id = '10'>
+		<!-- Correct country identified if file has one entry -->
+		<arguments>
+			<arg file='true' input='true'>inOne.txt</arg>				
+		</arguments>
+		<line><regexp> .*</regexp></line>
+		<line><regexp> .*</regexp></line>
+		<line><regexp> .*</regexp></line>
+		<line>
+			<regexp mark = '1'
+			 successMessage="PASS Test 10"
+			 errorMessage="FAIL Test 10: Country identified is not the smallest on the list">OnlyCountry</regexp>
+		</line>
+	</case>
+        
+	<case id = '11'>
+		<!-- Test for error checking if file does not exsist -->
+		<arguments>
+			<arg file='true' input='true'>inNoFile.txt</arg>				
+		</arguments>
+		<line>
+			<regexp
+			errorMessage="FAIL Test 11: You do not have a line of dashes after the prompt when the input is invalid"
+			>-{10}</regexp>
+		</line>
+		<alt>
+			<line>
+				<regexp mark = '4'
+				 successMessage="PASS Test 11"
+				 >\bNoFile\b</regexp>
+			</line>
+			<line>
+				<regexp mark = '3'
+				 successMessage = "FAIL Test 11: Check the spacing in the message when the input file is invalid"
+				 >NoFile</regexp>
+			</line>
+			<line>
+				<regexp mark = '2'
+				 successMessage = "FAIL Test 11: If the input file is invalid, the name of the invalid file should be in an error message"
+				 >[A-Za-z\s]{10}</regexp>		
+			</line>
+			<line>
+				<regexp
+				 successMessage="FAIL Test 11: You do not have error checking to ensure that the given file can be opened"
+				 >-{10}</regexp>
+			</line>
+		</alt>
+	</case>
+	
+	<case id = '12'>
+		<!-- Check if output of countries and their sizes is according to spec if values are large -->
+		<arguments>
+			<arg file='true' input='true'>inBigMiddle.txt</arg>				
+		</arguments>
+		<line><regexp> .*</regexp></line>
+		<line><regexp> .*</regexp></line>
+		<line>
+			<regexp mark = '1'
+			successMessage="PASS Test 12"
+			errorMessage="FAIL Test 12: Names and sizes of countries in the list are not according to specification (check spacing)">MiddleCountry {20}9999998</regexp>
+		</line>
+		<line><regexp> .*</regexp></line>
+		<line><regexp> .*</regexp></line>
+		<line>
+			<regexp mark = '2'
+			 successMessage="PASS Test 13"
+			 errorMessage="FAIL Test 13: Country identified is not the smallest on the list">MiddleCountry</regexp>
+		</line>
+	</case>
+
+	<case id = '14'>
+		<!-- Check message when the file is empty -->
+		<arguments>
+			<arg file='true' input='true'>inEmpty.txt</arg>				
+		</arguments>
+		<line><regexp> .*</regexp></line>
+		<line><regexp> .*</regexp></line>
+		<alt>
+			<line>
+				<regexp mark = '3'
+				 successMessage="PASS Test 14"
+				 >(\bblank\.txt\b.*(empty|\bno)|(empty|\bno).*\bblank\.txt\b)</regexp>
+			</line>
+			<line>
+				<regexp mark = '2'
+				 successMessage = "FAIL Test 14: Check the spacing in the message when the input file is empty"
+				 >(blank.txt.*(empty|\bno)|(empty|\bno).*blank.txt)</regexp>
+			</line>
+			<line>
+				<regexp mark = '1'
+				  errorMessage="FAIL Test 14: Your program does not behave correctly when the input file is empty"
+				 successMessage = "FAIL Test 14: If the input file is empty, the name of the empty file should be in an error message"
+				 >[A-Za-z\s]{10}</regexp>		
+			</line>
+		</alt>
+	</case>
+</output>
+</memo>

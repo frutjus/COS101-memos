@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<memo version='0.1'>
+	<title>Prac2_CurrencyConverter</title>
+	<config>
+		<random>0</random>
+		<sequence>1</sequence>
+		<parts>1</parts>
+		<chances>10</chances> 
+	</config>
+	
+	<output part='1' fullmarks='10'>
+		<executable>currency.out</executable>
+				
+		<delete-patterns>
+			<pattern>.+\.o$</pattern>
+			<pattern>.+~$</pattern>
+		</delete-patterns>
+		
+		<source-patterns>
+			<pattern>.+\.cpp$</pattern>
+		</source-patterns>
+		
+		<extra-files>
+			<file overwrite='true' jail='true'>makefile</file>
+			<file overwrite='true' jail='true'>input.txt</file>
+		</extra-files>
+		
+		<!--input and prompt-->
+		<case id='1'>
+			<arguments>
+				<arg file='true' input='true'>input.txt</arg>
+			</arguments>
+			<line>
+				<regexp errorMessage="Hint: When you prompt an user for input, use colon and a space.">.*:\s</regexp>
+			</line>
+		</case>
+		
+		<case id='2'>
+			<arguments>
+				<arg file='true' input='true'>input.txt</arg>
+			</arguments>
+			<line><alt>
+				<regexp errorMessage="Hint: Indicate, using a keyword, to the user that they must enter something.">((^|\s)[Ee]nter|[Ii]nput)\s.*</regexp>
+			</alt></line>
+		</case>
+		
+		<case id='3'>
+			<arguments>
+				<arg file='true' input='true'>input.txt</arg>
+			</arguments>
+			<line>
+				<regexp>.*</regexp>
+			</line>
+			<line>
+				<regexp mark='2' successMessage="PASS Test 1: Calculation is correct." errorMessage="FAIL Test 1: Calculation may be wrong.">.*\D5\.30[\s$]</regexp>
+			</line>
+		</case>
+		
+		<case id='1'>
+		<line>
+			<regexp
+			errorMessage="PASS Test1: (Secret test)"
+			successMessage="FAIL Test 1: You uploaded the given program"
+			>Hello - Howzit\?</regexp>
+		</line>
+		</case>
+		<case id='2'>
+			<line>
+				<regexp mark='2' 
+				errorMessage="FAIL Test 2: First few characters in output are wrong"
+				successMessage="PASS test 2: First few characters in output are correct">^[mM]y\s+[sS]tudent.*</regexp>
+			</line>
+		</case>
+		<case id='3'>
+			<line>
+				<regexp mark='2' 
+				errorMessage="FAIL Test 3: Output does not end with required punctuation"
+				successMessage="PASS test 3: Output ends with required punctuation">.*[!\.]$</regexp>
+			</line>
+		</case>
+		<case id='4'>
+		<alt>
+			<line>
+				<regexp mark='4' 
+				successMessage="PASS test 4: Student number is in the correct format">\s\d{8}\s</regexp>
+			</line>
+			<line>
+				<regexp mark='2' 
+				successMessage="FAIL test 4: Student number was recognised but is too short">[\su]\d{6,7}\s</regexp>
+			</line>
+			<line>
+				<regexp mark='1' 
+				successMessage="FAIL test 4: Student number was recognised but should NOT start with u">u\d{6,8}</regexp>
+			</line>
+			<line>
+				<regexp mark='1' 
+				successMessage="FAIL test 4: Student number was recognised but is not followed by a space">[\su]\d{8}[^\s]</regexp>
+			</line>
+			<line>
+				<regexp
+				errorMessage="FAIL test 4: Student number not recognised"
+				 >\d{6,8}</regexp>
+			</line>
+		</alt>
+		</case>
+</output>
+</memo>

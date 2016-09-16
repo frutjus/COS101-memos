@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<memo version='0.3'>
+	<title>Prac2-Distance</title>
+
+	<config>
+		<random>0</random>
+		<sequence>1</sequence>
+		<parts>1</parts>
+		<chances>10</chances>
+	</config>
+
+	<output part='1' fullmarks='10'>
+		<delete-patterns>
+			<pattern>.+\.o$</pattern>
+			<pattern>.+~$</pattern>
+		</delete-patterns>
+
+		<source-patterns>
+			<pattern>.+\.(c|C)(\+\+|pp?|xx)?$</pattern>	
+			<pattern>.+\.ii?$</pattern>
+			<pattern>.+\.cc$</pattern>
+		</source-patterns>
+		
+		<extra-files>
+			<file overwrite='true' jail='true'>Five.txt</file>
+			<file overwrite='true' jail='true'>TwoPointSix.txt</file>
+		</extra-files>
+
+		<!-- Prompt  end with colon -->
+		<case id='1'>
+			<arguments>
+				<arg file='true' input='true'>Five.txt</arg>
+			</arguments>
+			<line><regexp 
+			successMessage="PASS Test 1"
+			errorMessage="FAIL Test 1: Prompt has no colon - THIS ERROR MAY CAUSE FURTHER EVALUATION TO BE FAULTY"
+			>:</regexp></line>
+		</case>
+		
+		<!-- Prompt  not newline  -->
+		<case id='2'>
+			<arguments>
+				<arg file='true' input='true'>Five.txt</arg>
+			</arguments>
+			<line><regexp 
+			successMessage="PASS Test 2"
+			errorMessage="FAIL Test 2: Prompt should NOT end with a newline - THIS ERROR MAY CAUSE FURTHER EVALUATION TO BE FAULTY"
+			>(.*:[^$][^$])</regexp></line>
+		</case>
+		
+		<!-- Prompt  keyword -->
+		<case id='3'>
+			<arguments>
+				<arg file='true' input='true'>Five.txt</arg>
+			</arguments>
+			<line><regexp mark='2'
+			successMessage="PASS Test 3"
+			errorMessage="FAIL Test 3: Prompt should contain the keyword 'hours'"
+			>hours</regexp></line>
+		</case>
+
+		<!-- Echo input -->
+		<case id='4'>
+			<arguments>
+				<arg file='true' input='true'>Five.txt</arg>
+			</arguments>
+			<line>
+				<regexp mark = '1'
+				successMessage="PASS Test 4"
+				errorMessage="FAIL test 4: The output sentence should contain the input value"
+				>\D5\D</regexp>
+			</line>
+		</case>
+		
+		<!-- Spaces around the output and in integer format -->
+		<case id='5'>
+			<arguments>
+				<arg file='true' input='true'>Five.txt</arg>
+			</arguments>
+			<alt>
+				<line>
+					<regexp mark='1'
+					successMessage="PASS Test 5" 
+					>\s\d{3}([Kk]m)?\s</regexp>
+				</line>
+				<line>
+					<regexp
+					successMessage="FAIL Test 5: Integer output should be displayed without .00" 
+					errorMessage="FAIL Test 5: There should be spaces around the output value">\s\d{3}\.00([Kk]m)?\s</regexp>
+				</line>
+			</alt>
+		</case>
+
+		<!-- Calculation with integer input-->
+		<case id='6'>
+			<arguments>
+				<arg file='true' input='true'>Five.txt</arg>
+			</arguments>
+			<line>
+				<regexp mark='4'
+				successMessage="PASS Test 6" 
+				errorMessage="FAIL Test 6: The calculation may be wrong">\D600[$\D]</regexp>
+			</line>
+		</case>
+
+		<!-- Calculation with real input -->
+		<case id='7'>
+			<arguments>
+				<arg file='true' input='true'>TwoPointSix.txt</arg>
+			</arguments>
+			<line>
+				<regexp mark='2'
+				successMessage="PASS Test 7" 
+				errorMessage="FAIL Test 7: The program fails when input is a real value">\D312[$\D]</regexp>
+			</line>
+		</case>
+	</output>
+</memo>

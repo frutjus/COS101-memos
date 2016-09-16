@@ -1,0 +1,3 @@
+FirstCountry  1
+MiddleCountry 50
+LastCountry    2.778

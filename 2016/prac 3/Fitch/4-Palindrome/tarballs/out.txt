@@ -1,0 +1,2 @@
+Enter a nonzero positive number: The reverse of 5 is: 5
+Yes! This number is a palindrome.

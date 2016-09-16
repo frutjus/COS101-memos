@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<memo version='0.3'>
+<title>Countries</title>
+
+<config>
+	<random>0</random>
+	<sequence>1</sequence>
+	<parts>1</parts>
+	<chances>10</chances>
+</config>
+
+<output part='1' fullmarks='12'>
+	<delete-patterns>
+		<pattern>.+\.o(ut)?$</pattern>
+		<pattern>.+~$</pattern>
+	</delete-patterns>
+
+	<source-patterns>
+		<pattern>.+\.(c|C)(\+\+|pp?|xx)?$</pattern>	
+		<pattern>.+\.ii?$</pattern>
+		<pattern>.+\.cc$</pattern>
+	</source-patterns>
+		
+	<extra-files>
+		<file overwrite='true' jail='true'>makefile</file>
+		<file overwrite='true' jail='true'>paintTools.h</file>
+		<file overwrite='true' jail='true'>paintToolsTest.cpp</file>
+	</extra-files>
+		
+	<case id = '1'>
+		<!-- getItemArea(3, 7) -->
+		<line>
+			<regexp mark = '1'
+			successMessage="PASS Test 1"
+			errorMessage="FAIL Test 1: getItemArea(double, double) fails">^21$</regexp>
+		</line>
+		<!-- getTotalArea(3, 7) -->
+		<line>
+			<regexp mark = '1'
+			successMessage="PASS Test 2"
+			errorMessage="FAIL Test 2: getTotalArea(int, double) fails">^21$</regexp>
+		</line>
+		<!-- getActualArea(7, 3) -->
+		<line>
+			<regexp mark = '1'
+			successMessage="PASS Test 3"
+			errorMessage="FAIL Test 3: getActualArea(double, double) fails">^4$</regexp>
+		</line>
+		<!-- getRoomArea(3, 5, 4) -->
+		<line>
+			<regexp mark = '3'
+			successMessage="PASS Test 4"
+			errorMessage="FAIL Test 4: getRoomArea(double, double, double) fails">^64$</regexp>
+		</line>
+		<!-- getTins(140), getTins(145), getTins(10), getTins(140.1) -->
+		<line>
+			<regexp mark = '4'
+			successMessage="PASS Test 5"
+			errorMessage="FAIL Test 5: getTins(double) fails">^2\t3\t1\t3$</regexp>
+		</line>
+		<!-- getHours(70), getHours(88.4) -->
+		<line>
+			<regexp mark = '2'
+			successMessage="PASS Test 6"
+			errorMessage="FAIL Test 6: getHours(double) fails">^8\t10\.1029$</regexp>
+		</line>
+	</case>
+</output>
+</memo>
